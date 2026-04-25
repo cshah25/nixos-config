@@ -23,6 +23,6 @@ echo "Files updated."
 
 # Rebuild system
 echo "Rebuilding NixOS..."
-sudo nixos-rebuild --impure --flake .
+sudo nixos-rebuild switch --impure --flake .
 
 echo "Done."
