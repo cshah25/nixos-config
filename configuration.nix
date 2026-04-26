@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -12,10 +12,18 @@
 
   # Bootloader.
   #boot.loader.systemd-boot.enable = true;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.enable = lib.mkForce false;
+  #boot.loader.grub.efiSupport = true;
+  #boot.loader.grub.device = "nodev";
+  #boot.loader.grub.useOSProber = true;
+
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
+    
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
@@ -101,6 +109,7 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+    sbctl
     vim
     neovim
     git
