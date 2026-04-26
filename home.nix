@@ -85,7 +85,7 @@
 	"Kvantum".source = ./dotfiles/Kvantum;
 	"niri".source = ./dotfiles/niri;
 	"qt5ct".source = ./dotfiles/qt5ct;
-  }
+  };
 
   programs.zsh = {
     enable = true;
