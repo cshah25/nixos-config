@@ -143,6 +143,7 @@
       accent = "mauve";
     })
     adwaita-icon-theme
+    xwayland-satellite
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -210,4 +211,9 @@
 
   # For niri power key 
   services.logind.powerKey = "ignore";
+
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 }
