@@ -11,7 +11,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations.NixPC = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.NixLatitude = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
       modules = [
