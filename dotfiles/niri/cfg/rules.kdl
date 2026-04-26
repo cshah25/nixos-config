@@ -23,10 +23,10 @@
 
     window-rule {
         match app-id="waterfox"
-        open-maximized true
+        default-column-width { proportion 1.0; }
     }
 
     window-rule {
         match app-id="code"
-        open-maximized true
+        default-column-width { proportion 1.0; }
     }
