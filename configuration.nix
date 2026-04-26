@@ -83,7 +83,7 @@
   users.users.rayu = {
     isNormalUser = true;
     description = "Chirayu Shah";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -158,6 +158,10 @@
 
   # Docker
   virtualisation.docker.enable = true;
+
+  # Libvirt & Virt-Manager (KVM)
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
   # Shell
   programs.zsh.enable = true;
