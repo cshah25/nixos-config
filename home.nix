@@ -99,7 +99,7 @@
       }
     ];
 
-    initExtra = ''
+    initContent = ''
       # Sourcing the p10k configuration file if it exists
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
     '';
