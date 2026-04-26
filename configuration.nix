@@ -177,4 +177,7 @@
   # Shell
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
+
+  # Flatpak
+  services.flatpak.enable = true;
 }
