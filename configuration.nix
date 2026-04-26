@@ -126,7 +126,6 @@
     bluez
     fastfetch
     home-manager
-    tailscale
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -142,6 +141,17 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+
+  # Tailscale
+  services.tailscale.enable = true;
+
+  # Firewall for tailscale.
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
+  
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
