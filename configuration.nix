@@ -134,6 +134,8 @@
     bat
     tmux
     fastfetch
+    noctalia-shell
+    swayidle
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
