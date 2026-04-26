@@ -138,6 +138,11 @@
     swayidle
     brightnessctl
     playerctl
+    (catppuccin-papirus-folders.override {
+      flavor = "mocha";
+      accent = "mauve";
+    })
+    adwaita-icon-theme
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

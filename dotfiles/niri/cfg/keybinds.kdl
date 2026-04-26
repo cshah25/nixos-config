@@ -11,9 +11,10 @@ binds {
     // ─── Applications ───
     MOD+RETURN                          hotkey-overlay-title="Open Terminal: Alacritty" { spawn "alacritty"; }
     MOD+CTRL+RETURN                     hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "noctalia-shell ipc call launcher toggle"; }
-    MOD+B                               hotkey-overlay-title="Open Browser: Zen" { spawn "zen-browser"; }
+    MOD+B                               hotkey-overlay-title="Open Browser: Waterfox" { spawn "flatpak run net.waterfox.waterfox"; }
     MOD+SHIFT+B                         hotkey-overlay-title="Open Browser: Brave" { spawn "brave"; }
     MOD+L                               hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "noctalia-shell ipc call lockScreen lock"; }
+    Mod+C                               hotkey-overlay-title="Open Text Editor: VSCode" { spawn "code"; }
 
     // Please choose your own file manager.
     MOD+E                               hotkey-overlay-title="File Manager: thunar" { spawn "thunar"; }
@@ -100,7 +101,6 @@ binds {
 
     // ─── Layout Controls ───
     Mod+CTRL+F                          { expand-column-to-available-width; }
-    Mod+C                               { center-column; }
     Mod+CTRL+C                          { center-visible-columns; }
     Mod+Minus                           { set-column-width "-10%"; }
     Mod+Equal                           { set-column-width "+10%"; }
