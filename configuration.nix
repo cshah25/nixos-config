@@ -136,6 +136,8 @@
     fastfetch
     noctalia-shell
     swayidle
+    brightnessctl
+    playerctl
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -200,4 +202,7 @@
     remotePlay.openFirewall = true;   # optional
     dedicatedServer.openFirewall = true; # optional
   };
+
+  # For niri power key 
+  services.logind.powerKey = "ignore";
 }
