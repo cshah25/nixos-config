@@ -106,6 +106,7 @@
     git
     curl
     wget
+    tree
     alacritty
     vscode
     antigravity
@@ -121,10 +122,7 @@
     tealdeer
     bat
     tmux
-    zsh
-    bluez
     fastfetch
-    home-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
