@@ -78,6 +78,15 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
+  xdg.configFile = {
+	"alacritty".source = ./dotfiles/alacritty;
+	"gtk-3.0".source = ./dotfiles/gtk-3.0;
+	"gtk-4.0".source = ./dotfiles/gtk-4.0;
+	"Kvantum".source = ./dotfiles/Kvantum;
+	"niri".source = ./dotfiles/niri;
+	"qt5ct".source = ./dotfiles/qt5ct;
+  }
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
