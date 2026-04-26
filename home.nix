@@ -34,7 +34,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
+    pkgs.nerd-fonts.meslo-lg
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
