@@ -34,6 +34,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -73,4 +74,34 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    oh-my-zsh = {
+      enable = true;
+      # Make sure to REMOVE the theme = "robbyrussell"; line so they don't conflict!
+      plugins = [
+        "git"
+        "sudo"
+        "docker"
+      ];
+    };
+
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+    ];
+
+    initExtra = ''
+      # Sourcing the p10k configuration file if it exists
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    '';
+  };
 }
