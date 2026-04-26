@@ -5,3 +5,4 @@
     spawn-sh-at-startup "noctalia-shell"
     spawn-sh-at-startup "swayidle -w timeout 180 'noctalia-shell ipc call lockScreen lock' timeout 300 'systemctl suspend' before-sleep 'noctalia-shell ipc call lockScreen lock'"
     spawn-at-startup "xwayland-satellite"
+    spawn-at-startup "sh" "-c" "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY NIXOS_OZONE_WL"
