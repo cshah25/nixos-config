@@ -5,7 +5,7 @@
   # manage.
   home.username = "rayu";
   home.homeDirectory = "/home/rayu";
-
+  #home-manager.backupFileExtension = "backup";
   # KDE Connect
   services.kdeconnect.enable = true;
 
@@ -77,7 +77,7 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  
+
   xdg.configFile = {
 	"alacritty".source = ./dotfiles/alacritty;
 	"gtk-3.0".source = ./dotfiles/gtk-3.0;
