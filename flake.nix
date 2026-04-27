@@ -45,6 +45,7 @@
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
+          ./laptop.nix
           home-manager.nixosModules.home-manager
           lanzaboote.nixosModules.lanzaboote # Add Lanzaboote module
           {
