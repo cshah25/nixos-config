@@ -8,3 +8,4 @@
     // No sleep
     spawn-sh-at-startup "swayidle -w timeout 180 'noctalia-shell ipc call lockScreen lock'"
     spawn-at-startup "xwayland-satellite"
+    spawn-sh-at-startup "equibop"
