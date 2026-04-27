@@ -4,13 +4,7 @@
   users.users.rayu.packages = lib.mkForce [];
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+  boot.blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
+  services.xserver.videoDrivers = [ "modesetting" ];
+  hardware.nvidia.modesetting.enable = lib.mkForce false;
 }
