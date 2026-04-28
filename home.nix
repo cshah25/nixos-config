@@ -128,6 +128,20 @@
     initContent = ''
       # Sourcing the p10k configuration file if it exists
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+      pybox() {
+        # Check if the first argument ($1) is empty
+        if [[ -z "$1" ]]; then
+            echo "Error: No target directory provided."
+            echo "Usage: pybox <path-to-project-folder>"
+            return 1
+        fi
+
+        local target_dir="$1"
+
+        # Enter the box, change directory, activate the venv, and keep the shell open
+        distrobox enter python312-box -- bash -c "cd $target_dir && source .venv/bin/activate && exec bash"
+      }
     '';
   };
 }
