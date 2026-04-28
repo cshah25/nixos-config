@@ -87,6 +87,20 @@
 	"qt5ct".source = ./dotfiles/qt5ct;
   };
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "image/png" = [ "org.kde.gwenview.desktop" ];
+      "image/jpeg" = [ "org.kde.gwenview.desktop" ];
+      "image/jpg" = [ "org.kde.gwenview.desktop" ];
+      "image/gif" = [ "org.kde.gwenview.desktop" ];
+      "image/webp" = [ "org.kde.gwenview.desktop" ];
+    };
+  };
+
+  dconf.enable = true;
+  gtk.enable = true;
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
