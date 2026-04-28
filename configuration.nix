@@ -144,6 +144,7 @@
     })
     adwaita-icon-theme
     xwayland-satellite
+    python3
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -210,8 +211,9 @@
   };
 
   # For niri power key 
-  services.logind.powerKey = "ignore";
-
+  #services.logind.powerKey = "ignore";
+  services.logind.settings.Login.HandlePowerKey = "ignore";
+  
   programs.dconf.enable = true;
 
   environment.sessionVariables = {
