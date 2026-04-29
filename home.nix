@@ -73,6 +73,7 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    MOZ_ENABLE_WAYLAND = "1";
   };
 
   # Let Home Manager install and manage itself.
@@ -86,6 +87,20 @@
 	"niri".source = ./dotfiles/niri;
 	"qt5ct".source = ./dotfiles/qt5ct;
   };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "image/png" = [ "org.kde.gwenview.desktop" ];
+      "image/jpeg" = [ "org.kde.gwenview.desktop" ];
+      "image/jpg" = [ "org.kde.gwenview.desktop" ];
+      "image/gif" = [ "org.kde.gwenview.desktop" ];
+      "image/webp" = [ "org.kde.gwenview.desktop" ];
+    };
+  };
+
+  dconf.enable = true;
+  gtk.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -114,6 +129,20 @@
     initContent = ''
       # Sourcing the p10k configuration file if it exists
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+      pybox() {
+        # Check if the first argument ($1) is empty
+        if [[ -z "$1" ]]; then
+            echo "Error: No target directory provided."
+            echo "Usage: pybox <path-to-project-folder>"
+            return 1
+        fi
+
+        local target_dir="$1"
+
+        # Enter the box, change directory, activate the venv, and keep the shell open
+        distrobox enter python312-box -- bash -c "cd $target_dir && source .venv/bin/activate && exec bash"
+      }
     '';
   };
 }
