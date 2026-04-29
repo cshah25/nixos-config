@@ -145,6 +145,10 @@
     adwaita-icon-theme
     xwayland-satellite
     python3
+    cmake
+    ninja
+    gcc
+    gnumake
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
