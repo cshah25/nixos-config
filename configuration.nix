@@ -149,6 +149,7 @@
     ninja
     gcc
     gnumake
+    xev
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
