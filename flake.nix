@@ -58,6 +58,12 @@
             home-manager.users.rayu = import ./home.nix;
             home-manager.backupFileExtension = "backup";
           }
+          {
+            fileSystems."/mnt/storage" = {
+              device = "/dev/disk/by-uuid/103c2982-e6b3-484e-bc22-3a32504cbd63";
+              fsType = "ext4";
+            };
+          }
         ];
       };
     };
