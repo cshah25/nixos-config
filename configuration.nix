@@ -29,7 +29,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "NixHome"; # Define your hostname.
+  networking.hostName = "NixPrecision"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -219,6 +219,8 @@
   # For niri power key 
   #services.logind.powerKey = "ignore";
   services.logind.settings.Login.HandlePowerKey = "ignore";
+
+  services.power-profiles-daemon.enable = true;
   
   programs.dconf.enable = true;
 
