@@ -151,6 +151,7 @@
     gnumake
     xev
     ripgrep
+    wayland-pipewire-idle-inhibit
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

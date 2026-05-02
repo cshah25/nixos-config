@@ -6,6 +6,7 @@
     // Sleep
     // spawn-sh-at-startup "swayidle -w timeout 180 'noctalia-shell ipc call lockScreen lock' timeout 300 'systemctl suspend' before-sleep 'noctalia-shell ipc call lockScreen lock'"
     // No sleep
-    spawn-sh-at-startup "swayidle -w timeout 180 'noctalia-shell ipc call lockScreen lock'"
+    // spawn-sh-at-startup "swayidle -w timeout 180 'noctalia-shell ipc call lockScreen lock'"
     spawn-at-startup "xwayland-satellite"
     spawn-sh-at-startup "equibop"
+    spawn-at-startup "wayland-pipewire-idle-inhibit"
