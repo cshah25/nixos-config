@@ -86,6 +86,7 @@
 	"Kvantum".source = ./dotfiles/Kvantum;
 	"niri".source = ./dotfiles/niri;
 	"qt5ct".source = ./dotfiles/qt5ct;
+  "nvim".source = ./dotfiles/nvim;
   };
 
   xdg.mimeApps = {
