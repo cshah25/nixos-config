@@ -1,21 +1,53 @@
-local nix_path = "/run/current-system/sw/share/vim-plugins/nvim-treesitter"
-local is_nixos = vim.fn.isdirectory(nix_path) == 1
-
 return {
   "nvim-treesitter/nvim-treesitter",
-  dir = is_nixos and nix_path or nil,
-  name = "nvim-treesitter",
-  lazy = false, 
-  priority = 1000,
+  event = { "BufReadPre", "BufNewFile" },
+  build = ":TSUpdate",
   config = function()
-    local ok, configs = pcall(require, "nvim-treesitter.configs")
-    if not ok then return end
+    -- import nvim-treesitter plugin
+    local treesitter = require("nvim-treesitter.configs")
 
-    configs.setup({
-      highlight = { enable = true },
+    -- configure treesitter
+    treesitter.setup({ -- enable syntax highlighting
+      highlight = {
+        enable = true,
+      },
+      -- enable indentation
       indent = { enable = true },
+      -- ensure these language parsers are installed
+      ensure_installed = {
+        "json",
+        "javascript",
+        "typescript",
+        "tsx",
+        "yaml",
+        "html",
+        "css",
+        "prisma",
+        "markdown",
+        "markdown_inline",
+        "svelte",
+        "graphql",
+        "bash",
+        "lua",
+        "vim",
+        "dockerfile",
+        "gitignore",
+        "query",
+        "vimdoc",
+        "c",
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
+        },
+      },
     })
-    
+
+    -- use bash parser for zsh files
     vim.treesitter.language.register("bash", "zsh")
   end,
 }
