@@ -12,6 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({ { import = "rayu.plugins" } }, {
+  lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
   checker = {
     enabled = true,
     notify = false,
