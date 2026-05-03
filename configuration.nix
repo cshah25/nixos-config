@@ -147,7 +147,6 @@
     xev
     ripgrep
     wayland-pipewire-idle-inhibit
-    vimPlugins.nvim-treesitter.withAllGrammars
   ];
 
   # List services that you want to enable:
