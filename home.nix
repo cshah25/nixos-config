@@ -38,6 +38,7 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.nerd-fonts.meslo-lg
+    pkgs.teams-for-linux
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
