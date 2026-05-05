@@ -90,7 +90,11 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  programs.neovim.enable = true;
+  programs.neovim = {
+    enable = true;
+    withPython3 = false;
+    withRuby = false;
+  };
   xdg.configFile = {
 	"alacritty".source = ./dotfiles/alacritty;
 	"gtk-3.0".source = ./dotfiles/gtk-3.0;
