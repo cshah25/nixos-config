@@ -39,6 +39,18 @@
     # '')
     pkgs.nerd-fonts.meslo-lg
     pkgs.teams-for-linux
+    pkgs.vscode
+    pkgs.antigravity
+    pkgs.libreoffice
+    pkgs.android-studio
+    pkgs.nextcloud-client
+    pkgs.brave
+    pkgs.spotify
+    pkgs.equibop
+    pkgs.obsidian
+    pkgs.heroic
+    pkgs.nodejs
+    pkgs.xev
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -74,12 +86,15 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
-    MOZ_ENABLE_WAYLAND = "1";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
+  programs.neovim = {
+    enable = true;
+    withPython3 = false;
+    withRuby = false;
+  };
   xdg.configFile = {
 	"alacritty".source = ./dotfiles/alacritty;
 	"gtk-3.0".source = ./dotfiles/gtk-3.0;
@@ -112,7 +127,6 @@
 
     oh-my-zsh = {
       enable = true;
-      # Make sure to REMOVE the theme = "robbyrussell"; line so they don't conflict!
       plugins = [
         "git"
         "sudo"

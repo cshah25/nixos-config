@@ -11,19 +11,13 @@
     ];
 
   # Bootloader.
-  #boot.loader.systemd-boot.enable = true;
-  boot.loader.grub.enable = lib.mkForce false;
-  #boot.loader.grub.efiSupport = true;
-  #boot.loader.grub.device = "nodev";
-  #boot.loader.grub.useOSProber = true;
-
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-
-  boot.lanzaboote = {
+  boot.loader.grub = {
     enable = true;
-    pkiBundle = "/var/lib/sbctl";
+    device = "nodev"; # "nodev" is for EFI systems
+    efiSupport = true;
+    useOSProber = true;
   };
-    
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
@@ -107,24 +101,12 @@
   environment.systemPackages = with pkgs; [
     sbctl
     vim
-    neovim
     git
     curl
     wget
     tree
     alacritty
-    vscode
-    antigravity
-    libreoffice
     distrobox
-    android-studio
-    nextcloud-client
-    brave
-    spotify
-    equibop
-    obsidian
-    heroic
-    tealdeer
     bat
     tmux
     fastfetch
@@ -143,8 +125,6 @@
     ninja
     gcc
     gnumake
-    nodejs
-    xev
     ripgrep
     wayland-pipewire-idle-inhibit
   ];
@@ -153,7 +133,6 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
 
   # Tailscale
   services.tailscale.enable = true;
@@ -175,7 +154,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-
 
   # Docker
   virtualisation.docker.enable = true;
@@ -199,7 +177,6 @@
   };
 
   # For niri power key 
-  #services.logind.powerKey = "ignore";
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   services.power-profiles-daemon.enable = true;
@@ -208,7 +185,15 @@
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
   };
 
   programs.nix-ld.enable = true;
+
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 }
