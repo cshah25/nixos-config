@@ -21,7 +21,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.rayu = import ./home.nix;
+            home-manager.users.rayu = import ./home;
             home-manager.backupFileExtension = "backup";
           }
           {
@@ -49,7 +49,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.rayu = import ./home.nix;
+            home-manager.users.rayu = import ./home/home.nix;
             home-manager.backupFileExtension = "backup";
           }
           {
