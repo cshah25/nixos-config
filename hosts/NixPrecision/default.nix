@@ -1,33 +1,35 @@
-{ lib, pkgs, config, ... }:
 {
-  # services.desktopManager.plasma6.enable = lib.mkForce false;
-  # users.users.rayu.packages = lib.mkForce [];
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  networking.hostName = "NixPrecision";
+
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-uuid/103c2982-e6b3-484e-bc22-3a32504cbd63";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" "X-systemd.device-timeout=5s"];
+  };
+
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  # Load the Nvidia driver (required for power management)
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    # Required for Niri
-    modesetting.enable = true;
-    # Open source drivers
-    open = true; 
-
-    # Enable the Nvidia settings menu
-    nvidiaSettings = true;
   
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    nvidiaSettings = true;
+    
     powerManagement = {
       enable = true;
       finegrained = true;
     };
-
+    
     prime = {
       offload = {
         enable = true;
         enableOffloadCmd = true;
       };
-      
-      # hardware Bus IDs
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0"; 
     };
