@@ -55,7 +55,6 @@
     packages = [
       "net.waterfox.waterfox"
       "org.kde.index"
-      "com.collaboraoffice.Office"
       "org.onlyoffice.desktopeditors"
     ];
   };
