@@ -5,8 +5,6 @@
     pkgs.teams-for-linux
     pkgs.vscode
     pkgs.antigravity
-    pkgs.libreoffice
-    pkgs.onlyoffice-desktopeditors
     pkgs.android-studio
     pkgs.nextcloud-client
     pkgs.brave
