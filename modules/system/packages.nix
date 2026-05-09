@@ -1,6 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
+  imports = [
+    inputs.nix-flatpak.nixosModules.nix-flatpak
+  ];
+
   programs.firefox.enable = true;
   programs.zsh.enable = true;
   programs.dconf.enable = true;
@@ -41,4 +45,16 @@
     ripgrep
     wayland-pipewire-idle-inhibit
   ];
+  
+  services.flatpak = {
+    remotes = pkgs.lib.mkOptionDefault [{ 
+      name = "flathub"; 
+      location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+    }];
+    
+    packages = [
+      "net.waterfox.waterfox"
+      "org.kde.index"
+    ];
+  };
 }
