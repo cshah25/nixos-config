@@ -10,6 +10,7 @@
 	 "qt5ct".source = ./dotfiles/qt5ct;
    "nvim".source = ./dotfiles/nvim;
   };
+  home.file.".p10k.zsh".source = ./dotfiles/p10k.zsh;
 
   xdg.mimeApps = {
     enable = true;
