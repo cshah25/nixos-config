@@ -44,6 +44,7 @@
     gnumake
     ripgrep
     wayland-pipewire-idle-inhibit
+    wakeonlan
   ];
   
   services.flatpak = {

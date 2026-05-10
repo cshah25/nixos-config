@@ -5,6 +5,18 @@
 
   networking.hostName = "NixHome";
 
+  networking = {
+    hostName = "NixHome";
+    interfaces = {
+    enp7s0 = {
+        wakeOnLan.enable = true;
+      };
+    };
+    firewall = {
+      allowedUDPPorts = [ 9 ];
+    };
+  };
+
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/1456bb2e-df41-479f-acae-868420c1bc3a";
     fsType = "ext4";
