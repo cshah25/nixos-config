@@ -6,7 +6,6 @@
   networking.hostName = "NixHome";
 
   networking = {
-    hostName = "NixHome";
     interfaces = {
     enp7s0 = {
         wakeOnLan.enable = true;
