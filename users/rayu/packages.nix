@@ -15,6 +15,7 @@
     pkgs.nodejs
     pkgs.xev
     pkgs.kdePackages.kamoso
+    pkgs.libreoffice
   ];
 
   programs.home-manager.enable = true;
