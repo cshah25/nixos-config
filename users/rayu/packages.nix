@@ -16,6 +16,7 @@
     pkgs.xev
     pkgs.kdePackages.kamoso
     pkgs.libreoffice
+    pkgs.go
   ];
 
   programs.home-manager.enable = true;
