@@ -5,7 +5,7 @@
 	 "alacritty".source = ./dotfiles/alacritty;
 	 "gtk-3.0".source = ./dotfiles/gtk-3.0;
 	 "gtk-4.0".source = ./dotfiles/gtk-4.0;
-	 "Kvantum".source = ./dotfiles/Kvantum;
+"Kvantum".source = ./dotfiles/Kvantum;
 	 "niri".source = ./dotfiles/niri;
 	 "qt5ct".source = ./dotfiles/qt5ct;
    "nvim".source = ./dotfiles/nvim;
@@ -66,5 +66,17 @@
         distrobox enter python312-box -- bash -c "cd $target_dir && source .venv/bin/activate && exec bash"
       }
     '';
+  };
+
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Chirayu Shah";
+        email = "chirayushah61@gmail.com";
+      };
+      core.editor = "nvim";
+      pull.rebase = false;
+    };
   };
 }
