@@ -5,6 +5,22 @@
 
   networking.hostName = "NixHome";
 
+  sys = {
+    desktop = {
+      plasma.enable = true;
+      niri.enable = true;
+    };
+    gaming.enable = true;
+    virtualisation.enable = true;
+    apps.enable = true;
+    office.enable = true;
+    development.enable = true;
+    services = {
+      ssh.enable = true;
+      tailscale.enable = true;
+    };
+  };
+
   networking = {
     interfaces = {
     enp7s0 = {
