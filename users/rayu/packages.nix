@@ -1,32 +1,10 @@
 { config, pkgs, pkgs-stable, osConfig, ... }:
 
 let
-  # Productivity / Frequently used (Stable)
-  stableApps = with pkgs-stable; [
-    teams-for-linux
-    vscode
-    android-studio
-    nextcloud-client
-    brave
-    spotify
-    obsidian
-    libreoffice
-  ];
-
-  # Gaming / Bleeding edge / Others (Unstable)
-  unstableApps = with pkgs; [
-    heroic
-    antigravity
-    equibop
-    nodejs
-    go
-    xev
-    kdePackages.kamoso
-  ];
-
   # Base packages (always installed)
   basePackages = with pkgs; [
     nerd-fonts.meslo-lg
+    xev
   ];
 in
 {
@@ -37,6 +15,7 @@ in
          pkgs-stable.obsidian 
          pkgs-stable.nextcloud-client
          pkgs-stable.teams-for-linux
+         pkgs.equibop
        ] else [])
     ++ (if osConfig.sys.office.enable then [ 
          pkgs-stable.libreoffice 
@@ -46,10 +25,10 @@ in
          pkgs-stable.android-studio 
          pkgs.nodejs 
          pkgs.go 
+         pkgs.antigravity 
        ] else [])
     ++ (if osConfig.sys.gaming.enable then [ 
-         pkgs.heroic 
-         pkgs.antigravity 
+         pkgs.heroic
        ] else [])
     ++ (if osConfig.sys.desktop.plasma.enable then [
          pkgs.kdePackages.kamoso
