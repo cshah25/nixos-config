@@ -1,23 +1,59 @@
-{ config, pkgs, ... }:
-{
-  home.packages = [
-    pkgs.nerd-fonts.meslo-lg
-    pkgs.teams-for-linux
-    pkgs.vscode
-    pkgs.antigravity
-    pkgs.android-studio
-    pkgs.nextcloud-client
-    pkgs.brave
-    pkgs.spotify
-    pkgs.equibop
-    pkgs.obsidian
-    pkgs.heroic
-    pkgs.nodejs
-    pkgs.xev
-    pkgs.kdePackages.kamoso
-    pkgs.libreoffice
-    pkgs.go
+{ config, pkgs, pkgs-stable, osConfig, ... }:
+
+let
+  # Productivity / Frequently used (Stable)
+  stableApps = with pkgs-stable; [
+    teams-for-linux
+    vscode
+    android-studio
+    nextcloud-client
+    brave
+    spotify
+    obsidian
+    libreoffice
   ];
+
+  # Gaming / Bleeding edge / Others (Unstable)
+  unstableApps = with pkgs; [
+    heroic
+    antigravity
+    equibop
+    nodejs
+    go
+    xev
+    kdePackages.kamoso
+  ];
+
+  # Base packages (always installed)
+  basePackages = with pkgs; [
+    nerd-fonts.meslo-lg
+  ];
+in
+{
+  home.packages = basePackages
+    ++ (if osConfig.sys.apps.enable then [ 
+         pkgs-stable.brave 
+         pkgs-stable.spotify 
+         pkgs-stable.obsidian 
+         pkgs-stable.nextcloud-client
+         pkgs-stable.teams-for-linux
+       ] else [])
+    ++ (if osConfig.sys.office.enable then [ 
+         pkgs-stable.libreoffice 
+       ] else [])
+    ++ (if osConfig.sys.development.enable then [ 
+         pkgs-stable.vscode 
+         pkgs-stable.android-studio 
+         pkgs.nodejs 
+         pkgs.go 
+       ] else [])
+    ++ (if osConfig.sys.gaming.enable then [ 
+         pkgs.heroic 
+         pkgs.antigravity 
+       ] else [])
+    ++ (if osConfig.sys.desktop.plasma.enable then [
+         pkgs.kdePackages.kamoso
+       ] else []);
 
   programs.home-manager.enable = true;
   programs.neovim = {
