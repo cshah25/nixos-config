@@ -1,13 +1,25 @@
+{ config, lib, ... }:
+
+let
+  cfg = config.sys.desktop;
+in
 {
-  services.xserver.enable = true;
+  options.sys.desktop = {
+    plasma.enable = lib.mkEnableOption "KDE Plasma";
+    niri.enable = lib.mkEnableOption "Niri";
+  };
 
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  config = lib.mkIf (cfg.plasma.enable || cfg.niri.enable) {
+    services.xserver.enable = true;
 
-  programs.niri.enable = true;
+    services.displayManager.sddm.enable = lib.mkDefault cfg.plasma.enable;
+    services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    programs.niri.enable = cfg.niri.enable;
+
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
   };
 }
