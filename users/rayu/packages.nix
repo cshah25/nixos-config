@@ -3,7 +3,6 @@
 let
   # Base packages (always installed)
   basePackages = with pkgs; [
-    nerd-fonts.meslo-lg
     xev
   ];
 in

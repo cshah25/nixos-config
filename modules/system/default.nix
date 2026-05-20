@@ -5,6 +5,7 @@
     ./core.nix
     ./desktop.nix
     ./env.nix
+    ./fonts.nix
     ./gaming.nix
     ./hardware.nix
     ./packages.nix
