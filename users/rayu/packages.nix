@@ -34,9 +34,4 @@ in
        ] else []);
 
   programs.home-manager.enable = true;
-  programs.neovim = {
-    enable = true;
-    withPython3 = false;
-    withRuby = false;
-  };
 }

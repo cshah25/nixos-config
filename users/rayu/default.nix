@@ -7,6 +7,7 @@
     ./services.nix
     ./zsh.nix
     ./git.nix
+    ./nvim.nix
   ];
   home.username = "rayu";
   home.homeDirectory = "/home/rayu";

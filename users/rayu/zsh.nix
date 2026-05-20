@@ -24,7 +24,7 @@
       }
     ];
 
-    initExtra = ''
+    initContent = ''
       # Sourcing the p10k configuration file
       source ${./dotfiles/p10k.zsh}
 
