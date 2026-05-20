@@ -10,7 +10,6 @@
 	 "qt5ct".source = ./dotfiles/qt5ct;
    "nvim".source = ./dotfiles/nvim;
   };
-  home.file.".p10k.zsh".source = ./dotfiles/p10k.zsh;
 
   xdg.mimeApps = {
     enable = true;
@@ -25,58 +24,4 @@
 
   dconf.enable = true;
   gtk.enable = true;
-
-  programs.zsh = {
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "git"
-        "sudo"
-        "docker"
-      ];
-    };
-
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-    ];
-
-    initContent = ''
-      # Sourcing the p10k configuration file if it exists
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-      pybox() {
-        # Check if the first argument ($1) is empty
-        if [[ -z "$1" ]]; then
-            echo "Error: No target directory provided."
-            echo "Usage: pybox <path-to-project-folder>"
-            return 1
-        fi
-
-        local target_dir="$1"
-
-        # Enter the box, change directory, activate the venv, and keep the shell open
-        distrobox enter python312-box -- bash -c "cd $target_dir && source .venv/bin/activate && exec bash"
-      }
-    '';
-  };
-
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Chirayu Shah";
-        email = "chirayushah61@gmail.com";
-      };
-      core.editor = "nvim";
-      pull.rebase = false;
-    };
-  };
 }

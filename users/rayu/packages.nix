@@ -39,6 +39,4 @@ in
     withPython3 = false;
     withRuby = false;
   };
-
-  programs.zsh.enable = true;
 }
