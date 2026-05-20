@@ -5,7 +5,7 @@
 	 "alacritty".source = ./dotfiles/alacritty;
 	 "gtk-3.0".source = ./dotfiles/gtk-3.0;
 	 "gtk-4.0".source = ./dotfiles/gtk-4.0;
-"Kvantum".source = ./dotfiles/Kvantum;
+   "Kvantum".source = ./dotfiles/Kvantum;
 	 "niri".source = ./dotfiles/niri;
 	 "qt5ct".source = ./dotfiles/qt5ct;
   };
