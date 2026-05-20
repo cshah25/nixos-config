@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, osConfig, ... }:
+{ config, pkgs, osConfig, ... }:
 
 let
   # Base packages (always installed)
@@ -8,27 +8,6 @@ let
 in
 {
   home.packages = basePackages
-    ++ (if osConfig.sys.apps.enable then [ 
-         pkgs-stable.brave 
-         pkgs-stable.spotify 
-         pkgs-stable.obsidian 
-         pkgs-stable.nextcloud-client
-         pkgs-stable.teams-for-linux
-         pkgs.equibop
-       ] else [])
-    ++ (if osConfig.sys.office.enable then [ 
-         pkgs-stable.libreoffice 
-       ] else [])
-    ++ (if osConfig.sys.development.enable then [ 
-         pkgs-stable.vscode 
-         pkgs-stable.android-studio 
-         pkgs.nodejs 
-         pkgs.go 
-         pkgs.antigravity 
-       ] else [])
-    ++ (if osConfig.sys.gaming.enable then [ 
-         pkgs.heroic
-       ] else [])
     ++ (if osConfig.sys.desktop.plasma.enable then [
          pkgs.kdePackages.kamoso
        ] else []);

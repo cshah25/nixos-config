@@ -2,7 +2,6 @@
 
 {
   xdg.configFile = {
-	 "alacritty".source = ./dotfiles/alacritty;
 	 "gtk-3.0".source = ./dotfiles/gtk-3.0;
 	 "gtk-4.0".source = ./dotfiles/gtk-4.0;
    "Kvantum".source = ./dotfiles/Kvantum;

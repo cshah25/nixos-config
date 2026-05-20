@@ -8,6 +8,11 @@
     ./zsh.nix
     ./git.nix
     ./nvim.nix
+    ./alacritty.nix
+    ./apps.nix
+    ./dev.nix
+    ./office.nix
+    ./gaming.nix
   ];
   home.username = "rayu";
   home.homeDirectory = "/home/rayu";
