@@ -15,6 +15,7 @@
     nerd-fonts.droid-sans-mono
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
+    meslo-lgs-nf
   ];
 
   fonts.fontconfig = {
