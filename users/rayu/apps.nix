@@ -8,5 +8,6 @@
     pkgs-stable.nextcloud-client
     pkgs-stable.teams-for-linux
     pkgs.equibop
+    pkgs.vlc
   ] else [];
 }
