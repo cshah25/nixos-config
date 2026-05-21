@@ -17,7 +17,7 @@ binds {
     Mod+C                               hotkey-overlay-title="Open Text Editor: VSCode" { spawn "code"; }
 
     // Please choose your own file manager.
-    MOD+E                               hotkey-overlay-title="File Manager: Index" { spawn "sh" "-c" "flatpak run org.kde.index"; }
+    MOD+E                               hotkey-overlay-title="File Manager: Thunar" { spawn "sh" "-c" "thunar"; }
 
     // ─── Audio Controls ───
     XF86AUDIORAISEVOLUME                allow-when-locked=true { spawn-sh "noctalia-shell ipc call volume increase"; }

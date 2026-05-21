@@ -34,8 +34,6 @@
       ripgrep
       wayland-pipewire-idle-inhibit
       wakeonlan
-    ] ++ (if config.sys.apps.enable then [
-      pkgs-stable.firefox
-    ] else []);
+    ];
   };
 }
