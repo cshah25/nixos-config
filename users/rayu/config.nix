@@ -21,6 +21,12 @@
       # PDF
       "application/pdf" = [ "org.kde.okular.desktop" ];
 
+      # Dev
+      "application/toml" = [ "nvim.desktop" ];
+      "text/plain" = [ "nvim.desktop" ];
+      "text/x-python" = [ "nvim.desktop" ];
+      "application/json" = [ "nvim.desktop" ];
+      
       # Images
       "image/png" = [ "org.kde.gwenview.desktop" ];
       "image/jpeg" = [ "org.kde.gwenview.desktop" ];
