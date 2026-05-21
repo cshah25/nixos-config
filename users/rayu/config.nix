@@ -2,11 +2,11 @@
 
 {
   xdg.configFile = {
-	 "gtk-3.0".source = ./dotfiles/gtk-3.0;
-	 "gtk-4.0".source = ./dotfiles/gtk-4.0;
-   "Kvantum".source = ./dotfiles/Kvantum;
+	 "gtk-3.0/settings.ini".source = ./dotfiles/gtk-3.0/settings.ini;
+	 "gtk-4.0/settings.ini".source = ./dotfiles/gtk-4.0/settings.ini;
+   "Kvantum/kvantum.kvconfig".source = ./dotfiles/Kvantum/kvantum.kvconfig;
 	 "niri".source = ./dotfiles/niri;
-	 "qt5ct".source = ./dotfiles/qt5ct;
+	 "qt5ct/qt5ct.conf".source = ./dotfiles/qt5ct/qt5ct.conf;
   };
 
   xdg.mimeApps = {
