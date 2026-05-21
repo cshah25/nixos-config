@@ -59,4 +59,8 @@
 
   dconf.enable = true;
   gtk.enable = true;
+
+  home.sessionVariables = {
+    TERMINAL = "alacritty";
+  };
 }
