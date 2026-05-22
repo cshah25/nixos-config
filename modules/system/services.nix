@@ -7,6 +7,10 @@
   };
 
   config = lib.mkMerge [
+    {
+      security.pam.services.sddm.enableKwallet = true;
+    }
+
     (lib.mkIf config.sys.services.ssh.enable {
       services.openssh.enable = true;
     })

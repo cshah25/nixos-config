@@ -11,7 +11,6 @@
     environment.systemPackages = with pkgs; [
       sbctl
       vim
-      git
       curl
       wget
       tree
@@ -34,6 +33,7 @@
       ripgrep
       wayland-pipewire-idle-inhibit
       wakeonlan
+      kwalletmanager
     ];
   };
 }
