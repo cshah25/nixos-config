@@ -35,7 +35,7 @@
         "type": "github"
       }
     },
-    "nix-hardware": {
+    "nixos-hardware": {
       "locked": {
         "lastModified": 1779258371,
         "narHash": "sha256-j1iZsLy6oFApqR1oiDmHhvkwxXqcNi0aoSJj643LuwU=",
@@ -49,20 +49,6 @@
         "ref": "master",
         "repo": "nixos-hardware",
         "type": "github"
-      }
-    },
-    "nixos-hardware": {
-      "locked": {
-        "lastModified": 1779258371,
-        "narHash": "sha256-j1iZsLy6oFApqR1oiDmHhvkwxXqcNi0aoSJj643LuwU=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "c97bc4d15bd3473dd095e8e8ba57330ab1943a77",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixos-hardware",
-        "type": "indirect"
       }
     },
     "nixpkgs": {
@@ -101,7 +87,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "nix-flatpak": "nix-flatpak",
-        "nix-hardware": "nix-hardware",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable"
