@@ -33,7 +33,7 @@
       ripgrep
       wayland-pipewire-idle-inhibit
       wakeonlan
-      kwalletmanager
+      kdePackages.kwalletmanager
     ];
   };
 }
