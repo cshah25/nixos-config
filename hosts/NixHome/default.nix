@@ -1,6 +1,11 @@
+{ inputs, ... }: 
+
 {
   imports = [
     ./hardware-configuration.nix
+    (import "${inputs.nixos-hardware}/common/cpu/intel")
+    (import "${inputs.nixos-hardware}/common/gpu/amd")
+    (import "${inputs.nixos-hardware}/common/pc/ssd")
   ];
 
   networking.hostName = "NixHome";
