@@ -45,6 +45,16 @@
           ./hosts/NixPrecision
         ];
       };
+
+      NixThinkpad = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs pkgs-stable; };
+        modules = [
+          ./modules/system
+          ./modules/home-manager
+          ./hosts/NixThinkpad
+        ];
+      };
     };
   };
 }
