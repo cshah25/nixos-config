@@ -6,6 +6,7 @@
     pkgs-stable.android-studio 
     pkgs.nodejs 
     pkgs.go 
-    pkgs.antigravity 
+    pkgs.antigravity
+    pkgs-stable.texlive.combined.scheme-medium
   ] else [];
 }
