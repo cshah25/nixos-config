@@ -1,6 +1,10 @@
+{inputs, ...}:
+
 {
   imports = [
     ./hardware-configuration.nix
+
+    inputs.nixos-hardware.nixosModules.dell-precision-5570
   ];
 
   networking.hostName = "NixPrecision";
@@ -32,10 +36,8 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   
   hardware.nvidia = {
-    modesetting.enable = true;
     open = true;
-    nvidiaSettings = true;
-    
+
     powerManagement = {
       enable = true;
       finegrained = true;
@@ -46,8 +48,6 @@
         enable = true;
         enableOffloadCmd = true;
       };
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0"; 
     };
   };
 }
