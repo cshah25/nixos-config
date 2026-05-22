@@ -19,6 +19,22 @@
       packages = [] 
         ++ (if config.sys.apps.enable then [ "net.waterfox.waterfox" ] else [])
         ++ (if config.sys.office.enable then [ "org.onlyoffice.desktopeditors" ] else []);
+
+      overrides = {
+        "org.onlyoffice.desktopeditors" = {
+          Context = {
+            sockets = [
+              "x11"
+              "fallback-x11"
+              "!wayland"
+            ];
+          };
+          Environment = {
+            QT_QPA_PLATFORM = "xcb";
+            NIXOS_OZONE_WL = "";
+          };
+        };
+      };
     };
   };
 }
