@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, osConfig, ... }:
+{ config, pkgs, pkgs-stable, osConfig, inputs, ... }:
 
 {
   home.packages = if osConfig.sys.development.enable then [ 
@@ -10,5 +10,6 @@
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
     pkgs.docker-compose
+    inputs.kapsule.packages.${pkgs.system}.default
   ] else [];
 }

@@ -7,13 +7,14 @@
     
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    kapsule.url = "github:cshah25/kapsule";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, nixos-hardware, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-stable, nixos-hardware, kapsule, ... }@inputs: 
   let
     system = "x86_64-linux";
     pkgs-stable = import nixpkgs-stable {
