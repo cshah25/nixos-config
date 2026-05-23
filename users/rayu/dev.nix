@@ -9,5 +9,6 @@
     pkgs.antigravity
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
+    pkgs.docker-compose
   ] else [];
 }
