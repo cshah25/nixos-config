@@ -8,5 +8,6 @@
     pkgs.go 
     pkgs.antigravity
     pkgs-stable.texlive.combined.scheme-medium
+    pkgs.gnumake
   ] else [];
 }
