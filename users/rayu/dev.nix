@@ -12,4 +12,6 @@
     pkgs.docker-compose
     inputs.kapsule.packages.${pkgs.system}.default
   ] else [];
+
+  programs.java.enable = true;
 }
