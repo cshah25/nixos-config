@@ -1,4 +1,4 @@
-{ inputs, pkgs-stable, ... }:
+{ config, pkgs, inputs, hostname, pkgs-stable, ... }:
 
 {
   imports = [
@@ -9,7 +9,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs pkgs-stable; };
+    extraSpecialArgs = { inherit inputs hostname pkgs-stable; };
     
     # Points to your user configuration folder
     users.rayu = import ../../users/rayu; 
