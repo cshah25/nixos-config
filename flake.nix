@@ -14,7 +14,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, nixos-hardware, kapsule, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-stable, nixos-hardware, kapsule, home-manager, ... }@inputs: 
   let
     system = "x86_64-linux";
     pkgs-stable = import nixpkgs-stable {
@@ -28,7 +28,7 @@
       # Desktop Configuration
       NixHome = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs pkgs-stable; };
+        specialArgs = { inherit inputs pkgs-stable; hostname = "NixHome"; };
         modules = [
           ./modules/system
           ./modules/home-manager
@@ -39,7 +39,7 @@
       # Laptop Configuration
       NixPrecision = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs pkgs-stable; };
+        specialArgs = { inherit inputs pkgs-stable; hostname = "NixPrecision"; };
         modules = [
           ./modules/system
           ./modules/home-manager
@@ -47,9 +47,10 @@
         ];
       };
 
+      # Thinkpad Configuration
       NixThinkpad = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs pkgs-stable; };
+        specialArgs = { inherit inputs pkgs-stable; hostname = "NixThinkpad"; };
         modules = [
           ./modules/system
           ./modules/home-manager
