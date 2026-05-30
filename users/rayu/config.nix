@@ -48,7 +48,6 @@
     x11.enable = true;
     name = "capitaine-cursors";
     package = pkgs.capitaine-cursors;
-    size = if hostname == "NixHome" then 24 else 18;
   };
 
   xdg.mimeApps = {
