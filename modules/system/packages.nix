@@ -9,7 +9,6 @@
 
   config = {
     environment.systemPackages = with pkgs; [
-      sbctl
       vim
       curl
       wget
@@ -23,10 +22,6 @@
       swayidle
       brightnessctl
       playerctl
-      (catppuccin-papirus-folders.override {
-        flavor = "mocha";
-        accent = "mauve";
-      })
       adwaita-icon-theme
       xwayland-satellite
       python3
@@ -34,6 +29,10 @@
       wayland-pipewire-idle-inhibit
       wakeonlan
       kdePackages.kwalletmanager
+      (catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "mauve";
+      })
     ];
   };
 }
