@@ -17,7 +17,6 @@
       }];
       
       packages = [] 
-        ++ (if config.sys.apps.enable then [ "net.waterfox.waterfox" ] else [])
         ++ (if config.sys.office.enable then [ "org.onlyoffice.desktopeditors" ] else []);
 
       overrides = {

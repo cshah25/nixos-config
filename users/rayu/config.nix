@@ -54,9 +54,9 @@
     enable = true;
 
     defaultApplications = {
-      "text/html" = [ "net.waterfox.waterfox.desktop" ];
-      "x-scheme-handler/http" = [ "net.waterfox.waterfox.desktop" ];
-      "x-scheme-handler/https" = [ "net.waterfox.waterfox.desktop" ];
+      "text/html" = [ "zen.desktop" ];
+      "x-scheme-handler/http" = [ "zen.desktop" ];
+      "x-scheme-handler/https" = [ "zen.desktop" ];
 
       "application/pdf" = [ "org.kde.okular.desktop" ];
 
