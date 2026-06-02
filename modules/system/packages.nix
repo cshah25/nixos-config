@@ -29,6 +29,7 @@
       wayland-pipewire-idle-inhibit
       wakeonlan
       kdePackages.kwalletmanager
+      papirus-icon-theme
       (catppuccin-papirus-folders.override {
         flavor = "mocha";
         accent = "mauve";
