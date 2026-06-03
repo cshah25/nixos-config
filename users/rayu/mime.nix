@@ -1,4 +1,27 @@
-{ config, pkgs, ... }:
+{ config, pkgs, osConfig, ... }:
+
+let
+  isGnome = osConfig.sys.desktop.gnome.enable;
+  isPlasma = osConfig.sys.desktop.plasma.enable;
+
+  pdfViewer = if isGnome then [ "org.gnome.Evince.desktop" ]
+              else if isPlasma then [ "org.kde.okular.desktop" ]
+              else [ "org.kde.okular.desktop" ];
+
+  imageViewer = if isGnome then [ "org.gnome.eog.desktop" ]
+                else if isPlasma then [ "org.kde.gwenview.desktop" ]
+                else [ "org.kde.gwenview.desktop" ];
+
+  audioPlayer = if isGnome then [ "org.gnome.Music.desktop" ]
+                else if isPlasma then [ "org.kde.elisa.desktop" ]
+                else [ "org.kde.elisa.desktop" ];
+
+  archiveManager = if isGnome then [ "org.gnome.FileRoller.desktop" ]
+                   else if isPlasma then [ "org.kde.ark.desktop" ]
+                   else [ "org.kde.ark.desktop" ];
+
+  fileManager = [ "thunar.desktop" ];
+in
 
 {
   xdg.mimeApps = {
@@ -9,35 +32,35 @@
       "x-scheme-handler/http" = [ "zen.desktop" ];
       "x-scheme-handler/https" = [ "zen.desktop" ];
 
-      "application/pdf" = [ "org.kde.okular.desktop" ];
+      "application/pdf" = pdfViewer;
 
       "application/toml" = [ "nvim.desktop" ];
       "text/plain" = [ "nvim.desktop" ];
       "text/x-python" = [ "nvim.desktop" ];
       "application/json" = [ "nvim.desktop" ];
       
-      "image/png" = [ "org.kde.gwenview.desktop" ];
-      "image/jpeg" = [ "org.kde.gwenview.desktop" ];
-      "image/jpg" = [ "org.kde.gwenview.desktop" ];
-      "image/gif" = [ "org.kde.gwenview.desktop" ];
-      "image/webp" = [ "org.kde.gwenview.desktop" ];
-      "image/svg+xml" = [ "org.kde.gwenview.desktop" ];
+      "image/png" = imageViewer;
+      "image/jpeg" = imageViewer;
+      "image/jpg" = imageViewer;
+      "image/gif" = imageViewer;
+      "image/webp" = imageViewer;
+      "image/svg+xml" = imageViewer;
 
       "video/mp4" = [ "vlc.desktop" ];
       "video/x-matroska" = [ "vlc.desktop" ];
       "video/webm" = [ "vlc.desktop" ];
       "video/x-msvideo" = [ "vlc.desktop" ];
 
-      "audio/mpeg" = [ "org.kde.elisa.desktop" ];
-      "audio/flac" = [ "org.kde.elisa.desktop" ];
-      "audio/ogg" = [ "org.kde.elisa.desktop" ];
-      "audio/wav" = [ "org.kde.elisa.desktop" ];
+      "audio/mpeg" = audioPlayer;
+      "audio/flac" = audioPlayer;
+      "audio/ogg" = audioPlayer;
+      "audio/wav" = audioPlayer;
 
-      "application/zip" = [ "org.kde.ark.desktop" ];
-      "application/x-tar" = [ "org.kde.ark.desktop" ];
-      "application/gzip" = [ "org.kde.ark.desktop" ];
+      "application/zip" = archiveManager;
+      "application/x-tar" = archiveManager;
+      "application/gzip" = archiveManager;
 
-      "inode/directory" = [ "thunar.desktop" ];
+      "inode/directory" = fileManager;
     };
   };
 }
