@@ -4,6 +4,7 @@
   options.sys.services = {
     ssh.enable = lib.mkEnableOption "OpenSSH";
     tailscale.enable = lib.mkEnableOption "Tailscale";
+    fwupd.enable = lib.mkEnableOption "fwupd";
   };
 
   config = lib.mkMerge [
@@ -18,6 +19,9 @@
       services.tailscale.enable = true;
       networking.firewall.trustedInterfaces = [ "tailscale0" ];
       networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+    })
+    (lib.mkIf config.sys.services.fwupd.enable {
+      services.fwupd.enable = true;
     })
     {
       services.flatpak.enable = true;
