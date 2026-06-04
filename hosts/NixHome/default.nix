@@ -24,6 +24,7 @@
     services = {
       ssh.enable = true;
       tailscale.enable = true;
+      fwupd.enable = true;
     };
   };
 
