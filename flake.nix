@@ -61,6 +61,26 @@
           ./hosts/NixThinkpad
         ];
       };
+      iso = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs pkgs-stable; hostname = "NixISO"; };
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ({ pkgs, ... }: {
+            nix.settings.experimental-features = [ "nix-command" "flakes" ];
+            
+            environment.systemPackages = with pkgs; [
+              neovim
+              git
+              tmux
+              htop
+              curl
+            ];
+
+            networking.networkmanager.enable = true;
+          })
+        ];
+      };
     };
   };
 }
