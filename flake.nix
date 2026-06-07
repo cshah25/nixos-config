@@ -65,7 +65,7 @@
         inherit system;
         specialArgs = { inherit inputs pkgs-stable; hostname = "NixISO"; };
         modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
           ({ pkgs, ... }: {
             nix.settings.experimental-features = [ "nix-command" "flakes" ];
             
