@@ -11,7 +11,8 @@
 
   sys = {
     desktop = {
-      plasma.enable = true;
+      plasma.enable = false;
+      gnome.enable = true;
       niri.enable = true;
     };
     gaming.enable = true;
@@ -22,10 +23,9 @@
     services = {
       ssh.enable = true;
       tailscale.enable = true;
+      fwupd.enable = true;
     };
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
-
-  services.xserver.videoDrivers = [ "nvidia" ];
 }
