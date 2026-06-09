@@ -38,7 +38,7 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "/home/rayu/.local/bin/disable_mute.sh";
-      RemainAfterExit = true;;
+      RemainAfterExit = true;
     };    
   };
 }
