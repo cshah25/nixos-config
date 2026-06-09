@@ -5,6 +5,7 @@
     ssh.enable = lib.mkEnableOption "OpenSSH";
     tailscale.enable = lib.mkEnableOption "Tailscale";
     fwupd.enable = lib.mkEnableOption "fwupd";
+    displaylink.enable = lib.mkEnableOption "DisplayLink";
   };
 
   config = lib.mkMerge [
@@ -24,7 +25,6 @@
       services.fwupd.enable = true;
     })
     (lib.mkIf config.sys.services.displaylink.enable {
-      nixpkgs.config.allowUnfree = true;
       environment.systemPackages = [
         pkgs.displaylink
       ];
