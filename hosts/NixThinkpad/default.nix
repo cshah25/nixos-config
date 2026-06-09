@@ -29,4 +29,15 @@
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd.user.services.disable-mute = {
+    description = "Disable Mute";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    
+    serviceConfig = {
+      ExecStart = "/home/rayu/.local/bin/disable_mute.sh";
+      Restart = "on-failure";
+    };
+  };
 }
