@@ -31,7 +31,7 @@
   systemd.services.NetworkManager-wait-online.enable = false;
 
   systemd.user.services.disable-mute = {
-    description = "Disable Mute";
+    description = "Disable Mute LED";
     wantedBy = [ "graphical-session.target" ];
     after = [ "graphical-session.target" ];
     
