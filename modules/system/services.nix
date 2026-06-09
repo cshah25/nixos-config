@@ -23,6 +23,18 @@
     (lib.mkIf config.sys.services.fwupd.enable {
       services.fwupd.enable = true;
     })
+    (lib.mkIf config.sys.services.displaylink.enable {
+      nixpkgs.config.allowUnfree = true;
+      environment.systemPackages = [
+        pkgs.displaylink
+      ];
+      boot = {
+        extraModulePackages = [ config.boot.kernelPackages.evdi ];
+        initrd.kernelModules = [ "evdi" ];
+      };
+      services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+      systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+    })
     {
       services.flatpak.enable = true;
       networking.firewall.enable = true;
