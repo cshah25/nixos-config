@@ -19,12 +19,12 @@
 
     "niri/cfg/display.kdl".text = if hostname == "NixHome" then ''
       output "DP-2" {
-          mode "3840x2160@144.001"
+          mode "3840x2160@120.000"
           scale 1.5
           position x=2560 y=0
       }
 
-      output "DP-3" {
+      output "DVI-I-1" {
           mode "3840x2160@59.997"
           scale 1.5
           position x=0 y=0
