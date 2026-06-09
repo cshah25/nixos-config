@@ -34,22 +34,4 @@
   #};
 
   systemd.services.NetworkManager-wait-online.enable = false;
-
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  
-  #hardware.nvidia = {
-   # open = true;
-
-    #powerManagement = {
-     # enable = true;
-     # finegrained = true;
-    #};
-    
-#    prime = {
- #     offload = {
-  #      enable = true;
-   #     enableOffloadCmd = true;
-    #  };
-    #};
-#  };
 }
