@@ -30,14 +30,15 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  systemd.user.services.disable-mute = {
+  systemd.services.disable-mute = {
     description = "Disable Mute LED";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
     
     serviceConfig = {
+      Type = "oneshot";
       ExecStart = "/home/rayu/.local/bin/disable_mute.sh";
-      Restart = "on-failure";
-    };
+      RemainAfterExit = true;;
+    };    
   };
 }
