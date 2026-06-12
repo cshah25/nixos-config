@@ -41,6 +41,6 @@
           scale 1
           position x=0 y=1080
       }
-    '';
+    '' else "";
   };
 }
