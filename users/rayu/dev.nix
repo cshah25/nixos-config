@@ -12,7 +12,7 @@
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
     pkgs.docker-compose
-    inputs.kapsule.packages.${pkgs.system}.default
+    inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] else [];
 
   programs.java.enable = true;
