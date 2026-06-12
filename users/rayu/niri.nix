@@ -35,6 +35,12 @@
           scale 1
           position x=0 y=1080 
       }
-    '' else "";
+    '' else if hostname == "NixThinkpad" then ''
+      output "eDP-1" {
+          mode "1920x1200@60.003"
+          scale 1
+          position x=0 y=1080
+      }
+    '';
   };
 }
