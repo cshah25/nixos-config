@@ -6,6 +6,8 @@
     #pkgs-stable.android-studio 
     pkgs.nodejs 
     pkgs.go 
+    pkgs.gcc
+    pkgs.gnumake
     pkgs.antigravity
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
