@@ -30,6 +30,9 @@
       wakeonlan
       kdePackages.kwalletmanager
       papirus-icon-theme
+      (texlive.combine {
+        inherit (texlive) scheme-medium preprint titlesec marvosym enumitem;
+      })
     ];
   };
 }
