@@ -17,7 +17,7 @@ in
     services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
     services.displayManager.gdm.enable = lib.mkDefault cfg.gnome.enable;
-    services.xserver.desktopManager.gnome.enable = cfg.gnome.enable;
+    services.desktopManager.gnome.enable = cfg.gnome.enable;
 
     programs.niri.enable = cfg.niri.enable;
 
