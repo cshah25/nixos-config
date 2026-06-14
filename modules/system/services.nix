@@ -2,7 +2,7 @@
 
 {
   options.sys.services = {
-    ssh.enable = lib.mkEnableOption "OpenSSH";
+    remote.enable = lib.mkEnableOption "Remote Services";
     tailscale.enable = lib.mkEnableOption "Tailscale";
     fwupd.enable = lib.mkEnableOption "fwupd";
     displaylink.enable = lib.mkEnableOption "DisplayLink";
@@ -13,8 +13,14 @@
       security.pam.services.sddm.enableKwallet = true;
     }
 
-    (lib.mkIf config.sys.services.ssh.enable {
+    (lib.mkIf config.sys.services.remote.enable {
       services.openssh.enable = true;
+      services.sunshine = {
+        enable = true;
+        autoStart = true;
+        capSysAdmin = true;
+        openFirewall = true;
+      };
     })
     (lib.mkIf config.sys.services.tailscale.enable {
       services.tailscale.enable = true;

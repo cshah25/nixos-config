@@ -11,11 +11,14 @@ in
   home.packages = basePackages
     ++ (if osConfig.sys.desktop.plasma.enable then [
          pkgs.kdePackages.kamoso
-       ] else [])
+      ] else [])
+    ++ (if osConfig.sys.services.remote.enable then [
+        pkgs.moonlight-qt
+      ] else [])
     ++ (if osConfig.sys.desktop.gnome.enable then [
          pkgs.gnome-weather
          pkgs.gnome-tweaks
-       ] else []);
+      ] else []);
 
   programs.home-manager.enable = true;
 }
