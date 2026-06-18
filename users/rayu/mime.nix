@@ -4,23 +4,23 @@ let
   isGnome = osConfig.sys.desktop.gnome.enable;
   isPlasma = osConfig.sys.desktop.plasma.enable;
 
-  pdfViewer = if isGnome then [ "org.gnome.Evince.desktop" ]
+  pdfViewer = if isGnome then [ "org.gnome.Papers.desktop" ]
               else if isPlasma then [ "org.kde.okular.desktop" ]
               else [ "org.kde.okular.desktop" ];
 
-  imageViewer = if isGnome then [ "org.gnome.eog.desktop" ]
+  imageViewer = if isGnome then [ "org.gnome.Loupe.desktop" ]
                 else if isPlasma then [ "org.kde.gwenview.desktop" ]
                 else [ "org.kde.gwenview.desktop" ];
 
-  audioPlayer = if isGnome then [ "org.gnome.Music.desktop" ]
+  audioPlayer = if isGnome then [ "org.gnome.Decibels.desktop" ]
                 else if isPlasma then [ "org.kde.elisa.desktop" ]
                 else [ "org.kde.elisa.desktop" ];
 
-  archiveManager = if isGnome then [ "org.gnome.FileRoller.desktop" ]
+  archiveManager = if isGnome then [ "org.gnome.Nautilus.desktop" ]
                    else if isPlasma then [ "org.kde.ark.desktop" ]
                    else [ "org.kde.ark.desktop" ];
 
-  fileManager = [ "thunar.desktop" ];
+  fileManager = [ "org.gnome.Nautilus.desktop" ];
 in
 
 {
