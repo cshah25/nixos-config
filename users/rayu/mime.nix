@@ -20,7 +20,9 @@ let
                    else if isPlasma then [ "org.kde.ark.desktop" ]
                    else [ "org.kde.ark.desktop" ];
 
-  fileManager = [ "org.gnome.Nautilus.desktop" ];
+  fileManager = if isGnome then [ "org.gnome.Nautilus.desktop" ]
+                 else if isPlasma then [ "org.kde.dolphin.desktop" ]
+                 else [ "org.gnome.Nautilus.desktop" ];
 in
 
 {
