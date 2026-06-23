@@ -12,8 +12,8 @@
 
   sys = {
     desktop = {
-      plasma.enable = false;
-      gnome.enable = true;
+      plasma.enable = true;
+      gnome.enable = false;
       niri.enable = true;
     };
     gaming.enable = true;
