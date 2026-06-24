@@ -75,6 +75,7 @@
               tmux
               htop
               curl
+              nano
             ];
 
             networking.networkmanager.enable = true;
