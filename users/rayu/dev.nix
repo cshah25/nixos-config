@@ -7,6 +7,7 @@
     pkgs.nodejs 
     pkgs.go 
     pkgs.gcc
+    pkgs.gdb
     pkgs.gnumake
     pkgs.antigravity
     pkgs-stable.texlive.combined.scheme-medium
