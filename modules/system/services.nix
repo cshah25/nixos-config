@@ -6,6 +6,7 @@
     tailscale.enable = lib.mkEnableOption "Tailscale";
     fwupd.enable = lib.mkEnableOption "fwupd";
     displaylink.enable = lib.mkEnableOption "DisplayLink";
+    rgb.enable = lib.mkEnableOption "openrgb";
   };
 
   config = lib.mkMerge [
@@ -40,6 +41,12 @@
       };
       services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
       systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+    })
+    (lib.mkIf config.sys.services.rgb.enable {
+      services.hardware.openrgb = {
+        enable = true;
+        package = pkgs.openrgb-with-all-plugins;
+      };
     })
     {
       services.flatpak.enable = true;
