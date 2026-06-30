@@ -26,6 +26,7 @@
       tailscale.enable = true;
       fwupd.enable = true;
       displaylink.enable = true;
+      rgb.enable = true;
     };
   };
 
