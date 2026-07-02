@@ -15,7 +15,7 @@
       gnome.enable = false;
       niri.enable = true;
     };
-    gaming.enable = true;
+    gaming.enable = false;
     virtualisation.enable = true;
     apps.enable = true;
     office.enable = true;
