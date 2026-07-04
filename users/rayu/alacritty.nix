@@ -18,7 +18,7 @@
         dynamic_padding = true;
         decorations = "full";
         title = "Alacritty@CachyOS";
-        opacity = 1;
+        opacity = 0.7;
         decorations_theme_variant = "Dark";
         dimensions = {
           columns = 100;
