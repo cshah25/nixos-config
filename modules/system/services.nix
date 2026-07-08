@@ -12,6 +12,8 @@
   config = lib.mkMerge [
     {
       security.pam.services.sddm.enableKwallet = true;
+      security.pam.services.sddm.enableGnomeKeyring = true;
+      services.gnome.gnome-keyring.enable = true;
     }
 
     (lib.mkIf config.sys.services.remote.enable {

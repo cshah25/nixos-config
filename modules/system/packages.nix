@@ -30,6 +30,7 @@
       wayland-pipewire-idle-inhibit
       wakeonlan
       kdePackages.kwalletmanager
+      seahorse
       papirus-icon-theme
       (texlive.combine {
         inherit (texlive) scheme-medium preprint titlesec marvosym enumitem;
