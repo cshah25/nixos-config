@@ -5,6 +5,7 @@
     ./packages.nix
     ./theme.nix
     ./niri.nix
+    ./hyprland.nix
     ./mime.nix
     ./services.nix
     ./zsh.nix

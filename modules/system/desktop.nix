@@ -11,10 +11,10 @@ in
     hyprland.enable = lib.mkEnableOption "Hyprland";
   };
 
-  config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || cfg.niri.enable) {
+  config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || cfg.niri.enable || cfg.hyprland.enable) {
     services.xserver.enable = true;
 
-    services.displayManager.sddm.enable = lib.mkDefault cfg.plasma.enable;
+    services.displayManager.sddm.enable = lib.mkDefault (cfg.plasma.enable || ((cfg.hyprland.enable || cfg.niri.enable) && !cfg.gnome.enable));
     services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
     services.displayManager.gdm.enable = lib.mkDefault cfg.gnome.enable;
