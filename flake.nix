@@ -8,6 +8,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     kapsule.url = "github:cshah25/kapsule";
+    hyprland.url = "github:hyprwm/Hyprland";
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";

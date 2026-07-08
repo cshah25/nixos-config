@@ -14,6 +14,7 @@
       wget
       tree
       alacritty
+      kitty
       distrobox
       bat
       tmux
