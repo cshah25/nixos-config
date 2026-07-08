@@ -4,7 +4,6 @@ let
   # Base packages (always installed)
   basePackages = with pkgs; [
     xev
-    nautilus
   ];
 in
 {

@@ -1,29 +1,33 @@
 { config, pkgs, osConfig, ... }:
 
 let
-  isGnome = osConfig.sys.desktop.gnome.enable;
   isPlasma = osConfig.sys.desktop.plasma.enable;
 
-  pdfViewer = if isGnome then [ "org.gnome.Papers.desktop" ]
-              else if isPlasma then [ "org.kde.okular.desktop" ]
-              else [ "org.kde.okular.desktop" ];
+  pdfViewer = if isPlasma then [ "org.kde.okular.desktop" ] else [ "org.gnome.Papers.desktop" ];
 
-  imageViewer = if isGnome then [ "org.gnome.Loupe.desktop" ]
-                else if isPlasma then [ "org.kde.gwenview.desktop" ]
-                else [ "org.kde.gwenview.desktop" ];
+  imageViewer = if isPlasma then [ "org.kde.gwenview.desktop" ] else [ "org.gnome.Loupe.desktop" ];
 
-  audioPlayer = if isGnome then [ "org.gnome.Decibels.desktop" ]
-                else if isPlasma then [ "org.kde.elisa.desktop" ]
-                else [ "org.kde.elisa.desktop" ];
+  audioPlayer = if isPlasma then [ "org.kde.elisa.desktop" ] else [ "org.gnome.Decibels.desktop" ];
 
-  archiveManager = if isGnome then [ "org.gnome.Nautilus.desktop" ]
-                   else if isPlasma then [ "org.kde.ark.desktop" ]
-                   else [ "org.kde.ark.desktop" ];
+  archiveManager = if isPlasma then [ "org.kde.ark.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
 
-  fileManager = [ "org.gnome.Nautilus.desktop" ];
+  fileManager = if isPlasma then [ "org.kde.dolphin.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
 in
 
 {
+  home.packages = if isPlasma then [
+    pkgs.kdePackages.okular
+    pkgs.kdePackages.gwenview
+    pkgs.kdePackages.elisa
+    pkgs.kdePackages.ark
+    pkgs.kdePackages.dolphin
+  ] else [
+    pkgs.papers
+    pkgs.loupe
+    pkgs.decibels
+    pkgs.nautilus
+  ];
+
   xdg.mimeApps = {
     enable = true;
 
