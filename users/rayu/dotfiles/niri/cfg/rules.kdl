@@ -3,7 +3,6 @@
         clip-to-geometry true
     }
 
-     // if you use steam you will probably like these
     window-rule {
         match app-id="steam"
         exclude title=r#"^[Ss]team$"#
@@ -29,4 +28,26 @@
     window-rule {
         match app-id="code"
         default-column-width { proportion 1.0; }
+    }
+
+    window-rule {
+        match app-id="antigravity"
+        default-column-width { proportion 1.0; }
+    }
+
+    window-rule {
+      match is-active=false
+      opacity 0.85
+      background-effect {
+        blur true
+      }
+    }
+
+    window-rule {
+      match is-active=true
+      exclude app-id="(?i)^(antigravity|code|zen|brave-browser|firefox|chromium|google-chrome)$"
+      opacity 0.95
+      background-effect {
+        blur true
+      }
     }
