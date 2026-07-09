@@ -45,8 +45,8 @@
 
     window-rule {
       match is-active=true
-      exclude app-id="(?i)^(antigravity|code|zen|brave-browser|firefox|chromium|google-chrome)$"
-      opacity 0.95
+      exclude app-id="(?i)^(antigravity|code|zen|brave-browser|firefox|chromium|google-chrome|discord|equibop)$"
+      opacity 0.9
       background-effect {
         blur true
       }
