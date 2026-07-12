@@ -53,5 +53,8 @@
     fsType = "ext4";
     options = [ "defaults" "nofail" "X-systemd.device-timeout=5s" ];
   };
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
   hardware.graphics.enable = true;
 }
