@@ -11,11 +11,13 @@ let
 
   archiveManager = if isPlasma then [ "org.kde.ark.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
 
-  fileManager = if isPlasma then [ "org.kde.dolphin.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
+  fileManager =  [ "org.gnome.Nautilus.desktop" ];
 in
 
 {
-  home.packages = if isPlasma then [
+  home.packages = [
+    pkgs.nautilus
+  ] ++ (if isPlasma then [
     pkgs.kdePackages.okular
     pkgs.kdePackages.gwenview
     pkgs.kdePackages.elisa
@@ -25,8 +27,7 @@ in
     pkgs.papers
     pkgs.loupe
     pkgs.decibels
-    pkgs.nautilus
-  ];
+  ]);
 
   xdg.mimeApps = {
     enable = true;
