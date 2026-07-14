@@ -21,13 +21,13 @@
       output "DP-3" {
           mode "3840x2160@144.001"
           scale 1.5
-          position x=2560 y=0
+          position x=0 y=0
       }
 
       output "DP-2" {
           mode "3840x2160@60"
           scale 1.5
-          position x=0 y=0
+          position x=2560 y=0
       }
     '' else if hostname == "NixPrecision" then ''
       output "eDP-1" {
