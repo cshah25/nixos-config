@@ -32,9 +32,7 @@
       kdePackages.kwalletmanager
       seahorse
       papirus-icon-theme
-      (texlive.combine {
-        inherit (texlive) scheme-medium preprint titlesec marvosym enumitem;
-      })
+      (texliveMedium.withPackages (ps: with ps; [ preprint titlesec marvosym enumitem ]))
     ];
   };
 }
