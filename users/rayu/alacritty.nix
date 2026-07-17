@@ -37,10 +37,10 @@
 
       font = {
         size = 12;
-        normal = { family = "monospace"; style = "Regular"; };
-        bold = { family = "monospace"; style = "Bold"; };
-        italic = { family = "monospace"; style = "Italic"; };
-        bold_italic = { family = "monospace"; style = "Bold Italic"; };
+        normal = { family = "MesloLGS NF"; style = "Regular"; };
+        bold = { family = "MesloLGS NF"; style = "Bold"; };
+        italic = { family = "MesloLGS NF"; style = "Italic"; };
+        bold_italic = { family = "MesloLGS NF"; style = "Bold Italic"; };
       };
 
       colors = {
