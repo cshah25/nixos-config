@@ -26,7 +26,7 @@
 
     initContent = ''
       # Sourcing the p10k configuration file
-      source $(./dotfiles/p10k.zsh)
+      source ${./dotfiles/p10k.zsh}
 
       # Nix commands
       alias nrs='sudo nixos-rebuild switch --flake /home/rayu/nixos-config/#${hostname}'
