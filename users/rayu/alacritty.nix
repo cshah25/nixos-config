@@ -37,10 +37,10 @@
 
       font = {
         size = 12;
-        normal = { family = "MesloLGS NF"; style = "Regular"; };
-        bold = { family = "MesloLGS NF"; style = "Bold"; };
-        italic = { family = "MesloLGS NF"; style = "Italic"; };
-        bold_italic = { family = "MesloLGS NF"; style = "Bold Italic"; };
+        normal = { family = "MesloLGS Nerd Font"; style = "Regular"; };
+        bold = { family = "MesloLGS Nerd Font"; style = "Bold"; };
+        italic = { family = "MesloLGS Nerd Font"; style = "Italic"; };
+        bold_italic = { family = "MesloLGS Nerd Font"; style = "Bold Italic"; };
       };
 
       colors = {
