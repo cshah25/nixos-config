@@ -42,4 +42,9 @@
       RemainAfterExit = true;
     };    
   };
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-uuid/705be8ac-6fb3-4858-b83d-6a6e92b1c9d2";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" "X-systemd.device-timeout=5s" ];
+  };
 }
