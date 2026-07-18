@@ -7,6 +7,7 @@
     fwupd.enable = lib.mkEnableOption "fwupd";
     displaylink.enable = lib.mkEnableOption "DisplayLink";
     rgb.enable = lib.mkEnableOption "openrgb";
+    ollama.enable = lib.mkEnableOption "Ollama LLMs";
   };
 
   config = lib.mkMerge [
@@ -49,6 +50,11 @@
         enable = true;
         package = pkgs.openrgb-with-all-plugins;
       };
+    })
+    (lib.mkIf config.sys.services.ollama.enable {
+      environment.systemPackages = [
+        pkgs.ollama
+      ];
     })
     {
       services.flatpak.enable = true;
