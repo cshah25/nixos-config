@@ -52,9 +52,12 @@
       };
     })
     (lib.mkIf config.sys.services.ollama.enable {
-      environment.systemPackages = [
-        pkgs.ollama
-      ];
+      services.ollama = {
+        enable = true;
+        package = pkgs.ollama-rocm;
+        acceleration = "rocm";
+        rocmOverrideGfx = "11.0.1";
+      }
     })
     {
       services.flatpak.enable = true;
