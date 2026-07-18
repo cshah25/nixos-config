@@ -7,6 +7,7 @@
     pkgs-stable.spotify 
     pkgs-stable.obsidian 
     pkgs-stable.nextcloud-client
+    pkgs-stable.nextcloud-talk-desktop
     pkgs.equibop
     pkgs.vlc
   ] else [];
