@@ -13,6 +13,8 @@
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
     pkgs.docker-compose
+    pkgs.claude-code
+    pkgs.gemini-cli-bin
     inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] else [];
 
