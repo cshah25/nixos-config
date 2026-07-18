@@ -15,6 +15,7 @@ binds {
     MOD+SHIFT+B                         hotkey-overlay-title="Open Browser: Brave" { spawn "brave"; }
     MOD+L                               hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "noctalia-shell ipc call lockScreen lock"; }
     Mod+C                               hotkey-overlay-title="Open Text Editor: VSCode" { spawn "code"; }
+    Mod+SHIFT+C                         hotkey-overlay-title="Open Text Editor: Antigravity" { spawn "antigravity" }
 
     // Please choose your own file manager.
     MOD+E                               hotkey-overlay-title="File Manager: Nautilus" { spawn-sh "nautilus -w"; }

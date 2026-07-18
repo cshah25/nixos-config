@@ -43,6 +43,8 @@
       alias gcl='git clone'
       alias gl='git log'
 
+      alias agy='antigravity'
+
       # Distrobox 
       pybox() {
         if [[ -z "$1" ]]; then
