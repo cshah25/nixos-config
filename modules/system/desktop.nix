@@ -21,6 +21,7 @@ in
     services.desktopManager.gnome.enable = cfg.gnome.enable;
 
     programs.niri.enable = cfg.niri.enable;
+    services.upower.enable = cfg.niri.enable;
 
     programs.hyprland.enable = cfg.hyprland.enable;
 
