@@ -31,11 +31,6 @@
     }
 
     window-rule {
-        match app-id="antigravity"
-        default-column-width { proportion 1.0; }
-    }
-
-    window-rule {
       match is-active=false
       opacity 0.85
       background-effect {
@@ -45,7 +40,7 @@
 
     window-rule {
       match is-active=true
-      exclude app-id="(?i)^(antigravity|code|zen|brave-browser|firefox|chromium|google-chrome|discord|equibop)$"
+      exclude app-id="(?i)^(code|zen|brave-browser|firefox|chromium|google-chrome|discord|equibop)$"
       opacity 0.9
       background-effect {
         blur true
