@@ -12,6 +12,7 @@
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
     pkgs.docker-compose
+    pkgs.azuredatastudio
     inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] else [];
 
