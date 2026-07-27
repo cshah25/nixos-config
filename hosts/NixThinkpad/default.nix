@@ -25,7 +25,7 @@
       remote.enable = true;
       tailscale.enable = true;
       fwupd.enable = true;
-      displaylink.enable = true;
+      displaylink.enable = false;
     };
   };
 
