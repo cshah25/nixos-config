@@ -13,6 +13,12 @@
     pkgs.gnumake
     pkgs.docker-compose
     pkgs.azuredatastudio
+    pkgs.dotnet-sdk_10
+    pkgs.openssl
+    pkgs.netcoredbg
+    pkgs.roslyn-ls
+    pkgs.fontconfig
+    pkgs.freetype
     inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] else [];
 
