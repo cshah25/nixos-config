@@ -52,7 +52,7 @@
   fileSystems."/mnt/storage2" = {
     device = "/dev/disk/by-uuid/7b49a9b6-3126-4a4e-9ef1-23f3223d377d";
     fsType = "ext4";
-    options = [ "defaults" "nofail" "X-systemd.device-timeout=5s" ];
+    options = [ "defaults" "nofail" "X-systemd.device-timeout=5s" "x-systemd.mount-timeout=5s" ];
   };
 
   boot.initrd.kernelModules = [ "amdgpu" ];
