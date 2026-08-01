@@ -5,7 +5,7 @@
   users.users.rayu = {
     isNormalUser = true;
     description = "Chirayu Shah";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "kvm" "adbusers"];
     packages = with pkgs; [
       kdePackages.kate
     ];
