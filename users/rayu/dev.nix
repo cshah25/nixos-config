@@ -20,6 +20,7 @@
     pkgs.roslyn-ls
     pkgs.fontconfig
     pkgs.freetype
+    pkgs.distrobox
     inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] else [];
 

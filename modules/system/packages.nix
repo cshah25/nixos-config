@@ -14,12 +14,9 @@
       wget
       tree
       alacritty
-      kitty
-      distrobox
       bat
       tmux
       fastfetch
-      noctalia-shell
       swayidle
       brightnessctl
       playerctl
@@ -29,10 +26,14 @@
       ripgrep
       wayland-pipewire-idle-inhibit
       wakeonlan
-      kdePackages.kwalletmanager
       seahorse
       papirus-icon-theme
-      (texliveMedium.withPackages (ps: with ps; [ preprint titlesec marvosym enumitem ]))
+    ] ++ lib.optionals config.sys.desktop.niri.enable [
+      noctalia-shell
+    ] ++ lib.optionals config.sys.desktop.hyprland.enable [
+      kitty
+    ] ++ lib.optionals config.sys.desktop.plasma.enable [
+      kdePackages.kwalletmanager
     ];
   };
 }
