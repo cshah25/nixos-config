@@ -38,12 +38,7 @@ in
       "x-scheme-handler/https" = [ "zen.desktop" ];
 
       "application/pdf" = pdfViewer;
-
-      "application/toml" = [ "nvim.desktop" ];
-      "text/plain" = [ "nvim.desktop" ];
-      "text/x-python" = [ "nvim.desktop" ];
-      "application/json" = [ "nvim.desktop" ];
-      
+     
       "image/png" = imageViewer;
       "image/jpeg" = imageViewer;
       "image/jpg" = imageViewer;
