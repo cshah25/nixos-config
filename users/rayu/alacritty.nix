@@ -17,7 +17,6 @@
       window = {
         dynamic_padding = true;
         decorations = "full";
-        title = "Alacritty@CachyOS";
         opacity = 1;
         decorations_theme_variant = "Dark";
         dimensions = {
