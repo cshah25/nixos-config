@@ -19,15 +19,15 @@
 
     "niri/cfg/display.kdl".text = if hostname == "NixHome" then ''
       output "DP-3" {
-          mode "1920x1080@288.02"
-          scale 1
+          mode "3840x2160@144.01"
+          scale 1.5
           position x=0 y=0
       }
 
       output "DP-2" {
           mode "3840x2160@60"
-          scale 2
-          position x=1920 y=0
+          scale 1.5
+          position x=2560 y=0
       }
     '' else if hostname == "NixPrecision" then ''
       output "eDP-1" {
