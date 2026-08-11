@@ -11,7 +11,7 @@ let
 
   archiveManager = if isPlasma then [ "org.kde.ark.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
 
-  fileManager =  [ "org.gnome.Nautilus.desktop" ];
+  fileManager = if isPlasma then ["org.kde.dolphin.desktop"] else [ "org.gnome.Nautilus.desktop" ];
 in
 
 {
