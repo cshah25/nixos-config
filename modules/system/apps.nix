@@ -16,8 +16,10 @@
         location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
       }];
       
-      packages = [] 
-        ++ (if config.sys.office.enable then [ "org.onlyoffice.desktopeditors" ] else []);
+      packages = 
+        (lib.optional config.sys.office.enable "org.onlyoffice.desktopeditors")
+        ++ (lib.optional config.sys.desktop.gnome.enable "com.mattjakeman.ExtensionManager")
+        ++ (lib.optional config.sys.services.remote.enable "io.github.totoshko88.RustConn");
 
       overrides = {
         "org.onlyoffice.desktopeditors" = {
