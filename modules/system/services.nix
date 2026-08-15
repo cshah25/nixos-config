@@ -26,9 +26,6 @@
         capSysAdmin = true;
         openFirewall = true;
       };
-      environment.systemPackages = [
-        pkgs.remmina
-      ];
     })
     (lib.mkIf config.sys.services.tailscale.enable {
       services.tailscale.enable = true;
