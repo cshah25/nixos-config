@@ -12,7 +12,7 @@ in
          pkgs.kdePackages.kamoso
       ] else [])
     ++ (if osConfig.sys.services.remote.enable then [
-        pkgs.moonlight-qt
+        # pkgs.moonlight-qt
       ] else [])
     ++ (if osConfig.sys.desktop.gnome.enable then [
          pkgs.gnome-weather
