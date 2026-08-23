@@ -33,9 +33,9 @@ in
     enable = true;
 
     defaultApplications = {
-      "text/html" = [ "zen.desktop" ];
-      "x-scheme-handler/http" = [ "zen.desktop" ];
-      "x-scheme-handler/https" = [ "zen.desktop" ];
+      "text/html" = [ "brave.desktop" ];
+      "x-scheme-handler/http" = [ "brave.desktop" ];
+      "x-scheme-handler/https" = [ "brave.desktop" ];
 
       "application/pdf" = pdfViewer;
      
