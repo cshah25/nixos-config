@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username ? "cachy", ... }:
 
 {
   imports = [
@@ -12,8 +12,8 @@
     ./alacritty.nix
   ];
 
-  home.username = "rayu";
-  home.homeDirectory = "/home/rayu";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
 
   home.sessionVariables = {
