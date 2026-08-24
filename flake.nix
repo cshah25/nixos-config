@@ -84,5 +84,31 @@
         ];
       };
     };
+
+    homeConfigurations = {
+      "rayu@cachyos" = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        extraSpecialArgs = {
+          inherit inputs pkgs-stable;
+          hostname = "cachyos";
+          osConfig = {
+            sys = {
+              apps.enable = true;
+              development.enable = true;
+              office.enable = true;
+              gaming.enable = false;
+            };
+          };
+        };
+        modules = [
+          ./users/rayu/cachyos.nix
+        ];
+      };
+
+      "rayu" = self.homeConfigurations."rayu@cachyos";
+    };
   };
 }

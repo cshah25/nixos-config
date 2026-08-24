@@ -190,7 +190,19 @@ nix-collect-garbage -d
 nix-store --optimise
 ```
 
-### 2. Building Recovery / Installation ISO
+### 2. Standalone Home Manager Deployment (CachyOS / Generic Linux)
+
+#### Initial Switch on CachyOS
+```bash
+nix run github:nix-community/home-manager -- switch --flake .#rayu@cachyos
+```
+
+#### Subsequent Home Manager Rebuilds
+```bash
+home-manager switch --flake .#rayu@cachyos
+```
+
+### 3. Building Recovery / Installation ISO
 ```bash
 nix build .#nixosConfigurations.iso.config.system.build.sdImageOrIso
 ```
