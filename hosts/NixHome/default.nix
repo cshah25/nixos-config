@@ -41,7 +41,7 @@
 
     firewall = {
       enable = true;
-      trustedInterfaces = [ "br0" ];
+      trustedInterfaces = [ "br0" "br+-" "virbr0" "docker0" ];
       allowedUDPPorts = [ 9 ]; # Wake-on-LAN
     };
 
