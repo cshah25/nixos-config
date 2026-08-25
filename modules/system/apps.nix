@@ -16,14 +16,16 @@
         location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
       }];
       
-      packages = 
-        (com.github.tchx84.Flatseal)
-        ++ (lib.optional config.sys.office.enable "org.onlyoffice.desktopeditors")
-        ++ (lib.optional config.sys.desktop.gnome.enable "com.mattjakeman.ExtensionManager")
-        ++ (lib.optional config.sys.desktop.gnome.enable "org.gnome.gThumb")
-        ++ (lib.optional config.sys.services.remote.enable "io.github.totoshko88.RustConn");
-        ++ (lib.optional config.sys.services.remote.enable "com.rustdesk.RustDesk");
-
+      packages = [ "com.github.tchx84.Flatseal" ]
+        ++ lib.optional config.sys.office.enable "org.onlyoffice.desktopeditors"
+        ++ lib.optionals config.sys.desktop.gnome.enable [
+          "com.mattjakeman.ExtensionManager"
+          "org.gnome.gThumb"
+        ]
+        ++ lib.optionals config.sys.services.remote.enable [
+          "io.github.totoshko88.RustConn"
+          "com.rustdesk.RustDesk"
+        ];
 
       overrides = {
         "org.onlyoffice.desktopeditors" = {
