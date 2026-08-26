@@ -17,7 +17,6 @@
       }];
       
       packages = [ "com.github.tchx84.Flatseal" ]
-        ++ lib.optional config.sys.office.enable "org.onlyoffice.desktopeditors"
         ++ lib.optionals config.sys.desktop.gnome.enable [
           "com.mattjakeman.ExtensionManager"
           "org.gnome.gThumb"
