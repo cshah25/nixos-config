@@ -10,5 +10,6 @@
     pkgs-stable.nextcloud-talk-desktop
     pkgs.equibop
     pkgs.vlc
+    pkgs.onedrive
   ] else [];
 }
