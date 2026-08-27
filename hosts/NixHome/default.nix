@@ -29,6 +29,7 @@
       displaylink.enable = false;
       rgb.enable = true;
       ollama.enable = true;
+      onedrive.enable = true;
     };
   };
   boot.kernel.sysctl = {

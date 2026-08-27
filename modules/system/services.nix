@@ -8,6 +8,7 @@
     displaylink.enable = lib.mkEnableOption "DisplayLink";
     rgb.enable = lib.mkEnableOption "openrgb";
     ollama.enable = lib.mkEnableOption "Ollama LLMs";
+    onedrive.enable = lib.mkEnableOption "OneDrive Mount via rclone";
   };
 
   config = lib.mkMerge [
@@ -17,6 +18,10 @@
       services.gnome.gnome-keyring.enable = true;
       services.resolved.enable = true;
     }
+
+    (lib.mkIf config.sys.services.onedrive.enable {
+      programs.fuse.userAllowOther = true;
+    })
 
     (lib.mkIf config.sys.services.remote.enable {
       services.openssh.enable = true;
