@@ -28,6 +28,7 @@
       wakeonlan
       seahorse
       papirus-icon-theme
+      rclone
     ] ++ lib.optionals config.sys.desktop.niri.enable [
       noctalia-shell
     ] ++ lib.optionals config.sys.desktop.hyprland.enable [
