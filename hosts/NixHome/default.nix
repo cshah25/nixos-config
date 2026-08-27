@@ -14,7 +14,7 @@
     desktop = {
       plasma.enable = false;
       gnome.enable = true;
-      niri.enable = false;
+      niri.enable = true;
       hyprland.enable = false;
     };
     gaming.enable = true;
