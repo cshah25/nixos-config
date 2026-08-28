@@ -18,6 +18,7 @@
       tmux
       fastfetch
       swayidle
+      sbctl
       brightnessctl
       playerctl
       adwaita-icon-theme
