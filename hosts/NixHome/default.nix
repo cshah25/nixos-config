@@ -31,6 +31,10 @@
       ollama.enable = true;
       onedrive.enable = true;
     };
+    boot.windows = {
+      enable = true;
+      espUuid = "deb87fd2-80c2-4866-9844-9f344e8121a1"; # PARTUUID not UUID
+    };
   };
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
