@@ -1,10 +1,8 @@
 { pkgs, ... }:
 {
-  boot.loader.grub = {
+  boot.loader.limine = {
     enable = true;
-    device = "nodev";
-    efiSupport = true;
-    useOSProber = true;
+    secureBoot.enable = true;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
