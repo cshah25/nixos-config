@@ -210,7 +210,7 @@ home-manager switch --flake .#rayu@cachyos
 
 ### 3. Building Recovery / Installation ISO
 ```bash
-nix build .#nixosConfigurations.iso.config.system.build.sdImageOrIso
+nix build .#nixosConfigurations.iso.config.system.build.isoImage
 ```
 
 ---
