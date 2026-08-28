@@ -27,6 +27,10 @@
       fwupd.enable = true;
       displaylink.enable = false;
     };
+    boot.windows = {
+      enable = true;
+      espUuid = "5C3B-EA5B";
+    };
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
