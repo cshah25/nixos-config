@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-stable, ... }:
+{ config, lib, pkgs, pkgs-stable, inputs, ... }:
 
 {
   options.sys = {
@@ -30,8 +30,8 @@
       seahorse
       papirus-icon-theme
       rclone
-    ] ++ lib.optionals config.sys.desktop.niri.enable [
-      noctalia-shell
+    ] ++ lib.optionals (config.sys.desktop.niri.enable || config.sys.desktop.mango.enable) [
+      inputs.noctalia.packages.${pkgs.system}.default
     ] ++ lib.optionals config.sys.desktop.hyprland.enable [
       kitty
     ] ++ lib.optionals config.sys.desktop.plasma.enable [
