@@ -19,10 +19,12 @@ in
   config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || cfg.niri.enable || cfg.hyprland.enable || cfg.mango.enable) {
     services.xserver.enable = true;
 
-    services.displayManager.sddm.enable = lib.mkDefault (cfg.plasma.enable || ((cfg.hyprland.enable || cfg.niri.enable || cfg.mango.enable) && !cfg.gnome.enable));
+    # Use SDDM when any wlroots compositor is enabled (GDM can't launch them reliably)
+    services.displayManager.sddm.enable = lib.mkDefault (cfg.plasma.enable || cfg.hyprland.enable || cfg.niri.enable || cfg.mango.enable);
     services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
-    services.displayManager.gdm.enable = lib.mkDefault cfg.gnome.enable;
+    # Only use GDM when GNOME is the sole desktop (no wlroots compositors active)
+    services.displayManager.gdm.enable = lib.mkDefault (cfg.gnome.enable && !cfg.hyprland.enable && !cfg.niri.enable && !cfg.mango.enable);
     services.desktopManager.gnome.enable = cfg.gnome.enable;
 
     programs.niri.enable = cfg.niri.enable;

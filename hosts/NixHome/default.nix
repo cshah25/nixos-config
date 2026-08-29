@@ -13,10 +13,10 @@
   sys = {
     desktop = {
       plasma.enable = false;
-      gnome.enable = true;
+      gnome.enable = false;
       niri.enable = true;
       hyprland.enable = false;
-      mango.enable = false;
+      mango.enable = true;
     };
     gaming.enable = true;
     virtualisation.enable = true;
