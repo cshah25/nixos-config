@@ -9,6 +9,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     kapsule.url = "github:cshah25/kapsule";
     hyprland.url = "github:hyprwm/Hyprland";
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";

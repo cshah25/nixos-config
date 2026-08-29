@@ -16,6 +16,7 @@
       gnome.enable = true;
       niri.enable = true;
       hyprland.enable = false;
+      mango.enable = false;
     };
     gaming.enable = true;
     virtualisation.enable = true;
