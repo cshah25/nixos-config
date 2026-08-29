@@ -30,6 +30,7 @@
       seahorse
       papirus-icon-theme
       rclone
+      wl-clipboard
     ] ++ lib.optionals (config.sys.desktop.niri.enable || config.sys.desktop.mango.enable) [
       inputs.noctalia.packages.${pkgs.system}.default
     ] ++ lib.optionals config.sys.desktop.hyprland.enable [
