@@ -42,6 +42,8 @@
     "net.ipv6.conf.all.forwarding" = true;
   };
 
+  boot.supportedFilesystems = [ "fuse" ];
+
   networking = {
     useDHCP = false;
 
