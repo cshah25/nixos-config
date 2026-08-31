@@ -12,8 +12,8 @@
   sys = {
     desktop = {
       plasma.enable = false;
-      gnome.enable = true;
-      niri.enable = true;
+      gnome.enable = false;
+      niri.enable = false;
       hyprland.enable = false;
       mango.enable = true;
     };
