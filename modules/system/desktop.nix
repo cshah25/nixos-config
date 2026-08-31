@@ -6,6 +6,7 @@ in
 {
   imports = [
     inputs.mangowm.nixosModules.mango
+    inputs.noctalia-greeter.nixosModules.default
   ];
 
   options.sys.desktop = {
@@ -19,13 +20,29 @@ in
   config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || cfg.niri.enable || cfg.hyprland.enable || cfg.mango.enable) {
     services.xserver.enable = true;
 
-    # Use SDDM when any wlroots compositor is enabled (GDM can't launch them reliably)
-    services.displayManager.sddm.enable = lib.mkDefault (cfg.plasma.enable || cfg.hyprland.enable || cfg.niri.enable || cfg.mango.enable);
+    # Use SDDM when KDE Plasma is enabled
+    services.displayManager.sddm.enable = lib.mkDefault cfg.plasma.enable;
     services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
-    # Only use GDM when GNOME is the sole desktop (no wlroots compositors active)
-    services.displayManager.gdm.enable = lib.mkDefault (cfg.gnome.enable && !cfg.hyprland.enable && !cfg.niri.enable && !cfg.mango.enable);
+    # Use GDM when GNOME is enabled
+    services.displayManager.gdm.enable = lib.mkDefault (cfg.gnome.enable && !cfg.plasma.enable);
     services.desktopManager.gnome.enable = cfg.gnome.enable;
+
+    # Use Noctalia Greeter for standalone compositors (Niri, Mango, Hyprland) when no full DE is active
+    programs.noctalia-greeter = {
+      enable = lib.mkDefault ((cfg.niri.enable || cfg.mango.enable || cfg.hyprland.enable) && !cfg.plasma.enable && !cfg.gnome.enable);
+      greeter-args = lib.mkDefault "";
+      settings = {
+        cursor = {
+          theme = "Bibata-Modern-Ice";
+          size = 24;
+          path = "${pkgs.bibata-cursors}/share/icons";
+        };
+        keyboard = {
+          layout = "us";
+        };
+      };
+    };
 
     programs.niri.enable = cfg.niri.enable;
     services.upower.enable = lib.mkDefault (cfg.niri.enable || cfg.mango.enable);
