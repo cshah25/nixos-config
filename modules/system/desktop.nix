@@ -51,11 +51,27 @@ in
 
     programs.mango.enable = cfg.mango.enable;
 
-    # Configure portal-wlr output chooser for screen sharing
-    xdg.portal.wlr.settings = lib.mkIf cfg.mango.enable {
-      screencast = {
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+    # Configure xdg portal for Mango WM screen sharing & desktop integration
+    xdg.portal = lib.mkIf cfg.mango.enable {
+      enable = true;
+      wlr = {
+        enable = true;
+        settings = {
+          screencast = {
+            chooser_type = "simple";
+            chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+          };
+        };
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config = {
+        mango = {
+          default = [ "gtk" ];
+          "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+          "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+        };
       };
     };
 
