@@ -27,6 +27,7 @@
       tailscale.enable = true;
       fwupd.enable = true;
       displaylink.enable = false;
+      onedrive.enable = true;
     };
     boot.windows = {
       enable = true;
