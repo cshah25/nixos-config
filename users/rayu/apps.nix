@@ -2,7 +2,7 @@
 
 {
   home.packages = if osConfig.sys.apps.enable then [ 
-    pkgs-stable.brave 
+    pkgs.brave-origin
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs-stable.spotify 
     pkgs-stable.obsidian 
