@@ -23,6 +23,8 @@ let
 
     # 6. Equibop (Discord Client) after portals are initialized
     (sleep 3 && equibop) &
+
+    (nextcloud --background) &
   '';
 in
 {
