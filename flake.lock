@@ -622,7 +622,9 @@
     },
     "noctalia": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1788886125,
@@ -634,14 +636,13 @@
       },
       "original": {
         "owner": "noctalia-dev",
-        "ref": "cachix",
         "repo": "noctalia",
         "type": "github"
       }
     },
     "noctalia-greeter": {
       "inputs": {
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1788702995,
