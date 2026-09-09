@@ -607,39 +607,6 @@
         "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
       }
     },
-    "nixpkgs_6": {
-      "locked": {
-        "lastModified": 1788614874,
-        "narHash": "sha256-PRK1fSEiAcO29DkUoOlsVLGYRK3h1YKVr+qQJB0VcYQ=",
-        "rev": "c043004d1c6985732bcc1cbc5a9c9aecbbb4e0f0",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1068089.c043004d1c69/nixexprs.tar.zst"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
-      }
-    },
-    "noctalia": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788886125,
-        "narHash": "sha256-5rgQFUGr8GXYyyuy8ynrN39WfZzSiO/wqGWjELBOkEY=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia",
-        "rev": "d6607b4eafbb92f6d494ebed3e296d4b741c0b58",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "repo": "noctalia",
-        "type": "github"
-      }
-    },
     "noctalia-greeter": {
       "inputs": {
         "nixpkgs": "nixpkgs_5"
@@ -690,7 +657,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-stable": "nixpkgs-stable",
-        "noctalia": "noctalia",
         "noctalia-greeter": "noctalia-greeter",
         "zen-browser": "zen-browser"
       }
