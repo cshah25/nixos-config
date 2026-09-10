@@ -21,6 +21,9 @@
           "com.mattjakeman.ExtensionManager"
           "org.gnome.gThumb"
         ]
+        ++ lib.optionals config.sys.apps.enable [
+          "net.waterfox.waterfox"
+        ]
         ++ lib.optionals config.sys.services.remote.enable [
           "io.github.totoshko88.RustConn"
           "com.rustdesk.RustDesk"
