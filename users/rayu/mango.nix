@@ -42,6 +42,8 @@ in
 
     "mango/cfg/display.conf".text = if hostname == "NixHome" then ''
       # NixHome dual 4K monitor configuration
+      xwayland_ignore_scale=1
+
       monitorrule=name:DP-3,width:3840,height:2160,refresh:144,scale:1.5,x:0,y:0
       monitorrule=name:DP-2,width:3840,height:2160,refresh:60,scale:1.5,x:2560,y:0
     '' else if hostname == "NixPrecision" then ''
