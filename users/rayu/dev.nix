@@ -21,6 +21,7 @@
     pkgs.fontconfig
     pkgs.freetype
     pkgs.distrobox
+    pkgs.claude-code
     inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] else [];
 
