@@ -2,12 +2,16 @@
 
 let
   isPlasma = osConfig.sys.desktop.plasma.enable;
+  isGnome  = osConfig.sys.desktop.gnome.enable;
 
   pdfViewer = if isPlasma then [ "org.kde.okular.desktop" ] else [ "org.gnome.Papers.desktop" ];
   imageViewer = if isPlasma then [ "org.kde.gwenview.desktop" ] else [ "org.gnome.Loupe.desktop" ];
   audioPlayer = if isPlasma then [ "org.kde.elisa.desktop" ] else [ "org.gnome.Decibels.desktop" ];
-  archiveManager = if isPlasma then [ "org.kde.ark.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
-  fileManager = if isPlasma then [ "org.kde.dolphin.desktop" ] else [ "org.gnome.Nautilus.desktop" ];
+  archiveManager = if isPlasma then [ "org.kde.ark.desktop" ] else [ "org.gnome.FileRoller.desktop" ];
+  fileManager =
+    if isPlasma then [ "org.kde.dolphin.desktop" ]
+    else if isGnome then [ "org.gnome.Nautilus.desktop" ]
+    else [ "thunar.desktop" ];  # tiling WMs: Mango, Niri, Hyprland
 
   # Target desktop files
   codeEditor = [ "code.desktop" ];
@@ -69,19 +73,28 @@ let
 in
 
 {
-  home.packages = [
-    pkgs.nautilus
-  ] ++ (if isPlasma then [
-    pkgs.kdePackages.okular
-    pkgs.kdePackages.gwenview
-    pkgs.kdePackages.elisa
-    pkgs.kdePackages.ark
-    pkgs.kdePackages.dolphin
-  ] else [
+  home.packages =
+    if isPlasma then [
+      pkgs.kdePackages.okular
+      pkgs.kdePackages.gwenview
+      pkgs.kdePackages.elisa
+      pkgs.kdePackages.ark
+      pkgs.kdePackages.dolphin
+    ] else if isGnome then [
+      # GNOME installs Nautilus system-wide; add file-roller for archive handling
+      pkgs.nautilus
+      pkgs.file-roller
+      pkgs.papers
+      pkgs.loupe
+      pkgs.decibels
+    ] else [
+      # Tiling WMs (Mango, Niri, Hyprland)
+    pkgs.file-roller
     pkgs.papers
     pkgs.loupe
     pkgs.decibels
-  ]);
+  ];
+
 
   xdg.mimeApps = {
     enable = true;

@@ -8,6 +8,7 @@
     ./mango.nix
     ./hyprland.nix
     ./mime.nix
+    ./thunar.nix
     ./services.nix
     ./zsh.nix
     ./git.nix

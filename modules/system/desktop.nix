@@ -50,6 +50,16 @@ in
     programs.hyprland.enable = cfg.hyprland.enable;
 
     programs.mango.enable = cfg.mango.enable;
+    
+    # Enable system-level Thunar and Xfconf for tiling WMs (provides D-Bus services and settings backend)
+    programs.thunar = lib.mkIf (cfg.niri.enable || cfg.hyprland.enable || cfg.mango.enable) {
+      enable = true;
+      plugins = [
+        pkgs.thunar-archive-plugin
+        pkgs.thunar-volman
+      ];
+    };
+    programs.xfconf.enable = lib.mkDefault (cfg.niri.enable || cfg.hyprland.enable || cfg.mango.enable);
 
     # Configure xdg portal for Mango WM screen sharing & desktop integration
     xdg.portal = lib.mkIf cfg.mango.enable {
