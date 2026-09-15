@@ -1,6 +1,5 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  version = "v0.9.3",
   event = { "BufReadPre", "BufNewFile" },
   build = ":TSUpdate",
   config = function()
@@ -36,6 +35,10 @@ return {
         "query",
         "vimdoc",
         "c",
+        "rust",
+        "cpp",
+        "python",
+        "c_sharp"
       },
       incremental_selection = {
         enable = true,
