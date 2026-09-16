@@ -16,6 +16,18 @@
     pkgs.jdt-language-server
     pkgs.typescript-language-server
     pkgs.omnisharp-roslyn
+    pkgs.vscode-langservers-extracted # HTML, CSS, JSON, ESLint
+    pkgs.yaml-language-server
+    pkgs.bash-language-server
+    pkgs.lua-language-server
+    pkgs.dockerfile-language-server-nodejs
+    pkgs.marksman # Markdown
+    pkgs.sqls # SQL
+    pkgs.tailwindcss-language-server
+    pkgs.svelte-language-server
+    pkgs.zls # Zig
+    pkgs.nil # Nix
+    pkgs.taplo # TOML
     pkgs.gnumake
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake

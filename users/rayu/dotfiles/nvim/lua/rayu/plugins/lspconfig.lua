@@ -5,7 +5,6 @@ return {
     "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
-    local lspconfig = require("lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local keymap = vim.keymap
 
@@ -53,22 +52,42 @@ return {
       "jdtls",         -- Java
       "ts_ls",         -- TypeScript / JavaScript
       "omnisharp",     -- C#
+      "html",          -- HTML
+      "cssls",         -- CSS
+      "jsonls",        -- JSON
+      "eslint",        -- ESLint
+      "yamlls",        -- YAML
+      "bashls",        -- Bash
+      "lua_ls",        -- Lua
+      "dockerls",      -- Docker
+      "marksman",      -- Markdown
+      "sqls",          -- SQL
+      "tailwindcss",   -- Tailwind CSS
+      "svelte",        -- Svelte
+      "zls",           -- Zig
+      "nil_ls",        -- Nix
+      "taplo",         -- TOML
     }
 
     for _, lsp in ipairs(servers) do
-      -- Special configuration for omnisharp (C#)
+      local config = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
       if lsp == "omnisharp" then
-        lspconfig[lsp].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-          cmd = { "OmniSharp" },
-        })
-      else
-        lspconfig[lsp].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-        })
+        config.cmd = { "OmniSharp" }
+      elseif lsp == "lua_ls" then
+        config.settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" }, -- Recognize the 'vim' global for Neovim config
+            },
+          },
+        }
       end
+      vim.lsp.config(lsp, config)
+      vim.lsp.enable(lsp)
     end
   end,
 }
