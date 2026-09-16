@@ -67,6 +67,8 @@ return {
       "zls",           -- Zig
       "nil_ls",        -- Nix
       "taplo",         -- TOML
+      "prismals",      -- Prisma
+      "texlab",        -- LaTeX
     }
 
     for _, lsp in ipairs(servers) do

@@ -28,6 +28,9 @@
     pkgs.zls # Zig
     pkgs.nil # Nix
     pkgs.taplo # TOML
+    pkgs.prisma-language-server # Prisma
+    pkgs.texlab # LaTeX
+    pkgs.zathura # Minimal PDF viewer for LaTeX live preview
     pkgs.gnumake
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
