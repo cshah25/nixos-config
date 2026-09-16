@@ -29,7 +29,7 @@ in
     services.desktopManager.gnome.enable = cfg.gnome.enable;
 
     # Use Noctalia Greeter for standalone compositors (Niri, Mango, Hyprland) when no full DE is active
-    programs.noctalia-greeter = {
+    services.displayManager.noctalia-greeter = {
       enable = lib.mkDefault ((cfg.niri.enable || cfg.mango.enable || cfg.hyprland.enable) && !cfg.plasma.enable && !cfg.gnome.enable);
       greeter-args = lib.mkDefault "";
       settings = {
