@@ -14,7 +14,7 @@
     pkgs.gopls
     pkgs.rust-analyzer
     pkgs.jdt-language-server
-    pkgs.nodePackages.typescript-language-server
+    pkgs.typescript-language-server
     pkgs.omnisharp-roslyn
     pkgs.gnumake
     pkgs-stable.texlive.combined.scheme-medium
