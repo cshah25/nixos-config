@@ -8,7 +8,14 @@
     pkgs.nodejs 
     pkgs.go 
     pkgs.gcc
+    pkgs.clang-tools
     pkgs.gdb
+    pkgs.pyright
+    pkgs.gopls
+    pkgs.rust-analyzer
+    pkgs.jdt-language-server
+    pkgs.nodePackages.typescript-language-server
+    pkgs.omnisharp-roslyn
     pkgs.gnumake
     pkgs-stable.texlive.combined.scheme-medium
     pkgs.gnumake
