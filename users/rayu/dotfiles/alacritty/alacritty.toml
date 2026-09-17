@@ -160,10 +160,7 @@ action = "Paste"
 key = "Copy"
 action = "Copy"
 
-[[keyboard.bindings]]
-key = "L"
-mods = "Control"
-action = "ClearLogNotice"
+
 
 [[keyboard.bindings]]
 key = "L"

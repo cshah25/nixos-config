@@ -117,7 +117,6 @@
         bindings = [
           { key = "Paste"; action = "Paste"; }
           { key = "Copy"; action = "Copy"; }
-          { key = "L"; mods = "Control"; action = "ClearLogNotice"; }
           { key = "L"; mods = "Control"; mode = "~Vi"; chars = "\\f"; }
           { key = "PageUp"; mods = "Shift"; mode = "~Alt"; action = "ScrollPageUp"; }
           { key = "PageDown"; mods = "Shift"; mode = "~Alt"; action = "ScrollPageDown"; }
