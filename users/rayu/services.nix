@@ -1,7 +1,7 @@
 { config, lib, pkgs, osConfig, ... }: 
 {
   # KDE Connect
-  services.kdeconnect.enable = true; 
+  services.kdeconnect.enable = false; 
 
   # OneDrive mount via rclone
   systemd.user.services.rclone-onedrive-mount = lib.mkIf (osConfig.sys.services.onedrive.enable or false) {
