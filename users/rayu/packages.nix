@@ -11,6 +11,7 @@ let
     playerctl
     python3
     ripgrep
+    fd
     wayland-pipewire-idle-inhibit
     wakeonlan
     wl-clipboard
