@@ -161,13 +161,6 @@ key = "Copy"
 action = "Copy"
 
 
-
-[[keyboard.bindings]]
-key = "L"
-mods = "Control"
-mode = "~Vi"
-chars = "\f"
-
 [[keyboard.bindings]]
 key = "PageUp"
 mods = "Shift"
