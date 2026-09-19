@@ -32,6 +32,7 @@ in
     services.displayManager.noctalia-greeter = {
       enable = lib.mkDefault ((cfg.niri.enable || cfg.mango.enable || cfg.hyprland.enable) && !cfg.plasma.enable && !cfg.gnome.enable);
       greeter-args = lib.mkDefault "";
+      passwordless-sync-users = [ "rayu" ];
       settings = {
         cursor = {
           theme = "Bibata-Modern-Ice";
