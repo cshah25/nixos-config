@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, hostname,... }:
 
 {
   options.sys.services = {
@@ -26,7 +26,7 @@
     (lib.mkIf config.sys.services.remote.enable {
       services.openssh.enable = true;
       services.sunshine = {
-        enable = true;
+        enable = (if hostname == "NixHome" then true else false);
         autoStart = true;
         capSysAdmin = true;
         openFirewall = true;
