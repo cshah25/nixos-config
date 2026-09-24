@@ -2,8 +2,9 @@
 
 {
   home.packages = if osConfig.sys.development.enable then [ 
-    pkgs-stable.vscode 
+    pkgs.vscode 
     #pkgs-stable.android-studio 
+    pkgs.lefthook
     pkgs.android-tools
     pkgs.nodejs 
     pkgs.go 
