@@ -15,6 +15,7 @@
     ./nvim.nix
     ./alacritty.nix
     ./apps.nix
+    ./zen.nix
     ./dev.nix
     ./office.nix
     ./gaming.nix

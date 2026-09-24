@@ -3,6 +3,7 @@
 {
   imports = [
     ./apps.nix
+    ./zen.nix
     ./dev.nix
     ./office.nix
     ./gaming.nix

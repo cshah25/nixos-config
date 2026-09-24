@@ -3,7 +3,6 @@
 {
   home.packages = if osConfig.sys.apps.enable then [ 
     pkgs.brave-origin
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs-stable.spotify 
     pkgs-stable.obsidian 
     pkgs-stable.nextcloud-client
