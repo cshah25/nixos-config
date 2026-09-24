@@ -183,7 +183,7 @@ in
         "Personal" = {
           id = personalSpace;
           position = 1000;
-          # icon = "";  # set your emoji here (icons set in the UI get reset on switch)
+          icon = "🏠";
           pins."Proton Mail" = {
             id = "f5b0489a-d495-4179-8afe-1be4ca9a532d";
             url = "https://mail.protonmail.com";
