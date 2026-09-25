@@ -184,6 +184,14 @@ in
           id = personalSpace;
           position = 1000;
           icon = "🏠";
+          theme = {
+            opacity = 0.8;
+            colors = [
+              { red = 4; green = 18; blue = 47; algorithm = "analogous"; lightness = 10; type = "explicit-lightness"; position = { x = 156; y = 159; }; }
+              { red = 25; green = 4; blue = 47; algorithm = "analogous"; lightness = 10; type = "explicit-lightness"; position = { x = 180; y = 149; }; primary = false; }
+              { red = 4; green = 47; blue = 42; algorithm = "analogous"; lightness = 10; type = "explicit-lightness"; position = { x = 149; y = 184; }; primary = false; }
+            ];
+          };
           pins."Proton Mail" = {
             id = "f5b0489a-d495-4179-8afe-1be4ca9a532d";
             url = "https://mail.protonmail.com";
@@ -194,6 +202,14 @@ in
           id = universitySpace;
           position = 2000;
           icon = "🎓";
+          theme = {
+            opacity = 0.5;
+            colors = [
+              { red = 3; green = 68; blue = 34; algorithm = "analogous"; lightness = 14; position = { x = 156; y = 195; }; }
+              { red = 3; green = 54; blue = 73; algorithm = "analogous"; lightness = 14; position = { x = 152; y = 172; }; primary = false; }
+              { red = 28; green = 68; blue = 3; algorithm = "analogous"; lightness = 14; position = { x = 177; y = 207; }; primary = false; }
+            ];
+          };
           pins."Canvas" = {
             id = "a754e236-ed2c-4f2e-ae1b-738981ea6c3c";
             url = "https://canvas.ualberta.ca";
