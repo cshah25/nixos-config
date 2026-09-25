@@ -25,12 +25,6 @@
 
     (lib.mkIf config.sys.services.remote.enable {
       services.openssh.enable = true;
-      services.sunshine = {
-        enable = (if hostname == "NixHome" then true else false);
-        autoStart = true;
-        capSysAdmin = true;
-        openFirewall = true;
-      };
     })
     (lib.mkIf config.sys.services.tailscale.enable {
       services.tailscale.enable = true;

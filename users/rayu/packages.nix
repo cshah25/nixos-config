@@ -25,9 +25,6 @@ in
          pkgs.kdePackages.kamoso
          pkgs.kdePackages.kwalletmanager
       ] else [])
-    ++ (if osConfig.sys.services.remote.enable then [
-         pkgs.moonlight-qt
-      ] else [])
     ++ (if osConfig.sys.desktop.hyprland.enable then [
          pkgs.kitty
       ] else [])
