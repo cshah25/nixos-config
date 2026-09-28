@@ -25,6 +25,7 @@
     ];
 
     initContent = ''
+      [[ -f "$HOME/.config/secrets/api-keys.sh" ]] && source "$HOME/.config/secrets/api-keys.sh"
       # Sourcing the p10k configuration file
       source ${./dotfiles/p10k.zsh}
 

@@ -10,5 +10,11 @@ return {
     { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "AI actions" },
     { "<leader>ai", ":CodeCompanion ", mode = { "n", "v" }, desc = "AI inline edit" },
   },
-  opts = {},
+  opts = {
+    interactions = {
+      chat = { adapter = "anthropic" },
+      inline = { adapter = "anthropic" },
+      cmd = { adapter = "anthropic" },
+    },
+  },
 }
