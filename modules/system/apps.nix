@@ -23,6 +23,7 @@
         ]
         ++ lib.optionals config.sys.apps.enable [
           "net.waterfox.waterfox"
+          "app.fluxer.Fluxer"
         ]
         ++ lib.optionals config.sys.services.remote.enable [
           "io.github.totoshko88.RustConn"
