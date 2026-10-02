@@ -9,6 +9,7 @@
     rgb.enable = lib.mkEnableOption "openrgb";
     ollama.enable = lib.mkEnableOption "Ollama LLMs";
     onedrive.enable = lib.mkEnableOption "OneDrive Mount via rclone";
+    printing.enable = lib.mkEnableOption "Printing Services";
   };
 
   config = lib.mkMerge [
@@ -56,6 +57,21 @@
         enable = true;
         package = pkgs.ollama-rocm;
         rocmOverrideGfx = "11.0.1";
+      };
+    })
+    (lib.mkIf config.sys.services.printing.enable {
+      services.avahi = {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+      };
+
+      services.printing = {
+        enable = true;
+        drivers = with pkgs; [
+          cups-filters
+          cups-browsed
+        ];
       };
     })
     {

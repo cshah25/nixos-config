@@ -31,6 +31,7 @@
       rgb.enable = true;
       ollama.enable = true;
       onedrive.enable = true;
+      printing.enable = true;
     };
   };
   boot.kernel.sysctl = {
