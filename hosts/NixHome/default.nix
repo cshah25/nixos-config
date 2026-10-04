@@ -1,4 +1,4 @@
-{ inputs, ... }: 
+{ inputs, pkgs, ... }: 
 
 {
   imports = [
@@ -59,5 +59,10 @@
 
   boot.initrd.kernelModules = [ "amdgpu" ];
 
+  # AMD GPU stuff
   hardware.graphics.enable = true;
+  environment.systemPackages = with pkgs; [ lact ];
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+  hardware.amdgpu.overdrive.enable = true;
 }
