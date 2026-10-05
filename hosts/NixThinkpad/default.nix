@@ -17,7 +17,7 @@
       hyprland.enable = false;
       mango.enable = true;
     };
-    gaming.enable = false;
+    gaming.enable = true;
     virtualisation.enable = true;
     apps.enable = true;
     office.enable = true;
@@ -28,6 +28,7 @@
       fwupd.enable = true;
       displaylink.enable = false;
       onedrive.enable = true;
+      printing.enable = true;
     };
     boot.windows = {
       enable = true;
