@@ -33,7 +33,7 @@ in
     "mango/cfg/env.conf".source = ./dotfiles/mango/cfg/env.conf;
     "mango/cfg/autostart.conf".text = ''
       # ─── Startup Applications ───
-      exec-once=${autostartScript}
+      exec_once=${autostartScript}
     '';
     "mango/cfg/input.conf".source = ./dotfiles/mango/cfg/input.conf;
     "mango/cfg/layout.conf".source = ./dotfiles/mango/cfg/layout.conf;
@@ -44,14 +44,14 @@ in
    #   # NixHome dual 4K monitor configuration
    #   xwayland_ignore_scale=1
 
-   #   monitorrule=name:DP-3,width:3840,height:2160,refresh:144,scale:1.5,x:0,y:0
-   #   monitorrule=name:DP-2,width:3840,height:2160,refresh:60,scale:1.5,x:2560,y:0
+   #   monitor_rule=name:DP-3,width:3840,height:2160,refresh:144,scale:1.5,x:0,y:0
+   #   monitor_rule=name:DP-2,width:3840,height:2160,refresh:60,scale:1.5,x:2560,y:0
    # '' else if hostname == "NixPrecision" then ''
    #   # NixPrecision Dell laptop display
-   #   monitorrule=name:eDP-1,width:1920,height:1200,refresh:60,scale:1,x:0,y:1080
+   #   monitor_rule=name:eDP-1,width:1920,height:1200,refresh:60,scale:1,x:0,y:1080
    # '' else if hostname == "NixThinkpad" then ''
    #   # NixThinkpad Lenovo laptop display
-   #   monitorrule=name:eDP-1,width:1920,height:1200,refresh:60,scale:1,x:0,y:1080
+   #   monitor_rule=name:eDP-1,width:1920,height:1200,refresh:60,scale:1,x:0,y:1080
    # '' else "";
   };
 }
