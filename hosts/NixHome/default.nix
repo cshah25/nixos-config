@@ -61,12 +61,5 @@
 
   # AMD GPU stuff
   hardware.graphics.enable = true;
-  #environment.systemPackages = with pkgs; [ lact ];
-  #systemd.packages = with pkgs; [ lact ];
-  #systemd.services.lactd.wantedBy = [ "multi-user.target" ];
-  hardware.amdgpu.overdrive.enable = true;
-  programs.coolercontrol.enable = true;
-  boot.kernelModules = [ "it87" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ it87 ];
-  boot.kernelParams = [ "acpi_enforce_resources=lax" ];
+  services.lact.enable = false;
 }
