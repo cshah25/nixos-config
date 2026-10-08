@@ -5,8 +5,8 @@
     pkgs.brave-origin
     pkgs-stable.spotify 
     pkgs-stable.obsidian 
-    pkgs-stable.nextcloud-client
-    pkgs-stable.nextcloud-talk-desktop
+    pkgs.nextcloud-client
+    pkgs.nextcloud-talk-desktop
     pkgs.equibop
     pkgs.vlc
   ] else [];

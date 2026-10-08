@@ -54,4 +54,6 @@
     fsType = "ext4";
     options = [ "defaults" "nofail" "X-systemd.device-timeout=5s" ];
   };
+
+  hardware.graphics.enable = true;
 }
