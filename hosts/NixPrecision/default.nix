@@ -7,8 +7,6 @@
     inputs.nixos-hardware.nixosModules.dell-precision-5570
   ];
 
-  networking.hostName = "NixPrecision";
-
   sys = {
     desktop = {
       plasma.enable = false;
@@ -31,7 +29,7 @@
   #fileSystems."/mnt/storage" = {
   #  device = "/dev/disk/by-uuid/103c2982-e6b3-484e-bc22-3a32504cbd63";
   #  fsType = "ext4";
-  #  options = [ "defaults" "nofail" "X-systemd.device-timeout=5s"];
+  #  options = [ "defaults" "nofail" "x-systemd.device-timeout=5s"];
   #};
 
   systemd.services.NetworkManager-wait-online.enable = false;

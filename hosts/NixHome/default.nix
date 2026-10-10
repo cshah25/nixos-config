@@ -3,12 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    (import "${inputs.nixos-hardware}/common/cpu/intel")
-    (import "${inputs.nixos-hardware}/common/gpu/amd")
-    (import "${inputs.nixos-hardware}/common/pc/ssd")
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
-
-  networking.hostName = "NixHome";
 
   sys = {
     desktop = {
@@ -37,14 +35,9 @@
 
   boot.supportedFilesystems = [ "fuse" ];
 
-  networking = {
-    firewall = {
-      enable = true;
-      allowedUDPPorts = [ 9 ]; # Wake-on-LAN
-    };
+  # Magic packets are handled by the NIC, so no firewall port is needed
+  networking.interfaces.enp7s0.wakeOnLan.enable = true;
 
-    interfaces.enp7s0.wakeOnLan.enable = true;
-  };
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/1456bb2e-df41-479f-acae-868420c1bc3a";
     fsType = "ext4";

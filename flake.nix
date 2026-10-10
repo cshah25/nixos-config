@@ -1,18 +1,24 @@
 {
-  description = "A very basic flake";
+  description = "Multi-host NixOS and Home Manager configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Not following nixpkgs: kapsule still references openssl_3, removed from unstable
     kapsule.url = "github:cshah25/kapsule";
-    hyprland.url = "github:hyprwm/Hyprland";
     mangowm = {
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -26,57 +32,62 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, nixos-hardware, kapsule, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
     pkgs-stable = import nixpkgs-stable {
       inherit system;
       config.allowUnfree = true;
     };
-  in 
+
+    mkHost = hostname: nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit inputs pkgs-stable hostname; };
+      modules = [
+        ./modules/system
+        ./modules/home-manager
+        ./hosts/${hostname}
+        { networking.hostName = hostname; }
+      ];
+    };
+
+    # Standalone Home Manager for non-NixOS hosts (CachyOS)
+    mkHome = username: home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {
+        inherit inputs pkgs-stable username;
+        hostname = "cachyos";
+        osConfig = {
+          sys = {
+            apps.enable = true;
+            development.enable = true;
+            office.enable = true;
+            gaming.enable = false;
+          };
+        };
+      };
+      modules = [
+        ./users/rayu/cachyos.nix
+      ];
+    };
+  in
   {
-    nixosConfigurations = {
-
-      # Desktop Configuration
-      NixHome = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs pkgs-stable; hostname = "NixHome"; };
-        modules = [
-          ./modules/system
-          ./modules/home-manager
-          ./hosts/NixHome
-        ];
-      };
-
-      # Laptop Configuration
-      NixPrecision = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs pkgs-stable; hostname = "NixPrecision"; };
-        modules = [
-          ./modules/system
-          ./modules/home-manager
-          ./hosts/NixPrecision
-        ];
-      };
-
-      # Thinkpad Configuration
-      NixThinkpad = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs pkgs-stable; hostname = "NixThinkpad"; };
-        modules = [
-          ./modules/system
-          ./modules/home-manager
-          ./hosts/NixThinkpad
-        ];
-      };
+    nixosConfigurations = nixpkgs.lib.genAttrs [
+      "NixHome"       # Desktop
+      "NixPrecision"  # Laptop
+      "NixThinkpad"   # Thinkpad
+    ] mkHost // {
       iso = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs pkgs-stable; hostname = "NixISO"; };
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
           ({ pkgs, ... }: {
             nix.settings.experimental-features = [ "nix-command" "flakes" ];
-            
+
             environment.systemPackages = with pkgs; [
               neovim
               git
@@ -93,54 +104,13 @@
     };
 
     homeConfigurations = {
-      "cachy@cachyos" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        extraSpecialArgs = {
-          inherit inputs pkgs-stable;
-          hostname = "cachyos";
-          username = "cachy";
-          osConfig = {
-            sys = {
-              apps.enable = true;
-              development.enable = true;
-              office.enable = true;
-              gaming.enable = false;
-            };
-          };
-        };
-        modules = [
-          ./users/rayu/cachyos.nix
-        ];
-      };
-
-      "rayu@cachyos" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        extraSpecialArgs = {
-          inherit inputs pkgs-stable;
-          hostname = "cachyos";
-          username = "rayu";
-          osConfig = {
-            sys = {
-              apps.enable = true;
-              development.enable = true;
-              office.enable = true;
-              gaming.enable = false;
-            };
-          };
-        };
-        modules = [
-          ./users/rayu/cachyos.nix
-        ];
-      };
+      "cachy@cachyos" = mkHome "cachy";
+      "rayu@cachyos" = mkHome "rayu";
 
       "cachy" = self.homeConfigurations."cachy@cachyos";
       "rayu" = self.homeConfigurations."rayu@cachyos";
     };
+
+    formatter.${system} = pkgs.nixfmt-rfc-style;
   };
 }

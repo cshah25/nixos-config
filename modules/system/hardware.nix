@@ -1,6 +1,4 @@
 {
-  services.printing.enable = true;
-  
   hardware.bluetooth.enable = true;
 
   services.pulseaudio.enable = false;
