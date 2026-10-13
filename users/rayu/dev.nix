@@ -15,7 +15,7 @@
     pkgs.gopls
     pkgs.rust-analyzer
     pkgs.jdt-language-server
-    pkgs.typescript-language-server
+    pkgs-stable.typescript-language-server  # unstable pnpm-deps hash mismatch (2026-10)
     pkgs.omnisharp-roslyn
     pkgs.vscode-langservers-extracted # HTML, CSS, JSON, ESLint
     pkgs.yaml-language-server
