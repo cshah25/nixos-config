@@ -16,6 +16,7 @@
       sbctl
       brightnessctl
       xwayland-satellite
+      wlr-randr
     ] ++ lib.optionals (config.sys.desktop.gnome.enable && config.networking.hostName == "NixHome") [
       ddcutil
     ];
