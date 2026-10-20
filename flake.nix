@@ -9,7 +9,7 @@
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    inputs.kapsule = {
+    kapsule = {
       url = "github:cshah25/kapsule";
       inputs.nixpkgs.follows = "nixpkgs";
     };
