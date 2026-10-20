@@ -9,8 +9,10 @@
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Not following nixpkgs: kapsule still references openssl_3, removed from unstable
-    kapsule.url = "github:cshah25/kapsule";
+    inputs.kapsule = {
+      url = "github:cshah25/kapsule";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mangowm = {
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
