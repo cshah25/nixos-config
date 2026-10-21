@@ -28,10 +28,6 @@
       onedrive.enable = true;
       printing.enable = true;
     };
-    boot.windows = {
-      enable = true;
-      espUuid = "6f2fa47a-6e71-4577-b42f-2697f393e785"; # PARTUUID not UUID
-    };
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
