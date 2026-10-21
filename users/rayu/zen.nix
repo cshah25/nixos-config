@@ -19,7 +19,7 @@ in
 
 {
   imports = [
-    inputs.zen-browser.homeModules.beta
+    inputs.zen-browser.homeModules.twilight
   ];
 
   programs.zen-browser = lib.mkIf osConfig.sys.apps.enable {
