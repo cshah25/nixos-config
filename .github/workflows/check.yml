@@ -10,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
-      # Evaluate every host without building it (full builds don't fit on free runners)
+      # Evaluate every host without building it (full builds don't fit on free runners).
+      # Not `nix flake check --no-build`: the Zen Betterfox preset reads a fetched file
+      # during evaluation, which --no-build forbids.
       - name: Evaluate hosts
-        run: nix flake check --no-build
+        run: nix eval --json .#checks.x86_64-linux --apply 'builtins.mapAttrs (_: c: c.drvPath)'
