@@ -33,7 +33,6 @@
       alias nrs='sudo nixos-rebuild switch --flake $HOME/nixos-config/#${hostname}'
       alias nrb='sudo nixos-rebuild boot --flake $HOME/nixos-config/#${hostname}'     
       alias nfu='nix flake update'
-      alias hms='home-manager switch --flake $HOME/nixos-config/#${hostname}'
       
       # Git commands
       alias gs='git status'

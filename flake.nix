@@ -34,7 +34,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-stable, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -54,26 +54,6 @@
         ./modules/home-manager
         ./hosts/${hostname}
         { networking.hostName = hostname; }
-      ];
-    };
-
-    # Standalone Home Manager for non-NixOS hosts (CachyOS)
-    mkHome = username: home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {
-        inherit inputs pkgs-stable username;
-        hostname = "cachyos";
-        osConfig = {
-          sys = {
-            apps.enable = true;
-            development.enable = true;
-            office.enable = true;
-            gaming.enable = false;
-          };
-        };
-      };
-      modules = [
-        ./users/rayu/cachyos.nix
       ];
     };
   in
@@ -103,14 +83,6 @@
           })
         ];
       };
-    };
-
-    homeConfigurations = {
-      "cachy@cachyos" = mkHome "cachy";
-      "rayu@cachyos" = mkHome "rayu";
-
-      "cachy" = self.homeConfigurations."cachy@cachyos";
-      "rayu" = self.homeConfigurations."rayu@cachyos";
     };
 
     formatter.${system} = pkgs.nixfmt-rfc-style;
