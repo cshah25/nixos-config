@@ -44,22 +44,6 @@
         "io.github.totoshko88.RustConn"
         "com.rustdesk.RustDesk"
       ];
-
-      overrides = {
-        "org.onlyoffice.desktopeditors" = {
-          Context = {
-            sockets = [
-              "x11"
-              "fallback-x11"
-              "!wayland"
-            ];
-          };
-          Environment = {
-            QT_QPA_PLATFORM = "xcb";
-            NIXOS_OZONE_WL = "";
-          };
-        };
-      };
     };
   };
 }

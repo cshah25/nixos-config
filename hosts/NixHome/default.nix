@@ -68,8 +68,6 @@
   # gfx1101 isn't on ROCm's official support list
   services.ollama.rocmOverrideGfx = "11.0.1";
 
-  boot.supportedFilesystems = [ "fuse" ];
-
   # Magic packets are handled by the NIC, so no firewall port is needed
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
 

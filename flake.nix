@@ -91,6 +91,7 @@
         h: self.nixosConfigurations.${h}.config.system.build.toplevel
       );
 
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
+      # `nix fmt` formats every .nix file in the repo
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
     };
 }

@@ -14,7 +14,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "adbusers"
     ]
     ++ lib.optionals config.sys.virtualisation.enable [
       "docker"
