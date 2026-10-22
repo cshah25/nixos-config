@@ -14,4 +14,5 @@ jobs:
       # Not `nix flake check --no-build`: the Zen Betterfox preset reads a fetched file
       # during evaluation, which --no-build forbids.
       - name: Evaluate hosts
-        run: nix eval --json .#checks.x86_64-linux --apply 'builtins.mapAttrs (_: c: c.drvPath)'
+        run: |
+          nix eval --json .#checks.x86_64-linux --apply 'builtins.mapAttrs (_: c: c.drvPath)'
