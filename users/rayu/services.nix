@@ -1,7 +1,13 @@
-{ config, lib, pkgs, osConfig, ... }: 
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
 {
   # OneDrive mount via rclone
-  systemd.user.services.rclone-onedrive-mount = lib.mkIf (osConfig.sys.services.onedrive.enable or false) {
+  systemd.user.services.rclone-onedrive-mount = lib.mkIf osConfig.sys.services.onedrive.enable {
     Unit = {
       Description = "Mount OneDrive via rclone";
       After = [ "network-online.target" ];

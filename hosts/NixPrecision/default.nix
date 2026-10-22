@@ -1,4 +1,4 @@
-{inputs, ...}:
+{ inputs, ... }:
 
 {
   imports = [
@@ -23,7 +23,10 @@
       tailscale.enable = true;
       fwupd.enable = true;
     };
+    desktop.cursorSize = 16;
   };
+
+  system.stateVersion = "25.11";
 
   #fileSystems."/mnt/storage" = {
   #  device = "/dev/disk/by-uuid/103c2982-e6b3-484e-bc22-3a32504cbd63";

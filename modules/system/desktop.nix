@@ -1,4 +1,11 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  username,
+  ...
+}:
 
 let
   cfg = config.sys.desktop;
@@ -14,10 +21,20 @@ in
     gnome.enable = lib.mkEnableOption "GNOME";
     niri.enable = lib.mkEnableOption "Niri";
     mango.enable = lib.mkEnableOption "Mango WM";
+    cursorSize = lib.mkOption {
+      type = lib.types.int;
+      default = 24;
+      description = "Cursor size for the greeter and Niri.";
+    };
   };
 
   config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || cfg.niri.enable || cfg.mango.enable) {
-    services.xserver.enable = true;
+    # X server only for the full DEs; standalone Wayland compositors run XWayland themselves
+    services.xserver.enable = cfg.plasma.enable || cfg.gnome.enable;
+
+    # Both default to services.xserver.enable, but Wayland sessions need them too
+    services.libinput.enable = true;
+    gtk.iconCache.enable = true;
 
     # Use SDDM when KDE Plasma is enabled
     services.displayManager.sddm.enable = lib.mkDefault cfg.plasma.enable;
@@ -27,15 +44,22 @@ in
     services.displayManager.gdm.enable = lib.mkDefault (cfg.gnome.enable && !cfg.plasma.enable);
     services.desktopManager.gnome.enable = cfg.gnome.enable;
 
+    # Plasma and GNOME each set their own SSH askpass; prefer GNOME's since gnome-keyring is always on
+    programs.ssh.askPassword = lib.mkIf (cfg.plasma.enable && cfg.gnome.enable) (
+      lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass"
+    );
+
     # Use Noctalia Greeter for standalone compositors (Niri, Mango) when no full DE is active
     services.displayManager.noctalia-greeter = {
-      enable = lib.mkDefault ((cfg.niri.enable || cfg.mango.enable) && !cfg.plasma.enable && !cfg.gnome.enable);
+      enable = lib.mkDefault (
+        (cfg.niri.enable || cfg.mango.enable) && !cfg.plasma.enable && !cfg.gnome.enable
+      );
       greeter-args = lib.mkDefault "";
-      passwordless-sync-users = [ "rayu" ];
+      passwordless-sync-users = [ username ];
       settings = {
         cursor = {
           theme = "Bibata-Modern-Ice";
-          size = 24;
+          size = cfg.cursorSize;
           path = "${pkgs.bibata-cursors}/share/icons";
         };
         keyboard = {
@@ -48,7 +72,7 @@ in
     services.upower.enable = lib.mkDefault (cfg.niri.enable || cfg.mango.enable);
 
     programs.mango.enable = cfg.mango.enable;
-    
+
     # Enable system-level Thunar and Xfconf for tiling WMs (provides D-Bus services and settings backend)
     programs.thunar = lib.mkIf (cfg.niri.enable || cfg.mango.enable) {
       enable = true;

@@ -10,9 +10,18 @@ let
         default = null;
         description = "Connector name (e.g. eDP-1). Leave null to match by make/model/serial, which survives connector renumbering.";
       };
-      make = mkOption { type = types.nullOr types.str; default = null; };
-      model = mkOption { type = types.nullOr types.str; default = null; };
-      serial = mkOption { type = types.nullOr types.str; default = null; };
+      make = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+      model = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
+      serial = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
       width = mkOption { type = types.int; };
       height = mkOption { type = types.int; };
       refresh = mkOption {
@@ -24,9 +33,18 @@ let
         default = null;
         description = "Refresh rate `hirefresh` switches to while a game runs.";
       };
-      scale = mkOption { type = types.number; default = 1; };
-      x = mkOption { type = types.int; default = 0; };
-      y = mkOption { type = types.int; default = 0; };
+      scale = mkOption {
+        type = types.number;
+        default = 1;
+      };
+      x = mkOption {
+        type = types.int;
+        default = 0;
+      };
+      y = mkOption {
+        type = types.int;
+        default = 0;
+      };
     };
   };
 in

@@ -1,14 +1,26 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  username,
+  ...
+}:
 {
   users.defaultUserShell = pkgs.zsh;
 
-  users.users.rayu = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "Chirayu Shah";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" ]
-      ++ lib.optionals config.sys.virtualisation.enable [ "docker" "libvirtd" "kvm" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "adbusers"
+    ]
+    ++ lib.optionals config.sys.virtualisation.enable [
+      "docker"
+      "libvirtd"
+      "kvm"
+    ]
+    ++ lib.optionals config.sys.hardware.ddc.enable [ "i2c" ];
   };
 }

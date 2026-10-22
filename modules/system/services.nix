@@ -1,4 +1,9 @@
-{ config, lib, pkgs, hostname,... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.sys.services = {
@@ -43,7 +48,10 @@
         extraModulePackages = [ config.boot.kernelPackages.evdi ];
         initrd.kernelModules = [ "evdi" ];
       };
-      services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+      services.xserver.videoDrivers = [
+        "displaylink"
+        "modesetting"
+      ];
       systemd.services.dlm.wantedBy = [ "multi-user.target" ];
     })
     (lib.mkIf config.sys.services.rgb.enable {
@@ -56,7 +64,6 @@
       services.ollama = {
         enable = true;
         package = pkgs.ollama-rocm;
-        rocmOverrideGfx = "11.0.1";
       };
     })
     (lib.mkIf config.sys.services.printing.enable {

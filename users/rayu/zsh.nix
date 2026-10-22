@@ -1,4 +1,9 @@
-{ config, pkgs, hostname, ... }:
+{
+  config,
+  pkgs,
+  flakeDir,
+  ...
+}:
 
 {
   programs.zsh = {
@@ -30,10 +35,10 @@
       source ${./dotfiles/p10k.zsh}
 
       # Nix commands
-      alias nrs='sudo nixos-rebuild switch --flake $HOME/nixos-config/#${hostname}'
-      alias nrb='sudo nixos-rebuild boot --flake $HOME/nixos-config/#${hostname}'     
-      alias nfu='nix flake update'
-      
+      alias nrs='nh os switch'
+      alias nrb='nh os boot'
+      alias nfu='nix flake update --flake ${flakeDir}'
+
       # Git commands
       alias gs='git status'
       alias ga='git add'

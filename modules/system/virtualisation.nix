@@ -8,7 +8,10 @@
       enable = true;
       daemon.settings = {
         mtu = 1440;
-        dns = [ "1.1.1.1" "8.8.8.8" ];
+        dns = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
       };
     };
     virtualisation.libvirtd.enable = true;

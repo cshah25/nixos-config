@@ -1,4 +1,10 @@
-{ config, lib, pkgs, hostname, osConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
 
 let
   # Rendered from sys.monitors in the host config
@@ -12,18 +18,15 @@ let
 in
 {
   xdg.configFile = {
-    "niri/config.kdl".source = ./dotfiles/niri/config.kdl;
-    "niri/cfg/animation.kdl".source = ./dotfiles/niri/cfg/animation.kdl;
-    "niri/cfg/autostart.kdl".source = ./dotfiles/niri/cfg/autostart.kdl;
-    "niri/cfg/input.kdl".source = ./dotfiles/niri/cfg/input.kdl;
-    "niri/cfg/keybinds.kdl".source = ./dotfiles/niri/cfg/keybinds.kdl;
-    "niri/cfg/layout.kdl".source = ./dotfiles/niri/cfg/layout.kdl;
-    "niri/cfg/rules.kdl".source = ./dotfiles/niri/cfg/rules.kdl;
+    "niri" = {
+      source = ./dotfiles/niri;
+      recursive = true;
+    };
 
-    "niri/cfg/misc.kdl".text = (builtins.readFile ./dotfiles/niri/cfg/misc.kdl) + ''
+    "niri/cfg/cursor.kdl".text = ''
       cursor {
           xcursor-theme "capitaine-cursors"
-          xcursor-size ${if hostname == "NixPrecision" then "16" else "24"}
+          xcursor-size ${toString osConfig.sys.desktop.cursorSize}
       }
     '';
 

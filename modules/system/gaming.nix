@@ -1,14 +1,23 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   # Monitors with a separate gaming refresh rate
   fastMonitors = lib.filter (m: m.gamingRefresh != null) config.sys.monitors;
 
-  selector = m:
-    if m.output != null then ".name == ${builtins.toJSON m.output}"
-    else ".make == ${builtins.toJSON m.make} and .model == ${builtins.toJSON m.model} and .serial == ${builtins.toJSON m.serial}";
+  selector =
+    m:
+    if m.output != null then
+      ".name == ${builtins.toJSON m.output}"
+    else
+      ".make == ${builtins.toJSON m.make} and .model == ${builtins.toJSON m.model} and .serial == ${builtins.toJSON m.serial}";
 
-  setMode = hz: m:
+  setMode =
+    hz: m:
     "set_mode ${lib.escapeShellArg (selector m)} ${toString m.width} ${toString m.height} ${builtins.toJSON hz}";
 
   # Steam launch option: hirefresh %command%

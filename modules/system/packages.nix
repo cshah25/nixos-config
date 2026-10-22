@@ -1,4 +1,9 @@
-{ config, lib, pkgs, pkgs-stable, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.sys = {
@@ -17,8 +22,6 @@
       brightnessctl
       xwayland-satellite
       wlr-randr
-    ] ++ lib.optionals (config.sys.desktop.gnome.enable && config.networking.hostName == "NixHome") [
-      ddcutil
     ];
   };
 }

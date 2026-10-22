@@ -1,4 +1,9 @@
-{ lib, inputs, osConfig, ... }:
+{
+  lib,
+  inputs,
+  osConfig,
+  ...
+}:
 
 # Declarative Zen Browser setup (privacy-first).
 # ⚠ Close Zen before `nixos-rebuild switch` / `home-manager switch`:
@@ -6,11 +11,14 @@
 
 let
   # Install an add-on from addons.mozilla.org, keyed by its extension ID.
-  extension = slug: extra: {
-    install_url = "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
-    installation_mode = "force_installed";
-    private_browsing = true;
-  } // extra;
+  extension =
+    slug: extra:
+    {
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
+      installation_mode = "force_installed";
+      private_browsing = true;
+    }
+    // extra;
 
   # Space IDs (changing an ID re-creates the space and loses its tabs)
   personalSpace = "d7e69647-9aae-4e3e-9dc8-b8537ae9568f";
@@ -93,7 +101,9 @@ in
       # ── Extensions ────────────────────────────────────────────────────────
       ExtensionSettings = {
         "uBlock0@raymondhill.net" = extension "ublock-origin" { default_area = "navbar"; };
-        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = extension "bitwarden-password-manager" { default_area = "navbar"; };
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = extension "bitwarden-password-manager" {
+          default_area = "navbar";
+        };
         "addon@darkreader.org" = extension "darkreader" { };
         "{34daeb50-c2d2-4f14-886a-7160b24d66a4}" = extension "youtube-shorts-block" { };
         "{88ebde3a-4581-4c6b-8019-2a05a9e3e938}" = extension "hide-youtube-shorts" { };
@@ -187,9 +197,44 @@ in
           theme = {
             opacity = 0.8;
             colors = [
-              { red = 4; green = 18; blue = 47; algorithm = "analogous"; lightness = 10; type = "explicit-lightness"; position = { x = 156; y = 159; }; }
-              { red = 25; green = 4; blue = 47; algorithm = "analogous"; lightness = 10; type = "explicit-lightness"; position = { x = 180; y = 149; }; primary = false; }
-              { red = 4; green = 47; blue = 42; algorithm = "analogous"; lightness = 10; type = "explicit-lightness"; position = { x = 149; y = 184; }; primary = false; }
+              {
+                red = 4;
+                green = 18;
+                blue = 47;
+                algorithm = "analogous";
+                lightness = 10;
+                type = "explicit-lightness";
+                position = {
+                  x = 156;
+                  y = 159;
+                };
+              }
+              {
+                red = 25;
+                green = 4;
+                blue = 47;
+                algorithm = "analogous";
+                lightness = 10;
+                type = "explicit-lightness";
+                position = {
+                  x = 180;
+                  y = 149;
+                };
+                primary = false;
+              }
+              {
+                red = 4;
+                green = 47;
+                blue = 42;
+                algorithm = "analogous";
+                lightness = 10;
+                type = "explicit-lightness";
+                position = {
+                  x = 149;
+                  y = 184;
+                };
+                primary = false;
+              }
             ];
           };
           pins."Proton Mail" = {
@@ -205,9 +250,41 @@ in
           theme = {
             opacity = 0.5;
             colors = [
-              { red = 3; green = 68; blue = 34; algorithm = "analogous"; lightness = 14; position = { x = 156; y = 195; }; }
-              { red = 3; green = 54; blue = 73; algorithm = "analogous"; lightness = 14; position = { x = 152; y = 172; }; primary = false; }
-              { red = 28; green = 68; blue = 3; algorithm = "analogous"; lightness = 14; position = { x = 177; y = 207; }; primary = false; }
+              {
+                red = 3;
+                green = 68;
+                blue = 34;
+                algorithm = "analogous";
+                lightness = 14;
+                position = {
+                  x = 156;
+                  y = 195;
+                };
+              }
+              {
+                red = 3;
+                green = 54;
+                blue = 73;
+                algorithm = "analogous";
+                lightness = 14;
+                position = {
+                  x = 152;
+                  y = 172;
+                };
+                primary = false;
+              }
+              {
+                red = 28;
+                green = 68;
+                blue = 3;
+                algorithm = "analogous";
+                lightness = 14;
+                position = {
+                  x = 177;
+                  y = 207;
+                };
+                primary = false;
+              }
             ];
           };
           pins."Canvas" = {

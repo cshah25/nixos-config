@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, hostname, pkgs-stable, ... }:
+{
+  config,
+  inputs,
+  username,
+  flakeDir,
+  ...
+}:
 
 {
   imports = [
@@ -9,9 +15,12 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs hostname pkgs-stable; };
-    
-    # Points to your user configuration folder
-    users.rayu = import ../../users/rayu; 
+    extraSpecialArgs = { inherit inputs username flakeDir; };
+
+    users.${username} = {
+      imports = [ ../../users/rayu ];
+      # Home Manager state follows the release the host was installed with
+      home.stateVersion = config.system.stateVersion;
+    };
   };
 }

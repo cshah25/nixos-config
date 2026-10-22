@@ -73,17 +73,21 @@ The system manages multiple upstream repositories and external flakes:
 Every system target evaluated via `nixpkgs.lib.nixosSystem` inherits custom context variables:
 ```nix
 specialArgs = {
-  inherit inputs pkgs-stable;
-  hostname = "<HostIdentifier>";
+  inherit inputs username flakeDir; # username = "rayu", flakeDir = "/home/rayu/nixos-config"
 };
 ```
-This enables sub-modules across system and user spaces to reference `pkgs-stable` or `inputs.zen-browser` without re-importing upstream flakes manually.
+The username and repo path are defined once in `flake.nix` and used everywhere else. Packages from `nixpkgs-stable` are available as `pkgs.stable.<name>` through an overlay in `core.nix`.
 
 ### 3. Defined System Configurations
 * **`NixHome`**: Primary workstation. Evaluates `./modules/system`, `./modules/home-manager`, and `./hosts/NixHome`.
-* **`NixPrecision`**: Mobile workstation profile.
 * **`NixThinkpad`**: Laptop profile.
+* **`NixPrecision`**: Mobile workstation profile. Currently left out of `nixosConfigurations` until its `hardware-configuration.nix` is committed.
+* **`iso`**: see below.
+
+`nix flake check` builds every host listed in `hosts` in `flake.nix`.
 * **`iso`**: Live USB recovery installation medium equipped with Calamares graphical installer, Plasma 6, Neovim, Tmux, Git, and network tools.
+
+Each host sets its own `system.stateVersion` (Home Manager follows it), its monitor layout (`sys.monitors`), and hardware-specific values such as `services.ollama.rocmOverrideGfx`.
 
 ---
 
@@ -97,9 +101,9 @@ Hosts declare their hardware parameters, storage layout, network configurations,
   * AMD GPU driver stack & RADV Vulkan runtime (`nixos-hardware/common/gpu/amd`)
   * SSD optimizations (`nixos-hardware/common/pc/ssd`)
 * **Declarative Feature Flags (`sys`)**:
-  * **Desktop Environment**: Niri Wayland window manager (`sys.desktop.niri.enable = true`). Plasma & GNOME disabled.
+  * **Desktop Environment**: Mango Wayland compositor (`sys.desktop.mango.enable = true`). Several desktops can be enabled at once; the X server only runs when Plasma or GNOME is on.
   * **Workloads & Engines**:
-    * `sys.gaming.enable = true` (Steam, Proton, Lutris, GameMode)
+    * `sys.gaming.enable = true` (Steam, Gamescope, and `hirefresh` for monitors with a `gamingRefresh`)
     * `sys.virtualisation.enable = true` (Libvirt/KVM, Docker, Kapsule)
     * `sys.development.enable = true` (Toolchains, Neovim, compilers)
     * `sys.apps.enable = true` & `sys.office.enable = true`
@@ -122,19 +126,19 @@ The system layer sets up core platform primitives and exposes high-level declara
 * `core.nix`: Sets fundamental system settings.
 * `apps.nix`: Configures core binaries and manages declarative Flatpak deployments via Flathub.
 * `boot.nix`: Handles bootloader and the latest Linux kernel packages.
-* `desktop.nix`: Desktop environment toggles and display servers.
+* `desktop.nix`: Desktop environment toggles, display managers, and `sys.desktop.cursorSize`.
 * `env.nix`: Sets global environment variables.
 * `fonts.nix`: Manages system-wide font installation.
 * `gaming.nix`: Exposes `sys.gaming.enable` to configure Steam, plus the `hirefresh` launch wrapper for monitors with a `gamingRefresh`.
 * `monitors.nix`: Exposes `sys.monitors`, the per-host monitor layout rendered into the Mango and Niri configs.
-* `hardware.nix`: Configures hardware peripherals and daemons.
+* `hardware.nix`: Configures hardware peripherals and daemons, and exposes `sys.hardware.ddc.enable` for DDC/CI monitor control.
 * `packages.nix`: Declares global CLI/GUI package suites and exposes top-level workstation feature flags.
 * `services.nix`: Exposes background daemon options (`sys.services.*`).
 * `users.nix`: Manages core user accounts, shell preferences, and group permissions.
 * `virtualisation.nix`: Exposes `sys.virtualisation.enable` to activate Docker, KVM/Libvirt, and `virt-manager`.
 
 ### Home Manager Bridge (`modules/home-manager/`)
-Integrates user-level configuration into the NixOS rebuild cycle using `home-manager.nixosModules.home-manager`. It forwards `specialArgs` (including `inputs` and `pkgs-stable`) into user modules and configures user state files under `users/rayu/`.
+Integrates user-level configuration into the NixOS rebuild cycle using `home-manager.nixosModules.home-manager`. It forwards `specialArgs` (`inputs`, `username`, `flakeDir`) into user modules and configures user state files under `users/rayu/`.
 
 ---
 
@@ -150,9 +154,10 @@ Here is the concise summary of your `users/rayu/` modules, matching the exact le
 * `dev.nix`: Development toolchains, compilers, and IDE packages.
 * `gaming.nix`: User-space game launchers and Proton utilities.
 * `git.nix`: Git identity configuration and credential management.
+* `mango.nix`: Mango config files (linked live into the repo, so edits apply without a rebuild), autostart, and display rules from `sys.monitors`.
 * `mime.nix`: Default file associations and media viewers.
 * `niri.nix`: Niri compositor config files; display outputs come from `sys.monitors`.
-* `nvim.nix`: Neovim setup and Lua configuration symlinks.
+* `nvim.nix`: Neovim setup; `lua/` is linked live into the repo, so edits apply without a rebuild.
 * `office.nix`: Office tools and Mailspring email client wrapper.
 * `packages.nix`: Miscellaneous base utilities and dynamic DE apps.
 * `services.nix`: User-level background services like the OneDrive rclone mount.
@@ -165,28 +170,32 @@ Here is the concise summary of your `users/rayu/` modules, matching the exact le
 
 ### 1. System Rebuild Commands
 
-#### Rebuild Local Host (Auto-detected via Hostname)
+Rebuilds go through [`nh`](https://github.com/nix-community/nh), which finds this flake via `NH_FLAKE` and picks the host from the hostname.
+
+#### Rebuild Local Host
 ```bash
-nrs # Alias for nixos-rebuild switch
+nrs        # nh os switch: build, show a package diff, then switch
+nrb        # nh os boot: same, but activate on next boot
+nfu        # nix flake update
+nh os switch --update   # update inputs and switch in one step
 ```
 
 #### Rebuild Specific Target Host
 ```bash
-sudo nixos-rebuild switch --flake .#<hostname>
+nh os switch -H <hostname>
 ```
 
 #### Dry Build / Test Configuration
 ```bash
-nixos-rebuild dry-build --flake .#<hostname>
+nh os build                 # build without activating
+nh os test                  # activate now, but not as the boot default
+nix flake check             # build every host
 ```
 
-#### Garbage Collection & Store Optimization
+#### Garbage Collection
+Old generations are cleaned weekly (`programs.nh.clean`: keep the last 7 days and at least 5). To run it by hand:
 ```bash
-# Delete older generations and collect garbage
-nix-collect-garbage -d
-
-# Optimize Nix store hardlinks
-nix-store --optimise
+nh clean all --keep-since 7d --keep 5
 ```
 
 ### 2. Building Recovery / Installation ISO
@@ -203,7 +212,7 @@ nix build .#nixosConfigurations.iso.config.system.build.isoImage
 | `flake.nix` | Flake Entrypoint | Flake inputs, channels, `specialArgs`, and host targets (`NixHome`, `NixPrecision`, `NixThinkpad`, `iso`). |
 | `hosts/` | Host Profiles | Host hardware imports, storage mounts, network specs, and `sys.*` feature flags. |
 | `modules/system/` | System Modules | System-level primitives, hardware drivers, desktop environments, daemons, and `sys.*` option declarations. |
-| `modules/home-manager/` | HM Integration | Bridges Home Manager into NixOS rebuilds and forwards flake `inputs`/`pkgs-stable` down to user modules. |
+| `modules/home-manager/` | HM Integration | Bridges Home Manager into NixOS rebuilds and forwards flake `inputs`, `username` and `flakeDir` down to user modules. |
 | `users/rayu/` | User Configuration | User-space packages, terminal apps, desktop window manager configs, themes, and toolchains. |
 | `users/rayu/dotfiles/` | Raw Dotfiles | Standalone `.kdl`, `.conf`, `.lua`, `.toml`, and `.zsh` configs linked directly via XDG paths. |
 

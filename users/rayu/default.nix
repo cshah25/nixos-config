@@ -1,4 +1,9 @@
-{ config, pkgs, hostname, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   imports = [
@@ -19,9 +24,8 @@
     ./office.nix
     ./gaming.nix
   ];
-  home.username = "rayu";
-  home.homeDirectory = "/home/rayu";
-  home.stateVersion = "25.11";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
 
   home.sessionVariables = {
     TERMINAL = "alacritty";

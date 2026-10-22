@@ -1,8 +1,14 @@
-{ config, pkgs, osConfig, ... }:
-
 {
-  home.packages = if osConfig.sys.gaming.enable then [ 
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
+
+lib.mkIf osConfig.sys.gaming.enable {
+  home.packages = [
     pkgs.heroic
     pkgs.protonup-qt
-  ] else [];
+  ];
 }

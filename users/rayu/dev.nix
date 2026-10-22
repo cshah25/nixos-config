@@ -1,13 +1,20 @@
-{ config, pkgs, pkgs-stable, osConfig, inputs, ... }:
-
 {
-  home.packages = if osConfig.sys.development.enable then [ 
-    pkgs.vscode 
-    #pkgs-stable.android-studio 
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  inputs,
+  ...
+}:
+
+lib.mkIf osConfig.sys.development.enable {
+  home.packages = [
+    pkgs.vscode
+    #pkgs.stable.android-studio
     pkgs.lefthook
     pkgs.android-tools
-    pkgs.nodejs 
-    pkgs.go 
+    pkgs.nodejs
+    pkgs.go
     pkgs.gcc
     pkgs.clang-tools
     pkgs.gdb
@@ -15,7 +22,7 @@
     pkgs.gopls
     pkgs.rust-analyzer
     pkgs.jdt-language-server
-    pkgs-stable.typescript-language-server  # unstable pnpm-deps hash mismatch (2026-10)
+    pkgs.stable.typescript-language-server # unstable pnpm-deps hash mismatch (2026-10)
     pkgs.omnisharp-roslyn
     pkgs.vscode-langservers-extracted # HTML, CSS, JSON, ESLint
     pkgs.yaml-language-server
@@ -33,20 +40,17 @@
     pkgs.texlab # LaTeX
     pkgs.zathura # Minimal PDF viewer for LaTeX live preview
     pkgs.gnumake
-    pkgs-stable.texlive.combined.scheme-medium
-    pkgs.gnumake
+    pkgs.stable.texlive.combined.scheme-medium
     pkgs.docker-compose
     pkgs.azuredatastudio
     pkgs.dotnet-sdk_10
     pkgs.openssl
     pkgs.netcoredbg
     pkgs.roslyn-ls
-    pkgs.fontconfig
-    pkgs.freetype
     pkgs.distrobox
     pkgs.claude-code
     inputs.kapsule.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ] else [];
+  ];
 
   programs.java.enable = true;
 }

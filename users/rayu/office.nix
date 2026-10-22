@@ -1,9 +1,15 @@
-{ config, pkgs, pkgs-stable, osConfig, lib, ... }:
+{
+  config,
+  pkgs,
+  osConfig,
+  lib,
+  ...
+}:
 
 let
   mailspring-wrapped = pkgs.symlinkJoin {
     name = "mailspring-wrapped";
-    paths = [ pkgs-stable.mailspring ];
+    paths = [ pkgs.stable.mailspring ];
     buildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/mailspring \
@@ -12,9 +18,9 @@ let
   };
 in
 lib.mkIf osConfig.sys.office.enable {
-  home.packages = [ 
-    pkgs-stable.libreoffice 
-    pkgs-stable.zoom-us
+  home.packages = [
+    pkgs.stable.libreoffice
+    pkgs.stable.zoom-us
     mailspring-wrapped
   ];
 
@@ -24,7 +30,13 @@ lib.mkIf osConfig.sys.office.enable {
     exec = "mailspring --password-store=\"gnome-libsecret\" %U";
     icon = "mailspring";
     terminal = false;
-    categories = [ "Network" "Email" ];
-    mimeType = [ "x-scheme-handler/mailto" "x-scheme-handler/mailspring" ];
+    categories = [
+      "Network"
+      "Email"
+    ];
+    mimeType = [
+      "x-scheme-handler/mailto"
+      "x-scheme-handler/mailspring"
+    ];
   };
 }

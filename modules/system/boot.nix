@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.sys.boot.windows;
@@ -28,10 +33,12 @@ in
     }
 
     (lib.mkIf cfg.enable {
-      assertions = [{
-        assertion = cfg.espUuid != null;
-        message = "sys.boot.windows.enable is set but espUuid is null";
-      }];
+      assertions = [
+        {
+          assertion = cfg.espUuid != null;
+          message = "sys.boot.windows.enable is set but espUuid is null";
+        }
+      ];
 
       boot.loader.limine.extraEntries = ''
         /Windows
