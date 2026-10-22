@@ -11,7 +11,7 @@ let
   fileManager =
     if isPlasma then [ "org.kde.dolphin.desktop" ]
     else if isGnome then [ "org.gnome.Nautilus.desktop" ]
-    else [ "thunar.desktop" ];  # tiling WMs: Mango, Niri, Hyprland
+    else [ "thunar.desktop" ];  # tiling WMs: Mango, Niri
 
   # Target desktop files
   codeEditor = [ "code.desktop" ];
@@ -88,7 +88,7 @@ in
       pkgs.loupe
       pkgs.decibels
     ] else [
-      # Tiling WMs (Mango, Niri, Hyprland)
+      # Tiling WMs (Mango, Niri)
     pkgs.file-roller
     pkgs.papers
     pkgs.loupe

@@ -6,7 +6,6 @@
     ./theme.nix
     ./niri.nix
     ./mango.nix
-    ./hyprland.nix
     ./mime.nix
     ./thunar.nix
     ./services.nix

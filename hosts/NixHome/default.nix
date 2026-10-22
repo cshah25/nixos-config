@@ -13,9 +13,20 @@
       plasma.enable = false;
       gnome.enable = false;
       niri.enable = false;
-      hyprland.enable = false;
       mango.enable = true;
     };
+    monitors = [
+      {
+        make = "ASUSTek COMPUTER INC"; model = "ASUS VG289"; serial = "R9LMTF128641";
+        width = 3840; height = 2160; refresh = 60; scale = 1.5;
+        x = 0; y = 0;
+      }
+      {
+        make = "Microstep"; model = "MAG 275UD E14"; serial = "CE8M435A00519";
+        width = 3840; height = 2160; refresh = 60; gamingRefresh = 144.001; scale = 1.5;
+        x = 2560; y = 0;
+      }
+    ];
     gaming.enable = true;
     virtualisation.enable = true;
     apps.enable = true;

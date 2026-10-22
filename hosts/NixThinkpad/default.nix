@@ -1,4 +1,4 @@
-{inputs, ...}:
+{ inputs, pkgs, ... }:
 
 {
   imports = [
@@ -12,9 +12,11 @@
       plasma.enable = false;
       gnome.enable = false;
       niri.enable = false;
-      hyprland.enable = false;
       mango.enable = true;
     };
+    monitors = [
+      { output = "eDP-1"; width = 1920; height = 1200; refresh = 60.003; x = 0; y = 1080; }
+    ];
     gaming.enable = true;
     virtualisation.enable = true;
     apps.enable = true;
@@ -32,6 +34,7 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
+  # The E14's mic-mute LED stays lit even when the mic is unmuted
   systemd.services.disable-mute = {
     description = "Disable Mute LED";
     wantedBy = [ "multi-user.target" ];
@@ -39,7 +42,9 @@
     
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "/home/rayu/.local/bin/disable_mute.sh";
+      ExecStart = pkgs.writeShellScript "disable-micmute-led" ''
+        echo 0 > /sys/class/leds/platform::micmute/brightness
+      '';
       RemainAfterExit = true;
     };    
   };

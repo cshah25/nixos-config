@@ -25,9 +25,6 @@ in
          pkgs.kdePackages.kamoso
          pkgs.kdePackages.kwalletmanager
       ] else [])
-    ++ (if osConfig.sys.desktop.hyprland.enable then [
-         pkgs.kitty
-      ] else [])
     ++ (if osConfig.sys.desktop.mango.enable || osConfig.sys.desktop.niri.enable then [
          pkgs.noctalia
       ] else [])

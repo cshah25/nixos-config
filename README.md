@@ -1,6 +1,6 @@
 # NixOS Multi-Host Architecture & System Configuration
 
-A modular, flake-based **NixOS** and **Home Manager** config for multi-host deployment (`NixHome`, `NixPrecision`, `NixThinkpad`, and a custom bootable `ISO`). This repository implements custom module abstraction layers, dual-channel package pinning (unstable core with pinned stable fallback), dotfile symlinking/management, and cross-desktop environment support (Hyprland, Niri, KDE Plasma, GNOME).
+A modular, flake-based **NixOS** and **Home Manager** config for multi-host deployment (`NixHome`, `NixPrecision`, `NixThinkpad`, and a custom bootable `ISO`). This repository implements custom module abstraction layers, dual-channel package pinning (unstable core with pinned stable fallback), dotfile symlinking/management, and cross-desktop environment support (Mango, Niri, KDE Plasma, GNOME).
 
 ---
 
@@ -29,6 +29,7 @@ The configuration is structured as an extensible multi-host NixOS workspace with
 │       ├── fonts.nix
 │       ├── gaming.nix
 │       ├── hardware.nix
+│       ├── monitors.nix
 │       ├── packages.nix
 │       ├── services.nix
 │       ├── users.nix
@@ -42,7 +43,6 @@ The configuration is structured as an extensible multi-host NixOS workspace with
         ├── dev.nix
         ├── gaming.nix
         ├── git.nix
-        ├── hyprland.nix
         ├── mime.nix
         ├── niri.nix
         ├── nvim.nix
@@ -66,7 +66,6 @@ The system manages multiple upstream repositories and external flakes:
 * **`home-manager`**: Tracks home-manager unstable, pinned to match main `nixpkgs`.
 * **`nixos-hardware`**: Hardware-specific kernel and module tune-ups for vendor hardware profiles.
 * **`kapsule`**: Custom graphical container engine input created by me (`github:cshah25/kapsule`).
-* **`hyprland`**: Upstream Hyprland Wayland compositor development builds.
 * **`zen-browser`**: Zen Browser flake integration following main `nixpkgs`.
 * **`nix-flatpak`**: Declarative Flatpak management module.
 
@@ -126,7 +125,8 @@ The system layer sets up core platform primitives and exposes high-level declara
 * `desktop.nix`: Desktop environment toggles and display servers.
 * `env.nix`: Sets global environment variables.
 * `fonts.nix`: Manages system-wide font installation.
-* `gaming.nix`: Exposes `sys.gaming.enable` to configure Steam.
+* `gaming.nix`: Exposes `sys.gaming.enable` to configure Steam, plus the `hirefresh` launch wrapper for monitors with a `gamingRefresh`.
+* `monitors.nix`: Exposes `sys.monitors`, the per-host monitor layout rendered into the Mango and Niri configs.
 * `hardware.nix`: Configures hardware peripherals and daemons.
 * `packages.nix`: Declares global CLI/GUI package suites and exposes top-level workstation feature flags.
 * `services.nix`: Exposes background daemon options (`sys.services.*`).
@@ -150,13 +150,12 @@ Here is the concise summary of your `users/rayu/` modules, matching the exact le
 * `dev.nix`: Development toolchains, compilers, and IDE packages.
 * `gaming.nix`: User-space game launchers and Proton utilities.
 * `git.nix`: Git identity configuration and credential management.
-* `hyprland.nix`: Hyprland configuration symlinks and per-host monitor rules.
 * `mime.nix`: Default file associations and media viewers.
-* `niri.nix`: Niri compositor config files and display output rules.
+* `niri.nix`: Niri compositor config files; display outputs come from `sys.monitors`.
 * `nvim.nix`: Neovim setup and Lua configuration symlinks.
 * `office.nix`: Office tools and Mailspring email client wrapper.
 * `packages.nix`: Miscellaneous base utilities and dynamic DE apps.
-* `services.nix`: User-level background services like KDE Connect.
+* `services.nix`: User-level background services like the OneDrive rclone mount.
 * `theme.nix`: GTK settings, dark mode, cursor, and icon themes.
 * `zsh.nix`: Zsh shell configuration, Powerlevel10k theme, and custom aliases.
 

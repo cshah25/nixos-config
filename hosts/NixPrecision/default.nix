@@ -12,7 +12,6 @@
       plasma.enable = false;
       gnome.enable = true;
       niri.enable = true;
-      hyprland.enable = true;
     };
     gaming.enable = false;
     virtualisation.enable = true;

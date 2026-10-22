@@ -1,5 +1,15 @@
-{ config, pkgs, hostname, ... }:
+{ config, lib, pkgs, hostname, osConfig, ... }:
 
+let
+  # Rendered from sys.monitors in the host config
+  outputBlock = m: ''
+    output "${if m.output != null then m.output else "${m.make} ${m.model} ${m.serial}"}" {
+        mode "${toString m.width}x${toString m.height}@${builtins.toJSON m.refresh}"
+        scale ${builtins.toJSON m.scale}
+        position x=${toString m.x} y=${toString m.y}
+    }
+  '';
+in
 {
   xdg.configFile = {
     "niri/config.kdl".source = ./dotfiles/niri/config.kdl;
@@ -17,30 +27,6 @@
       }
     '';
 
-    "niri/cfg/display.kdl".text = if hostname == "NixHome" then ''
-      output "DP-3" {
-          mode "3840x2160@144.001"
-          scale 1.5
-          position x=0 y=0
-      }
-
-      output "DP-2" {
-          mode "3840x2160@60"
-          scale 1.5
-          position x=2560 y=0
-      }
-    '' else if hostname == "NixPrecision" then ''
-      output "eDP-1" {
-          mode "1920x1200@59.950"
-          scale 1
-          position x=0 y=1080 
-      }
-    '' else if hostname == "NixThinkpad" then ''
-      output "eDP-1" {
-          mode "1920x1200@60.003"
-          scale 1
-          position x=0 y=1080
-      }
-    '' else "";
+    "niri/cfg/display.kdl".text = lib.concatMapStringsSep "\n" outputBlock osConfig.sys.monitors;
   };
 }

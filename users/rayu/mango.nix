@@ -1,4 +1,4 @@
-{ config, pkgs, hostname, ... }:
+{ config, lib, pkgs, osConfig, ... }:
 
 let
   autostartScript = pkgs.writeShellScript "mango-autostart" ''
@@ -26,6 +26,22 @@ let
 
     (nextcloud --background) &
   '';
+
+  # Rendered from sys.monitors in the host config
+  monitorRule = m: "monitor_rule=" + lib.concatStringsSep "," (
+    lib.optional (m.output != null) "name:${m.output}"
+    ++ lib.optional (m.make != null) "make:${m.make}"
+    ++ lib.optional (m.model != null) "model:${m.model}"
+    ++ lib.optional (m.serial != null) "serial:${m.serial}"
+    ++ [
+      "width:${toString m.width}"
+      "height:${toString m.height}"
+      "refresh:${builtins.toJSON m.refresh}"
+      "scale:${builtins.toJSON m.scale}"
+      "x:${toString m.x}"
+      "y:${toString m.y}"
+    ]
+  );
 in
 {
   xdg.configFile = {
@@ -40,18 +56,9 @@ in
     "mango/cfg/rules.conf".source = ./dotfiles/mango/cfg/rules.conf;
     "mango/cfg/bind.conf".source = ./dotfiles/mango/cfg/bind.conf;
 
-   # "mango/cfg/display.conf".text = if hostname == "NixHome" then ''
-   #   # NixHome dual 4K monitor configuration
-   #   xwayland_ignore_scale=1
-
-   #   monitor_rule=name:DP-3,width:3840,height:2160,refresh:144,scale:1.5,x:0,y:0
-   #   monitor_rule=name:DP-2,width:3840,height:2160,refresh:60,scale:1.5,x:2560,y:0
-   # '' else if hostname == "NixPrecision" then ''
-   #   # NixPrecision Dell laptop display
-   #   monitor_rule=name:eDP-1,width:1920,height:1200,refresh:60,scale:1,x:0,y:1080
-   # '' else if hostname == "NixThinkpad" then ''
-   #   # NixThinkpad Lenovo laptop display
-   #   monitor_rule=name:eDP-1,width:1920,height:1200,refresh:60,scale:1,x:0,y:1080
-   # '' else "";
+    "mango/cfg/display.conf".text = ''
+      xwayland_ignore_scale=1
+      ${lib.concatMapStringsSep "\n" monitorRule osConfig.sys.monitors}
+    '';
   };
 }

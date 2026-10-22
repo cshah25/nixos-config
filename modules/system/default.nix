@@ -8,6 +8,7 @@
     ./fonts.nix
     ./gaming.nix
     ./hardware.nix
+    ./monitors.nix
     ./packages.nix
     ./services.nix
     ./users.nix
