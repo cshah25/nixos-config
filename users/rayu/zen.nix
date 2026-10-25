@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   inputs,
   osConfig,
   ...
@@ -30,9 +31,14 @@ in
     inputs.zen-browser.homeModules.twilight
   ];
 
+  # PWAsForFirefox CLI/runtime (paired with the native messaging host below)
+  home.packages = lib.mkIf osConfig.sys.apps.enable [ pkgs.firefoxpwa ];
+
   programs.zen-browser = lib.mkIf osConfig.sys.apps.enable {
     enable = true;
     # Default-browser MIME associations are handled in mime.nix
+
+    nativeMessagingHosts = [ pkgs.firefoxpwa ];
 
     # ── Policies (policies.json) ────────────────────────────────────────────
     # Reference: https://mozilla.github.io/policy-templates/
