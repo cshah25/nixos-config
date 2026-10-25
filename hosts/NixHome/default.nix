@@ -39,7 +39,7 @@
         width = 3840;
         height = 2160;
         refresh = 60;
-        gamingRefresh = 144.001;
+        gamingRefresh = 144.001007;
         scale = 1.5;
         x = 2560;
         y = 0;
