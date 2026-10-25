@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -29,7 +30,11 @@ in
         secureBoot.enable = true;
       };
       boot.loader.efi.canTouchEfiVariables = true;
-      boot.kernelPackages = pkgs.linuxPackages_latest;
+      # Hosts pick a CPU-tuned kernel from pkgs.cachyosKernels.*
+      boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+
+      # pinned: builds against the flake's own nixpkgs so the binary cache hits
+      nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
     }
 
     (lib.mkIf cfg.enable {

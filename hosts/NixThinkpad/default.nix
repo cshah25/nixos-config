@@ -49,6 +49,9 @@
 
   system.stateVersion = "25.11";
 
+  # Ryzen 7 250 is Zen 4 (Hawk Point); EEVDF is CachyOS's general-purpose default
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-zen4;
+
   systemd.services.NetworkManager-wait-online.enable = false;
 
   # The E14's mic-mute LED stays lit even when the mic is unmuted

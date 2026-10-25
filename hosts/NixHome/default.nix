@@ -65,6 +65,9 @@
 
   system.stateVersion = "25.11";
 
+  # BORE for gaming responsiveness; i7-12700K has AVX-512 fused off, so v3 is the highest tier
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v3;
+
   # gfx1101 isn't on ROCm's official support list
   services.ollama.rocmOverrideGfx = "11.0.1";
 

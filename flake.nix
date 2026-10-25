@@ -5,6 +5,8 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    # No nixpkgs follows: the kernel patches are pinned to this flake's own nixpkgs
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
