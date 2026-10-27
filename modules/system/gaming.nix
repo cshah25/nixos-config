@@ -65,6 +65,20 @@ in
       capSysNice = false;
     };
 
+    # Launch option: gamemoderun %command%
+    # Switches the CPU to the performance governor and pins the GPU clocks high while a game runs.
+    programs.gamemode = {
+      enable = true;
+      settings = {
+        general.renice = 10;
+        gpu = {
+          apply_gpu_optimisations = "accept-responsibility";
+          gpu_device = 2; # /sys/class/drm/card2 is the AMD dGPU (card1 is the Intel iGPU)
+          amd_performance_level = "high";
+        };
+      };
+    };
+
     environment.systemPackages = lib.optional (fastMonitors != [ ]) hirefresh;
   };
 }

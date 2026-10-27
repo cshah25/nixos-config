@@ -20,6 +20,7 @@
       "libvirtd"
       "kvm"
     ]
+    ++ lib.optionals config.sys.gaming.enable [ "gamemode" ]
     ++ lib.optionals config.sys.hardware.ddc.enable [ "i2c" ];
   };
 }
