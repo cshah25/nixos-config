@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   osConfig,
@@ -34,6 +33,7 @@ in
     ]
     ++ lib.optionals (osConfig.sys.desktop.mango.enable || osConfig.sys.desktop.niri.enable) [
       pkgs.noctalia
+      pkgs.ddcutil
     ]
     ++ lib.optionals osConfig.sys.desktop.gnome.enable [
       pkgs.gnome-weather
