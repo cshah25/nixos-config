@@ -28,7 +28,7 @@ in
 
 {
   imports = [
-    inputs.zen-browser.homeModules.twilight
+    inputs.zen-browser.homeModules.beta
   ];
 
   # PWAsForFirefox CLI/runtime (paired with the native messaging host below)
