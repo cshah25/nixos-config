@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   pkgs,
   ...
@@ -18,7 +17,7 @@
       plasma.enable = false;
       gnome.enable = false;
       niri.enable = false;
-      mango.enable = true;
+      mango.enable = false;
       umbriel.enable = true;
     };
     monitors = [
