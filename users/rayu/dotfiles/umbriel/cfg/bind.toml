@@ -101,6 +101,9 @@
 
 "Mod+Tab" = "workspace-focus-last"
 
+# ─── Overview (same as the 4-finger swipe) ───
+"Mod+O" = { action = "overview-toggle", repeat = false }
+
 # ─── Screenshots (Noctalia) ───
 "Mod+Shift+1" = { action = "spawn noctalia msg screenshot-region", repeat = false }
 "Mod+Shift+2" = { action = "spawn noctalia msg screenshot-fullscreen", repeat = false }

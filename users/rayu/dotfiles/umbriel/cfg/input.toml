@@ -10,6 +10,10 @@ natural_scroll = true
 accel_profile = "flat"
 sensitivity = 0.0
 
+# Focus the window under the pointer
+[input.focus]
+follows_mouse = true
+
 # Mouse
 [input.mouse]
 accel_profile = "flat"
