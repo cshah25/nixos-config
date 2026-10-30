@@ -31,10 +31,17 @@ in
       pkgs.kdePackages.kamoso
       pkgs.kdePackages.kwalletmanager
     ]
-    ++ lib.optionals (osConfig.sys.desktop.mango.enable || osConfig.sys.desktop.niri.enable) [
-      pkgs.noctalia
-      pkgs.ddcutil
-    ]
+    ++
+      lib.optionals
+        (
+          osConfig.sys.desktop.mango.enable
+          || osConfig.sys.desktop.niri.enable
+          || osConfig.sys.desktop.umbriel.enable
+        )
+        [
+          pkgs.noctalia
+          pkgs.ddcutil
+        ]
     ++ lib.optionals osConfig.sys.desktop.gnome.enable [
       pkgs.gnome-weather
       pkgs.gnome-tweaks

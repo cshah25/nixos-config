@@ -11,6 +11,7 @@
     ./theme.nix
     ./niri.nix
     ./mango.nix
+    ./umbriel.nix
     ./mime.nix
     ./thunar.nix
     ./services.nix

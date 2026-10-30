@@ -9,10 +9,13 @@
 
 let
   cfg = config.sys.desktop;
+  # Standalone Wayland compositors paired with the Noctalia shell
+  tiling = cfg.niri.enable || cfg.mango.enable || cfg.umbriel.enable;
 in
 {
   imports = [
     inputs.mangowm.nixosModules.mango
+    inputs.umbriel.nixosModules.default
     inputs.noctalia-greeter.nixosModules.default
   ];
 
@@ -21,6 +24,7 @@ in
     gnome.enable = lib.mkEnableOption "GNOME";
     niri.enable = lib.mkEnableOption "Niri";
     mango.enable = lib.mkEnableOption "Mango WM";
+    umbriel.enable = lib.mkEnableOption "Umbriel";
     cursorSize = lib.mkOption {
       type = lib.types.int;
       default = 24;
@@ -28,7 +32,7 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || cfg.niri.enable || cfg.mango.enable) {
+  config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || tiling) {
     # X server only for the full DEs; standalone Wayland compositors run XWayland themselves
     services.xserver.enable = cfg.plasma.enable || cfg.gnome.enable;
 
@@ -49,11 +53,9 @@ in
       lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass"
     );
 
-    # Use Noctalia Greeter for standalone compositors (Niri, Mango) when no full DE is active
+    # Use Noctalia Greeter for standalone compositors (Niri, Mango, Umbriel) when no full DE is active
     services.displayManager.noctalia-greeter = {
-      enable = lib.mkDefault (
-        (cfg.niri.enable || cfg.mango.enable) && !cfg.plasma.enable && !cfg.gnome.enable
-      );
+      enable = lib.mkDefault (tiling && !cfg.plasma.enable && !cfg.gnome.enable);
       greeter-args = lib.mkDefault "";
       passwordless-sync-users = [ username ];
       settings = {
@@ -69,19 +71,21 @@ in
     };
 
     programs.niri.enable = cfg.niri.enable;
-    services.upower.enable = lib.mkDefault (cfg.niri.enable || cfg.mango.enable);
+    services.upower.enable = lib.mkDefault tiling;
 
     programs.mango.enable = cfg.mango.enable;
+    # Also installs xdg-desktop-portal-umbriel for screen sharing and registers the greeter session
+    programs.umbriel.enable = cfg.umbriel.enable;
 
     # Enable system-level Thunar and Xfconf for tiling WMs (provides D-Bus services and settings backend)
-    programs.thunar = lib.mkIf (cfg.niri.enable || cfg.mango.enable) {
+    programs.thunar = lib.mkIf tiling {
       enable = true;
       plugins = [
         pkgs.thunar-archive-plugin
         pkgs.thunar-volman
       ];
     };
-    programs.xfconf.enable = lib.mkDefault (cfg.niri.enable || cfg.mango.enable);
+    programs.xfconf.enable = lib.mkDefault tiling;
 
     # Configure xdg portal for Mango WM screen sharing & desktop integration
     xdg.portal = lib.mkIf cfg.mango.enable {

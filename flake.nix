@@ -19,6 +19,8 @@
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # cachix branch = latest commit with cached binaries; no nixpkgs follows, or the cache would miss
+    umbriel.url = "github:noctalia-dev/umbriel/cachix";
     noctalia-greeter = {
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";

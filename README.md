@@ -1,6 +1,6 @@
 # NixOS Multi-Host Architecture & System Configuration
 
-A modular, flake-based **NixOS** and **Home Manager** config for multi-host deployment (`NixHome`, `NixPrecision`, `NixThinkpad`, and a custom bootable `ISO`). This repository implements custom module abstraction layers, dual-channel package pinning (unstable core with pinned stable fallback), dotfile symlinking/management, and cross-desktop environment support (Mango, Niri, KDE Plasma, GNOME).
+A modular, flake-based **NixOS** and **Home Manager** config for multi-host deployment (`NixHome`, `NixPrecision`, `NixThinkpad`, and a custom bootable `ISO`). This repository implements custom module abstraction layers, dual-channel package pinning (unstable core with pinned stable fallback), dotfile symlinking/management, and cross-desktop environment support (Mango, Umbriel, Niri, KDE Plasma, GNOME).
 
 ---
 
@@ -101,7 +101,7 @@ Hosts declare their hardware parameters, storage layout, network configurations,
   * AMD GPU driver stack & RADV Vulkan runtime (`nixos-hardware/common/gpu/amd`)
   * SSD optimizations (`nixos-hardware/common/pc/ssd`)
 * **Declarative Feature Flags (`sys`)**:
-  * **Desktop Environment**: Mango Wayland compositor (`sys.desktop.mango.enable = true`). Several desktops can be enabled at once; the X server only runs when Plasma or GNOME is on.
+  * **Desktop Environment**: Mango and Umbriel Wayland compositors (`sys.desktop.mango.enable`, `sys.desktop.umbriel.enable`), both picked from the Noctalia greeter. Several desktops can be enabled at once; the X server only runs when Plasma or GNOME is on.
   * **Workloads & Engines**:
     * `sys.gaming.enable = true` (Steam, Gamescope, and `hirefresh` for monitors with a `gamingRefresh`)
     * `sys.virtualisation.enable = true` (Libvirt/KVM, Docker, Kapsule)
@@ -130,7 +130,7 @@ The system layer sets up core platform primitives and exposes high-level declara
 * `env.nix`: Sets global environment variables.
 * `fonts.nix`: Manages system-wide font installation.
 * `gaming.nix`: Exposes `sys.gaming.enable` to configure Steam, plus the `hirefresh` launch wrapper for monitors with a `gamingRefresh`.
-* `monitors.nix`: Exposes `sys.monitors`, the per-host monitor layout rendered into the Mango and Niri configs.
+* `monitors.nix`: Exposes `sys.monitors`, the per-host monitor layout rendered into the Mango, Niri, and Umbriel configs.
 * `hardware.nix`: Configures hardware peripherals and daemons, and exposes `sys.hardware.ddc.enable` for DDC/CI monitor control.
 * `packages.nix`: Declares global CLI/GUI package suites and exposes top-level workstation feature flags.
 * `services.nix`: Exposes background daemon options (`sys.services.*`).
@@ -157,6 +157,7 @@ Here is the concise summary of your `users/rayu/` modules, matching the exact le
 * `mango.nix`: Mango config files (linked live into the repo, so edits apply without a rebuild), autostart, and display rules from `sys.monitors`.
 * `mime.nix`: Default file associations and media viewers.
 * `niri.nix`: Niri compositor config files; display outputs come from `sys.monitors`.
+* `umbriel.nix`: Umbriel config files (linked live into the repo like Mango's), and output sections from `sys.monitors`.
 * `nvim.nix`: Neovim setup; `lua/` is linked live into the repo, so edits apply without a rebuild.
 * `office.nix`: Office tools and Mailspring email client wrapper.
 * `packages.nix`: Miscellaneous base utilities and dynamic DE apps.

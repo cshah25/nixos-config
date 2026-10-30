@@ -1,0 +1,30 @@
+# ─── Layout & Window Appearance ───
+# Default layout across all workspaces (Mango scroller)
+[layout]
+mode = "scrolling"
+# Window gaps (8px matching Niri); Umbriel uses one gap for inner and outer
+gap = 8
+# Cycled by Mod+Equal; same widths as the Mod+Ctrl/Shift+Minus and Mod+Ctrl+F binds
+extent_presets = [0.5, 0.8, 1.0]
+
+[layout.scrolling]
+# Mango's scroller_default_proportion default
+default_extent_fraction = 0.9
+
+# Window borders & corner radius (5px matching Niri)
+[appearance]
+border_width = 1
+corner_radius = 5
+
+# Theme colors
+[colors]
+# root_color
+backdrop = "#1A1B26FF"
+
+[colors.border]
+focused = "#7AA2F7FF"
+unfocused = "#1A1B26FF"
+
+# Opacity
+# [[window_rule]]
+# opacity = 0.85

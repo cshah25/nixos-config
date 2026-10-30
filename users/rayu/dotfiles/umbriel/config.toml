@@ -1,0 +1,15 @@
+# ─── Umbriel Main Configuration ───
+# https://docs.noctalia.dev/umbriel/
+# Ported from dotfiles/mango. Check edits with `umbriel config validate`.
+
+# Tables merge by key; display.toml is generated from sys.monitors in umbriel.nix
+[include]
+files = [
+  "cfg/env.toml",
+  "cfg/autostart.toml",
+  "cfg/input.toml",
+  "cfg/display.toml",
+  "cfg/layout.toml",
+  "cfg/rules.toml",
+  "cfg/bind.toml",
+]

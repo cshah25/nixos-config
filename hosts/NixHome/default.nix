@@ -19,6 +19,7 @@
       gnome.enable = false;
       niri.enable = false;
       mango.enable = true;
+      umbriel.enable = true;
     };
     monitors = [
       {

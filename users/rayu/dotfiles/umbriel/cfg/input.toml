@@ -1,0 +1,17 @@
+# ─── Input Devices ───
+# Keyboard
+[input.keyboard]
+numlock_toggle = true
+
+# Touchpad
+[input.touchpad]
+tap = true
+natural_scroll = true
+accel_profile = "flat"
+sensitivity = 0.0
+
+# Mouse
+[input.mouse]
+accel_profile = "flat"
+sensitivity = 0.0
+natural_scroll = false

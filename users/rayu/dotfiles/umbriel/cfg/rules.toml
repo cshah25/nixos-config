@@ -1,0 +1,34 @@
+# ─── Window & Layer Rules ───
+
+# Blur behind every window (Mango blur=1)
+[[window_rule]]
+blur = true
+
+# A lone window fills the screen (Mango's scroller_default_proportion_single default)
+[[window_rule]]
+match.is_alone = true
+default_scrolling_extent = 1.0
+
+# Noctalia's own settings window and Umbriel's screen-share picker float
+[[window_rule]]
+match.app_id = "^dev.noctalia.Noctalia$"
+default_floating = true
+default_floating_size_px = { width = 1020, height = 900 }
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.UmbrielSharePicker$"
+default_floating = true
+default_floating_size_px = { width = 800, height = 600 }
+
+# Full opacity for media/browsers/editor
+# [[window_rule]]
+# match.app_id = "^(zen|code|firefox|equibop)$"
+# opacity = 1.0
+
+# Noctalia layer surfaces: Mango had blur_layer=0, so no layer blur.
+# To get Noctalia's frosted panels, uncomment:
+# [[layer_rule]]
+# match.namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd|desktop-widget-[^\"]*)$"
+# blur = true
+# blur_ignore_alpha = 0.5
+# blur_popups = true

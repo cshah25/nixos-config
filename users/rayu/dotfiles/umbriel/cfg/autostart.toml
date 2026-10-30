@@ -1,0 +1,11 @@
+# ─── Startup Applications ───
+# umbriel.service already imports the session environment into systemd/D-Bus and
+# starts graphical-session.target before these run, so Mango's env/portal steps aren't needed.
+# Each entry runs through /bin/sh. Changes need an Umbriel restart.
+[general]
+autostart = [
+  "noctalia",
+  "wayland-pipewire-idle-inhibit",
+  "sleep 3 && equibop",
+  "nextcloud --background",
+]
