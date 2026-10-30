@@ -26,8 +26,7 @@ let
       mode = "${toString m.width}x${toString m.height}@${builtins.toJSON m.refresh}"
       scale = ${builtins.toJSON m.scale}
       position = [${toString m.x}, ${toString m.y}]
-      # Fixed 1-9 like Mango tags, so Mod+N always lands on workspace N
-      workspaces = 9
+      workspaces = ["一", "二", "三", "四", "五", "六", "七", "八", "九"]
     '';
 in
 {
