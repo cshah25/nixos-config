@@ -40,7 +40,6 @@ in
         )
         [
           pkgs.noctalia
-          pkgs.ddcutil
         ]
     ++ lib.optionals osConfig.sys.desktop.gnome.enable [
       pkgs.gnome-weather

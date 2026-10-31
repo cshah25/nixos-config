@@ -17,8 +17,8 @@
       plasma.enable = false;
       gnome.enable = false;
       niri.enable = false;
-      mango.enable = false;
-      umbriel.enable = true;
+      mango.enable = true;
+      umbriel.enable = false;
     };
     monitors = [
       {
@@ -55,8 +55,8 @@
       tailscale.enable = true;
       fwupd.enable = true;
       displaylink.enable = false;
-      rgb.enable = true;
-      ollama.enable = true;
+      rgb.enable = false;
+      ollama.enable = false;
       onedrive.enable = true;
       printing.enable = true;
     };
