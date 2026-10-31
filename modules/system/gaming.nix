@@ -66,17 +66,11 @@ in
     };
 
     # Launch option: gamemoderun %command%
-    # Switches the CPU to the performance governor and pins the GPU clocks high while a game runs.
+    # Switches the CPU to the performance governor while a game runs.
+    # GPU clocks are left to LACT so the two don't fight over the same setting.
     programs.gamemode = {
       enable = true;
-      settings = {
-        general.renice = 10;
-        gpu = {
-          apply_gpu_optimisations = "accept-responsibility";
-          gpu_device = 2; # /sys/class/drm/card2 is the AMD dGPU (card1 is the Intel iGPU)
-          amd_performance_level = "high";
-        };
-      };
+      settings.general.renice = 10;
     };
 
     environment.systemPackages = lib.optional (fastMonitors != [ ]) hirefresh;

@@ -99,4 +99,55 @@
 
   # AMD GPU stuff
   hardware.graphics.enable = true;
+
+  # Under "auto", dual 4K60 keeps VRAM at 772MHz (~80°C) on the desktop; "low" settles at 456MHz
+  # but also floors the core clock, so LACT switches to "auto" whenever a game is running.
+  # Fan control stays disabled: LACT then resets the fans to the firmware's own curve, which
+  # watches junction temperature (a custom edge-based curve once let junction hit 110°C).
+  services.lact = {
+    enable = true;
+    settings =
+      let
+        gpu = "1002:747E-1002:0E37-0000:03:00.0"; # RX 7800 XT
+      in
+      {
+        version = 7;
+        daemon = {
+          log_level = "info";
+          admin_group = "wheel";
+          disable_clocks_cleanup = false;
+        };
+        apply_settings_timer = 5;
+        gpus.${gpu} = {
+          fan_control_enabled = false;
+          performance_level = "low";
+        };
+        profiles.gaming = {
+          gpus.${gpu} = {
+            fan_control_enabled = false;
+            performance_level = "auto";
+          };
+          # Steam wraps every game (native or Proton) in `reaper SteamLaunch`;
+          # Heroic's Wine/Proton games run a wineserver.
+          rule = {
+            type = "or";
+            filter = [
+              {
+                type = "process";
+                filter = {
+                  name = "reaper";
+                  args = "SteamLaunch";
+                };
+              }
+              {
+                type = "process";
+                filter.name = "wineserver";
+              }
+            ];
+          };
+        };
+        current_profile = null;
+        auto_switch_profiles = true;
+      };
+  };
 }
