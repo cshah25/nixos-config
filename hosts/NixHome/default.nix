@@ -28,7 +28,7 @@
         width = 3840;
         height = 2160;
         refresh = 60;
-        scale = 1.5;
+        scale = 2;
         x = 0;
         y = 0;
       }
@@ -40,8 +40,8 @@
         height = 2160;
         refresh = 60;
         gamingRefresh = 144.001007;
-        scale = 1.5;
-        x = 2560;
+        scale = 2;
+        x = 1920;
         y = 0;
       }
     ];
