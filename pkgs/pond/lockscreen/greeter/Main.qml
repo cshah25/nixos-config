@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQml.Models
 import Pond.System
-import "../frontend" as Frontend
+import "frontend" as Frontend
 
 Item {
     id: root

@@ -41,3 +41,9 @@ install(DIRECTORY screenshot/ DESTINATION "${POND_QML_DIR}/Screenshot" PATTERN n
 
 # Quickshell configs
 install(DIRECTORY shell lockscreen DESTINATION share/pond)
+
+# SDDM theme "pond": the greeter plus a link to the lockscreen frontend it shares
+install(FILES lockscreen/greeter/Main.qml lockscreen/greeter/metadata.desktop
+    DESTINATION share/sddm/themes/pond)
+install(CODE "file(CREATE_LINK \"\${CMAKE_INSTALL_PREFIX}/share/pond/lockscreen/frontend\"
+    \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/share/sddm/themes/pond/frontend\" SYMBOLIC)")

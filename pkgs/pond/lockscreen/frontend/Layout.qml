@@ -276,34 +276,6 @@ Item {
                     root.restartRequested();
                 }
             }
-
-            SoftLightText {
-                pixelScale: root.pixelScale
-                backgroundTexture: backdropTexture
-                backgroundSize: Qt.size(canvas.width, canvas.height)
-                x: 10
-                y: 1026
-                text: "Pre-release version"
-                font.family: theme.displayFont
-                font.styleName: "Regular"
-                font.pixelSize: 39
-                font.letterSpacing: -1.17
-            }
-
-            SoftLightText {
-                pixelScale: root.pixelScale
-                backgroundTexture: backdropTexture
-                backgroundSize: Qt.size(canvas.width, canvas.height)
-                x: canvas.width - 240
-                y: 1041
-                width: 228
-                text: "Some features may not work as expected. Please report any issues or bugs."
-                font.family: theme.uiFont
-                font.styleName: "Medium"
-                font.pixelSize: 11
-                font.letterSpacing: 0.11
-                wrapMode: Text.WordWrap
-            }
         }
 
         Form {

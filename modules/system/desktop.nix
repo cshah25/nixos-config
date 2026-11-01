@@ -11,6 +11,43 @@ let
   cfg = config.sys.desktop;
   # Standalone Wayland compositors paired with the Noctalia shell
   tiling = cfg.niri.enable || cfg.mango.enable || cfg.umbriel.enable;
+  # Standalone compositors log in through a greeter of their own, not a full DE's display manager
+  ownGreeter = tiling && !cfg.plasma.enable && !cfg.gnome.enable;
+  pondGreeter = ownGreeter && cfg.shell == "pond";
+
+  # Pond's greeter is an SDDM theme shown inside a bare niri, as on Pond itself
+  greeterNiriConfig = pkgs.writeText "pond-greeter-niri.kdl" ''
+    prefer-no-csd
+    hotkey-overlay { skip-at-startup; }
+    animations { off; }
+
+    input {
+        keyboard {
+            xkb {
+                layout "${config.services.xserver.xkb.layout}"
+                variant "${config.services.xserver.xkb.variant}"
+            }
+        }
+    }
+
+    cursor {
+        xcursor-theme "Bibata-Modern-Ice"
+        xcursor-size ${toString cfg.cursorSize}
+    }
+
+    window-rule {
+        match app-id="^sddm-greeter"
+        open-fullscreen true
+    }
+
+    ${lib.concatMapStringsSep "\n" (m: ''
+      output "${if m.output != null then m.output else "${m.make} ${m.model} ${m.serial}"}" {
+          mode "${toString m.width}x${toString m.height}@${builtins.toJSON m.refresh}"
+          scale ${builtins.toJSON m.scale}
+          position x=${toString m.x} y=${toString m.y}
+      }
+    '') config.sys.monitors}
+  '';
 in
 {
   imports = [
@@ -56,8 +93,8 @@ in
     services.libinput.enable = true;
     gtk.iconCache.enable = true;
 
-    # Use SDDM when KDE Plasma is enabled
-    services.displayManager.sddm.enable = lib.mkDefault cfg.plasma.enable;
+    # Use SDDM when KDE Plasma is enabled, or for Pond's greeter (below)
+    services.displayManager.sddm.enable = lib.mkDefault (cfg.plasma.enable || pondGreeter);
     services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
     # Use GDM when GNOME is enabled
@@ -69,9 +106,30 @@ in
       lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass"
     );
 
-    # Use Noctalia Greeter for standalone compositors (Niri, Mango, Umbriel) when no full DE is active
+    # Pond's login screen for standalone compositors when Pond is the shell; it lists every
+    # installed session (mango, niri, ...) in its compositor picker
+    services.displayManager.sddm.theme = lib.mkIf pondGreeter "pond";
+    services.displayManager.sddm.wayland = lib.mkIf pondGreeter {
+      enable = true;
+      compositorCommand = "${pkgs.coreutils}/bin/env XCURSOR_PATH=${pkgs.bibata-cursors}/share/icons ${lib.getExe pkgs.niri} --config ${greeterNiriConfig}";
+    };
+    # Pond.System and Pond.Daylight QML modules, and the Qt modules the theme draws with
+    services.displayManager.sddm.extraPackages = lib.mkIf pondGreeter [
+      pkgs.pond
+      pkgs.qt6.qtsvg
+    ];
+    services.displayManager.sddm.settings.Theme = lib.mkIf pondGreeter {
+      CursorTheme = "Bibata-Modern-Ice";
+      CursorSize = cfg.cursorSize;
+    };
+    environment.systemPackages = lib.mkIf pondGreeter [
+      pkgs.pond
+      pkgs.bibata-cursors
+    ];
+
+    # Use Noctalia Greeter for standalone compositors (Niri, Mango, Umbriel) otherwise
     services.displayManager.noctalia-greeter = {
-      enable = lib.mkDefault (tiling && !cfg.plasma.enable && !cfg.gnome.enable);
+      enable = lib.mkDefault (ownGreeter && !pondGreeter);
       greeter-args = lib.mkDefault "";
       passwordless-sync-users = [ username ];
       settings = {
