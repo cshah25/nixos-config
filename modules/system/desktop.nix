@@ -78,7 +78,12 @@ in
   };
 
   config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || tiling) {
-    nixpkgs.overlays = [ (final: _: { pond = final.callPackage ../../pkgs/pond { }; }) ];
+    nixpkgs.overlays = [
+      (final: _: {
+        pond = final.callPackage ../../pkgs/pond { };
+        pond-boot = final.callPackage ../../pkgs/pond/boot.nix { };
+      })
+    ];
 
     # Pond ships its UI fonts; its lockscreen and launcher run from the user session
     fonts.packages = lib.mkIf (tiling && cfg.shell == "pond") [

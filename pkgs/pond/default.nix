@@ -65,7 +65,16 @@ stdenv.mkDerivation {
   pname = "pond";
   version = "0-unstable-2026-11-01";
 
-  src = lib.cleanSource ./.;
+  # Boot art is its own package (boot.nix); leave it out so it doesn't rebuild the shell
+  src = lib.fileset.toSource {
+    root = ./.;
+    fileset = lib.fileset.difference ./. (
+      lib.fileset.unions [
+        ./boot
+        ./boot.nix
+      ]
+    );
+  };
 
   nativeBuildInputs = [
     cmake
