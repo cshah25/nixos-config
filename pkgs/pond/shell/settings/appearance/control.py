@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+"""Small JSON bridge for the Appearance panel's hardware and saved settings."""
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+import tempfile
+
+CONFIG = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
+
+
+def run(*args, timeout=12):
+    result = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+    if result.returncode:
+        raise RuntimeError(result.stderr.strip() or result.stdout.strip() or f"{args[0]} failed")
+    return result.stdout
+
+
+def atomic_write(path, text):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as file:
+        temporary = Path(file.name)
+        file.write(text)
+    try:
+        if path.exists():
+            temporary.chmod(path.stat().st_mode)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def brightness_device(output, cached=""):
+    device = json.loads(cached) if cached else None
+    # Match brightness control to the selected connector, not detection order.
+    if not device and not output.startswith(("eDP", "LVDS", "DSI")):
+        # The targeted brightness read below also checks DDC support.
+        detected = run("ddcutil", "detect", "--brief", "--skip-ddc-checks")
+        for block in re.split(r"(?=Display \d+)", detected):
+            connector = re.search(r"DRM connector:\s+\S*card\d+-(\S+)", block)
+            bus = re.search(r"I2C bus:\s+/dev/i2c-(\d+)", block)
+            if connector and bus and connector[1] == output:
+                device = {"kind": "ddc", "device": bus[1]}
+                break
+    elif not device:
+        devices = sorted(Path("/sys/class/backlight").glob("*"))
+        if devices:
+            device = {"kind": "backlight", "device": devices[0].name}
+    try:
+        if device and device["kind"] == "ddc":
+            value = run("ddcutil", "-b", device["device"], "getvcp", "10", "--brief",
+                        *(["--skip-ddc-checks"] if cached else []))
+            match = re.search(r"VCP 10 C (\d+) (\d+)", value)
+            if match and int(match[2]) > 0:
+                return dict(device, current=int(match[1]), max=int(match[2]))
+        elif device:
+            path = Path("/sys/class/backlight") / device["device"]
+            return dict(device, current=int((path / "brightness").read_text()),
+                        max=int((path / "max_brightness").read_text()))
+    except (RuntimeError, OSError, subprocess.TimeoutExpired):
+        if not cached:
+            raise
+    if cached:
+        return brightness_device(output)
+    raise RuntimeError("Brightness control is unavailable for this display")
+
+
+def output_mode(output):
+    """Physical size and scale of a connected output, or None."""
+    if os.environ.get("NIRI_SOCKET"):
+        monitor = json.loads(run("niri", "msg", "-j", "outputs")).get(output)
+        if not (monitor and monitor.get("logical")):
+            return None
+        mode = monitor["modes"][monitor["current_mode"]]
+        return {"width": mode["width"], "height": mode["height"], "scale": monitor["logical"]["scale"]}
+    # Mango reports logical size; scale it back up to the panel's pixels.
+    for monitor in json.loads(run("mmsg", "get", "all-monitors"))["monitors"]:
+        if monitor["name"] == output:
+            scale = monitor["scale"]
+            return {"width": round(monitor["width"] * scale), "height": round(monitor["height"] * scale),
+                    "scale": scale}
+    return None
+
+
+def status(output, cached=""):
+    mode = output_mode(output)
+    result = {"output": output, "connected": mode is not None,
+              "brightness": None, "brightnessDevice": None, "brightnessError": ""}
+    if result["connected"]:
+        result.update(mode)
+        try:
+            device = brightness_device(output, cached)
+            result["brightness"] = device["current"] / device["max"]
+            result["brightnessDevice"] = device
+        except (RuntimeError, OSError, subprocess.TimeoutExpired) as error:
+            result["brightnessError"] = str(error)
+    return result
+
+
+def set_brightness(output, value, cached=""):
+    value = max(0.01, min(1, float(value)))
+    device = json.loads(cached) if cached else brightness_device(output)
+    if device["kind"] == "ddc":
+        run("ddcutil", "-b", device["device"], "--noverify", "--enable-dynamic-sleep",
+            "--sleep-multiplier=0.05", "setvcp", "10", str(round(value * device["max"])))
+    else:
+        run("brightnessctl", "-d", device["device"], "set", f"{round(value * 100)}%")
+    return {"brightness": value}
+
+
+def step_brightness(output, delta):
+    device = brightness_device(output)
+    value = device["current"] / device["max"] + float(delta)
+    return set_brightness(output, value, json.dumps(device))
+
+
+def wallpaper(mode, path=""):
+    state = {"mode": mode, "path": "", "url": ""}
+    if mode == "custom":
+        import gi
+        gi.require_version("GdkPixbuf", "2.0")
+        from gi.repository import GdkPixbuf
+        image = Path(path).expanduser().resolve(strict=True)
+        if not image.is_file() or GdkPixbuf.Pixbuf.get_file_info(str(image))[0] is None:
+            raise ValueError("Choose a readable image file")
+        state.update(path=str(image), url=f"{image.as_uri()}?{image.stat().st_mtime_ns}")
+    elif mode != "dynamic":
+        raise ValueError("Unknown wallpaper mode")
+    atomic_write(CONFIG / "pond-interface/wallpaper.json", json.dumps(state) + "\n")
+    return state
+
+
+def pick_wallpaper():
+    result = subprocess.run(["zenity", "--file-selection", "--title=Choose a wallpaper",
+                             f"--filename={Path.home() / 'Pictures/Wallpapers'}/",
+                             "--file-filter=Images | *.png *.jpg *.jpeg *.webp *.avif *.bmp *.gif *.svg *.PNG *.JPG *.JPEG",
+                             "--file-filter=All files | *"], capture_output=True, text=True)
+    if result.returncode == 1:
+        return {"cancelled": True}
+    if result.returncode:
+        raise RuntimeError(result.stderr.strip() or "Could not open the image picker")
+    return wallpaper("custom", result.stdout.rstrip("\n"))
+
+
+def theme(name):
+    if name not in ("daylight", "unthemed"):
+        raise ValueError("Unknown theme")
+    atomic_write(CONFIG / "pond-interface/theme.json", json.dumps({"theme": name}) + "\n")
+    return {"theme": name}
+
+
+def main():
+    try:
+        action, *args = sys.argv[1:]
+        commands = {"status": status, "brightness": set_brightness, "brightness-step": step_brightness,
+                    "wallpaper": wallpaper, "pick-wallpaper": pick_wallpaper, "theme": theme}
+        print(json.dumps(commands[action](*args)))
+    except Exception as error:
+        print(json.dumps({"error": str(error)}))
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

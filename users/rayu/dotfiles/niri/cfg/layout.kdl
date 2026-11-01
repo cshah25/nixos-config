@@ -7,7 +7,7 @@
             width 1
         }
 
-        background-color "transparent" // <- needed for noctalia-shell to set wallpaper
+        background-color "transparent" // <- lets the shell draw the wallpaper
 
         preset-column-widths {
             proportion 0.33333

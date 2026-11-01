@@ -8,6 +8,8 @@
 }:
 
 let
+  pond = osConfig.sys.desktop.shell == "pond";
+
   autostartScript = pkgs.writeShellScript "mango-autostart" ''
     # ─── Mango WM Autostart Script ───
 
@@ -22,8 +24,8 @@ let
     # 3. Ensure portal services are restarted with new environment
     ${pkgs.systemd}/bin/systemctl --user restart xdg-desktop-portal-wlr xdg-desktop-portal-gtk xdg-desktop-portal
 
-    # 4. Noctalia desktop shell
-    noctalia &
+    # 4. Desktop shell (vicinae, Pond's launcher, starts with the session target)
+    ${if pond then "pond-shell" else "noctalia"} &
 
     # 5. Wayland pipewire idle inhibitor
     wayland-pipewire-idle-inhibit &
@@ -33,6 +35,63 @@ let
 
     (nextcloud --background) &
   '';
+
+  # Shell-specific binds, sourced after cfg/bind.conf
+  shellBinds =
+    if pond then
+      ''
+        # ─── Pond Shell ───
+        bind=SUPER+CTRL,Return,spawn,vicinae toggle
+        bind=SUPER,V,spawn,vicinae vicinae://launch/clipboard/history?toggle=true
+        bind=SUPER+ALT,L,spawn,pond-lock
+        bind=SUPER,Escape,spawn,pond-lock
+        bind=SUPER+SHIFT,Q,spawn,pond-msg settings toggle
+        bind=CTRL+ALT,Delete,spawn,pond-msg settings toggle
+        bind=SUPER,grave,spawn,pond-msg sidebar toggle
+
+        # ─── Audio, Media & Brightness (DDC on external monitors) ───
+        bind=NONE,XF86AudioRaiseVolume,spawn,pond-msg volume increase
+        bind=NONE,XF86AudioLowerVolume,spawn,pond-msg volume decrease
+        bind=NONE,XF86AudioMute,spawn,pond-msg volume muteOutput
+        bind=NONE,XF86AudioMicMute,spawn,pond-msg volume muteInput
+        bind=NONE,XF86MonBrightnessDown,spawn,pond-msg brightness decrease
+        bind=NONE,XF86MonBrightnessUp,spawn,pond-msg brightness increase
+        bind=NONE,XF86AudioPlay,spawn,pond-msg media playPause
+        bind=NONE,XF86AudioNext,spawn,pond-msg media next
+        bind=NONE,XF86AudioPrev,spawn,pond-msg media previous
+
+        # ─── Screenshots ───
+        bind=SUPER+SHIFT,1,spawn,pond-screenshot region
+        bind=SUPER+SHIFT,2,spawn,pond-screenshot screen
+        bind=SUPER+SHIFT,3,spawn,pond-screenshot screen
+        bind=SUPER+SHIFT,4,spawn,pond-screenshot region
+      ''
+    else
+      ''
+        # ─── Noctalia Shell ───
+        bind=SUPER+CTRL,Return,spawn,noctalia msg panel-toggle launcher
+        bind=SUPER+ALT,L,spawn,noctalia msg session lock
+        bind=SUPER,Escape,spawn,noctalia msg session lock
+        bind=SUPER+SHIFT,Q,spawn,noctalia msg panel-toggle control-center
+        bind=CTRL+ALT,Delete,spawn,noctalia msg panel-toggle control-center
+
+        # ─── Audio & Media Controls (Noctalia IPC & brightnessctl/playerctl) ───
+        bind=NONE,XF86AudioRaiseVolume,spawn,noctalia msg volume-up
+        bind=NONE,XF86AudioLowerVolume,spawn,noctalia msg volume-down
+        bind=NONE,XF86AudioMute,spawn,noctalia msg volume-mute
+        bind=NONE,XF86AudioMicMute,spawn,noctalia msg mic-mute
+        bind=NONE,XF86MonBrightnessDown,spawn,brightnessctl s 10%-
+        bind=NONE,XF86MonBrightnessUp,spawn,brightnessctl s +10%
+        bind=NONE,XF86AudioPlay,spawn,playerctl play-pause
+        bind=NONE,XF86AudioNext,spawn,playerctl next
+        bind=NONE,XF86AudioPrev,spawn,playerctl previous
+
+        # ─── Screenshots ───
+        bind=SUPER+SHIFT,1,spawn,noctalia msg screenshot-region
+        bind=SUPER+SHIFT,2,spawn,noctalia msg screenshot-fullscreen
+        bind=SUPER+SHIFT,3,spawn,noctalia msg screenshot-fullscreen all
+        bind=SUPER+SHIFT,4,spawn,noctalia msg screenshot-fullscreen pick
+      '';
 
   # Static config files link straight into the repo, so edits apply without a rebuild
   # (adding or removing a file in dotfiles/mango/cfg still needs one)
@@ -68,6 +127,8 @@ in
       # ─── Startup Applications ───
       exec_once=${autostartScript}
     '';
+
+    "mango/cfg/shell.conf".text = shellBinds;
 
     "mango/cfg/display.conf".text = ''
       xwayland_ignore_scale=1

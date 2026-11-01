@@ -12,6 +12,7 @@
     ./niri.nix
     ./mango.nix
     ./umbriel.nix
+    ./pond.nix
     ./mime.nix
     ./thunar.nix
     ./services.nix

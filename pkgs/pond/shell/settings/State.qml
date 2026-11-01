@@ -1,0 +1,93 @@
+pragma Singleton
+
+import QtQuick
+import "." as Settings
+import "../bluetooth" as Bluetooth
+import ".." as Shell
+import Quickshell
+
+Singleton {
+  id: root
+
+  property bool opened: false
+  property string page: ""
+  property var pageHistory: []
+  property string outputName: ""
+  signal opening
+  property string pendingSessionAction: ""
+
+  readonly property var sessionActions: [
+    "lock", "suspend", "reboot", "shutdown"
+  ]
+  readonly property var pages: [
+    "appearance", "information", "manual", "system", "lock"
+  ]
+
+  Timer {
+    id: sessionActionDelay
+    interval: Settings.Style.closeDuration
+    onTriggered: {
+      const action = root.pendingSessionAction;
+      root.pendingSessionAction = "";
+      if (action === "")
+        return;
+      Quickshell.execDetached([
+        "python3", Quickshell.shellDir + "/settings/session.py", action
+      ]);
+    }
+  }
+
+  function open(requestedOutputName, initialPage = "") {
+    sessionActionDelay.stop();
+    pendingSessionAction = "";
+    outputName = requestedOutputName || focusedOutputName();
+    pageHistory = [];
+    page = initialPage;
+    opening();
+    opened = true;
+  }
+
+  function close() {
+    opened = false;
+  }
+
+  function openPage(name) {
+    if (pages.indexOf(name) < 0) return;
+    pageHistory = pageHistory.concat(page);
+    page = name;
+  }
+
+  function back() {
+    if (!pageHistory.length) { close(); return; }
+    page = pageHistory[pageHistory.length - 1];
+    pageHistory = pageHistory.slice(0, -1);
+  }
+
+  function toggle(requestedOutputName) {
+    const targetOutput = requestedOutputName || focusedOutputName();
+    if (opened && outputName === targetOutput)
+      close();
+    else
+      open(targetOutput);
+  }
+
+  function requestSessionAction(action) {
+    if (sessionActions.indexOf(action) < 0)
+      return;
+    pendingSessionAction = action;
+    opened = false;
+    sessionActionDelay.restart();
+  }
+
+  function openBluetooth() {
+    const targetOutput = outputName || focusedOutputName();
+    close();
+    Bluetooth.State.requestPanel("open", targetOutput);
+  }
+
+  function focusedOutputName() {
+    if (Shell.Compositor.focusedOutputName !== "")
+      return Shell.Compositor.focusedOutputName;
+    return Quickshell.screens.length ? Quickshell.screens[0].name : "";
+  }
+}

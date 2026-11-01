@@ -34,8 +34,10 @@ in
     ++
       lib.optionals
         (
-          osConfig.sys.desktop.mango.enable
-          || osConfig.sys.desktop.niri.enable
+          (
+            (osConfig.sys.desktop.mango.enable || osConfig.sys.desktop.niri.enable)
+            && osConfig.sys.desktop.shell == "noctalia"
+          )
           || osConfig.sys.desktop.umbriel.enable
         )
         [

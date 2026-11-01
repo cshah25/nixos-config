@@ -25,6 +25,14 @@ in
     niri.enable = lib.mkEnableOption "Niri";
     mango.enable = lib.mkEnableOption "Mango WM";
     umbriel.enable = lib.mkEnableOption "Umbriel";
+    shell = lib.mkOption {
+      type = lib.types.enum [
+        "noctalia"
+        "pond"
+      ];
+      default = "noctalia";
+      description = "Desktop shell for Niri and Mango (Umbriel always uses Noctalia).";
+    };
     cursorSize = lib.mkOption {
       type = lib.types.int;
       default = 24;
@@ -33,6 +41,14 @@ in
   };
 
   config = lib.mkIf (cfg.plasma.enable || cfg.gnome.enable || tiling) {
+    nixpkgs.overlays = [ (final: _: { pond = final.callPackage ../../pkgs/pond { }; }) ];
+
+    # Pond ships its UI fonts; its lockscreen and launcher run from the user session
+    fonts.packages = lib.mkIf (tiling && cfg.shell == "pond") [
+      pkgs.pond
+      pkgs.ibm-plex
+    ];
+
     # X server only for the full DEs; standalone Wayland compositors run XWayland themselves
     services.xserver.enable = cfg.plasma.enable || cfg.gnome.enable;
 
