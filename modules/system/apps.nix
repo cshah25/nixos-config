@@ -42,7 +42,6 @@
       ]
       ++ lib.optionals config.sys.services.remote.enable [
         "io.github.totoshko88.RustConn"
-        "com.rustdesk.RustDesk"
       ];
     };
   };
