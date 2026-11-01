@@ -84,7 +84,12 @@
                 nano
               ];
 
-              networking.networkmanager.enable = true;
+              networking.networkmanager = {
+                enable = true;
+                connectionConfig = {
+                  "ipv6.ignore-auto-dns" = true;
+                };
+              };
             })
           ];
         };
