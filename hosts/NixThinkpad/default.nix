@@ -1,7 +1,7 @@
 {
-  inputs, 
+  inputs,
   pkgs,
-  ... 
+  ...
 }:
 
 {
@@ -37,6 +37,7 @@
         y = 0;
       }
     ];
+    boot.theme.resolution = "1920x1200"; # eDP-1 panel
     gaming.enable = true;
     virtualisation.enable = true;
     apps.enable = true;

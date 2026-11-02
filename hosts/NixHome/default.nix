@@ -45,6 +45,7 @@
         y = 0;
       }
     ];
+    boot.theme.resolution = "3840x2160";
     gaming.enable = true;
     virtualisation.enable = true;
     apps.enable = true;

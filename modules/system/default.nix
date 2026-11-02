@@ -10,7 +10,7 @@
     ./hardware.nix
     ./monitors.nix
     ./packages.nix
-    ./plymouth
+    ./boot-theme
     ./services.nix
     ./users.nix
     ./virtualisation.nix
