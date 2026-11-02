@@ -93,7 +93,8 @@ in
     description = "Native resolution of the boot display; the Limine wallpaper is rendered at exactly this size.";
   };
 
-  config.boot.loader.limine = {
+  # Pond ships its own boot theme (see ../boot.nix)
+  config.boot.loader.limine = lib.mkIf (config.sys.desktop.shell != "pond") {
     # Keeps the centred menu short enough to clear the logo
     maxGenerations = lib.mkDefault 10;
 

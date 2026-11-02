@@ -18,6 +18,7 @@
       niri.enable = false;
       mango.enable = true;
       umbriel.enable = false;
+      shell = "pond";
     };
     monitors = [
       {

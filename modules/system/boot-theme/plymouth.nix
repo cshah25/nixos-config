@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   art = import ./artwork.nix { inherit lib; };
@@ -142,7 +147,8 @@ let
       '';
 in
 {
-  boot = {
+  # Pond ships its own boot theme (see ../boot.nix)
+  config.boot = lib.mkIf (config.sys.desktop.shell != "pond") {
     plymouth = {
       enable = true;
       theme = "nixos-snowflake";
