@@ -100,10 +100,6 @@
   # AMD GPU stuff
   hardware.graphics.enable = true;
 
-  # Under "auto", dual 4K60 keeps VRAM at 772MHz (~80°C) on the desktop; "low" settles at 456MHz
-  # but also floors the core clock, so LACT switches to "auto" whenever a game is running.
-  # Fan control stays disabled: LACT then resets the fans to the firmware's own curve, which
-  # watches junction temperature (a custom edge-based curve once let junction hit 110°C).
   services.lact = {
     enable = true;
     settings =
@@ -127,8 +123,6 @@
             fan_control_enabled = false;
             performance_level = "auto";
           };
-          # Steam wraps every game (native or Proton) in `reaper SteamLaunch`;
-          # Heroic's Wine/Proton games run a wineserver.
           rule = {
             type = "or";
             filter = [
