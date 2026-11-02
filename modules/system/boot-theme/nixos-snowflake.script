@@ -1,0 +1,260 @@
+// NixOS Snowflake: six lambdas fly in and lock into the snowflake, then a
+// highlight chases around the arms while the system boots.
+
+// ---- Layout ----
+
+screen_x = Window.GetX();
+screen_y = Window.GetY();
+screen_w = Window.GetWidth();
+screen_h = Window.GetHeight();
+short_side = Math.Min(screen_w, screen_h);
+ui = short_side / 1080;
+
+logo_size = Math.Int(short_side * 0.24);
+glow_size = Math.Int(logo_size * 1.6);
+halo_size = Math.Int(logo_size * 3.4);
+center_x = screen_x + screen_w / 2;
+center_y = screen_y + screen_h * 0.44;
+
+// Pick the asset closest above the target size; plymouth only interpolates, so
+// scaling far down would alias the edges
+if (logo_size <= 320)
+    asset = "-sm";
+else
+    asset = "-lg";
+
+Window.SetBackgroundTopColor(0.067, 0.078, 0.122);
+Window.SetBackgroundBottomColor(0.027, 0.031, 0.051);
+
+fun clamp(v, lo, hi) {
+    if (v < lo) return lo;
+    if (v > hi) return hi;
+    return v;
+}
+
+fun ease_out_cubic(p) {
+    q = 1 - p;
+    return 1 - q * q * q;
+}
+
+// Overshoots slightly past 1 before settling, so the arms snap into place
+fun ease_out_back(p) {
+    s = 1.3;
+    q = p - 1;
+    return 1 + (s + 1) * q * q * q + s * q * q;
+}
+
+fun place(sprite, image, x, y) {
+    sprite.SetX(x - image.GetWidth() / 2);
+    sprite.SetY(y - image.GetHeight() / 2);
+}
+
+// ---- Sprites ----
+
+halo_image = Image("halo.png").Scale(halo_size, halo_size);
+halo = Sprite(halo_image);
+place(halo, halo_image, center_x, center_y);
+halo.SetZ(1);
+halo.SetOpacity(0);
+
+glow_image = Image("glow" + asset + ".png").Scale(glow_size, glow_size);
+glow = Sprite(glow_image);
+place(glow, glow_image, center_x, center_y);
+glow.SetZ(2);
+glow.SetOpacity(0);
+
+// Direction from the logo centre to arm 0's centroid, in screen space
+arm_base_angle = 116.83 * Math.Pi / 180;
+fly_distance = logo_size * 0.55;
+
+for (k = 0; k < 6; k++) {
+    arm_image[k] = Image("arm-" + k + asset + ".png").Scale(logo_size, logo_size);
+    arm[k] = Sprite(arm_image[k]);
+    arm[k].SetZ(10);
+    arm[k].SetOpacity(0);
+
+    shine_image[k] = Image("shine-" + k + asset + ".png").Scale(logo_size, logo_size);
+    shine[k] = Sprite(shine_image[k]);
+    shine[k].SetZ(11);
+    shine[k].SetOpacity(0);
+    place(shine[k], shine_image[k], center_x, center_y);
+
+    arm_dx[k] = Math.Cos(arm_base_angle + k * Math.Pi / 3);
+    arm_dy[k] = Math.Sin(arm_base_angle + k * Math.Pi / 3);
+}
+
+wordmark_image = Image.Text("N  i  x  O  S", 0.82, 0.89, 0.97, 1, "Sans " + Math.Int(15 * ui));
+if (wordmark_image) {
+    wordmark = Sprite(wordmark_image);
+    place(wordmark, wordmark_image, center_x, center_y + logo_size * 0.5 + 56 * ui);
+    wordmark.SetZ(10);
+    wordmark.SetOpacity(0);
+}
+
+bar_w = Math.Int(logo_size * 1.1);
+bar_h = Math.Max(2, Math.Int(4 * ui));
+bar_x = center_x - bar_w / 2;
+bar_y = center_y + logo_size * 0.5 + 110 * ui;
+
+track_image = Image("track.png").Scale(bar_w, bar_h);
+track = Sprite(track_image);
+track.SetPosition(bar_x, bar_y, 10);
+track.SetOpacity(0);
+
+bar_source = Image("bar.png");
+bar = Sprite();
+bar.SetPosition(bar_x, bar_y, 11);
+bar.SetOpacity(0);
+
+// Shutdown and reboot report no meaningful progress
+show_progress = Plymouth.GetMode() == "boot";
+
+// ---- Animation ----
+
+time = 0;
+progress_target = 0;
+progress_shown = 0;
+bar_drawn_w = -1;
+ui_fade = 1; // hides the wordmark and progress bar while a prompt is up
+
+fun refresh_callback() {
+    global.time = time + 1 / 50;
+
+    for (k = 0; k < 6; k++) {
+        p = clamp((time - 0.15 - k * 0.09) / 0.9, 0, 1);
+        offset = (1 - ease_out_back(p)) * fly_distance;
+        arm[k].SetX(center_x - logo_size / 2 + arm_dx[k] * offset);
+        arm[k].SetY(center_y - logo_size / 2 + arm_dy[k] * offset);
+        arm[k].SetOpacity(ease_out_cubic(clamp(p * 1.6, 0, 1)));
+    }
+
+    halo.SetOpacity(ease_out_cubic(clamp(time / 1.4, 0, 1)));
+
+    // Glow arrives as the arms lock in, then breathes
+    glow_in = ease_out_cubic(clamp((time - 1.0) / 0.8, 0, 1));
+    breath = 0.62 + 0.25 * Math.Sin((time - 1.0) * 2 * Math.Pi / 3.2);
+    glow.SetOpacity(glow_in * breath);
+
+    // A highlight chasing clockwise round the arms
+    shine_in = clamp((time - 1.5) / 0.6, 0, 1);
+    phase = (time - 1.5) * 2 * Math.Pi / 2.0;
+    for (k = 0; k < 6; k++) {
+        w = Math.Sin(phase - k * Math.Pi / 3);
+        if (w < 0) w = 0;
+        w = w * w * w * w;
+        shine[k].SetOpacity(shine_in * w * 0.32);
+    }
+
+    fade_in = ease_out_cubic(clamp((time - 1.2) / 0.8, 0, 1));
+    if (wordmark) wordmark.SetOpacity(fade_in * ui_fade * 0.75);
+
+    if (show_progress) {
+        global.progress_shown = progress_shown + (progress_target - progress_shown) * 0.06;
+        fill_w = Math.Int(bar_w * progress_shown);
+        if (fill_w >= bar_h && fill_w != bar_drawn_w) {
+            bar.SetImage(bar_source.Scale(fill_w, bar_h));
+            global.bar_drawn_w = fill_w;
+        }
+        track.SetOpacity(fade_in * ui_fade);
+        bar.SetOpacity(fade_in * ui_fade);
+    }
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
+
+fun progress_callback(duration, progress) {
+    // Never let the bar run backwards
+    if (progress > progress_target) global.progress_target = progress;
+}
+
+Plymouth.SetBootProgressFunction(progress_callback);
+
+// ---- Password and question prompts ----
+
+field_w = Math.Int(360 * ui);
+field_h = Math.Int(48 * ui);
+field_y = bar_y - 12 * ui;
+field_image = Image("field.png").Scale(field_w, field_h);
+bullet_size = Math.Max(6, Math.Int(11 * ui));
+bullet_image = Image("bullet.png").Scale(bullet_size, bullet_size);
+bullet_gap = Math.Int(19 * ui);
+max_bullets = Math.Int((field_w - 48 * ui) / bullet_gap);
+
+prompt_sprite = Sprite();
+field = Sprite();
+answer_sprite = Sprite();
+bullet_count = 0;
+
+fun hide_prompt() {
+    prompt_sprite.SetOpacity(0);
+    field.SetOpacity(0);
+    answer_sprite.SetOpacity(0);
+    for (i = 0; i < bullet_count; i++) bullets[i].SetOpacity(0);
+    global.ui_fade = 1;
+}
+
+fun show_prompt(text) {
+    global.ui_fade = 0;
+    if (!text) text = "Password";
+    prompt_image = Image.Text(text, 0.82, 0.89, 0.97, 1, "Sans " + Math.Int(12 * ui));
+    prompt_sprite.SetImage(prompt_image);
+    place(prompt_sprite, prompt_image, center_x, field_y - 22 * ui);
+    prompt_sprite.SetZ(20);
+    prompt_sprite.SetOpacity(0.8);
+
+    field.SetImage(field_image);
+    place(field, field_image, center_x, field_y);
+    field.SetZ(20);
+    field.SetOpacity(1);
+}
+
+fun display_password_callback(prompt, count) {
+    show_prompt(prompt);
+    answer_sprite.SetOpacity(0);
+
+    shown = Math.Min(count, max_bullets);
+    for (i = 0; i < Math.Max(shown, bullet_count); i++) {
+        if (!bullets[i]) {
+            global.bullets[i] = Sprite(bullet_image);
+            bullets[i].SetZ(21);
+        }
+        bullets[i].SetX(center_x - (shown - 1) * bullet_gap / 2 + i * bullet_gap - bullet_size / 2);
+        bullets[i].SetY(field_y - bullet_size / 2);
+        if (i < shown) bullets[i].SetOpacity(1);
+        else bullets[i].SetOpacity(0);
+    }
+    global.bullet_count = Math.Max(shown, bullet_count);
+}
+
+fun display_question_callback(prompt, entry) {
+    show_prompt(prompt);
+    for (i = 0; i < bullet_count; i++) bullets[i].SetOpacity(0);
+    answer_image = Image.Text(entry, 0.92, 0.95, 1, 1, "Sans " + Math.Int(13 * ui));
+    answer_sprite.SetImage(answer_image);
+    place(answer_sprite, answer_image, center_x, field_y);
+    answer_sprite.SetZ(21);
+    answer_sprite.SetOpacity(1);
+}
+
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+Plymouth.SetDisplayQuestionFunction(display_question_callback);
+Plymouth.SetDisplayNormalFunction(hide_prompt);
+
+// ---- Messages ----
+
+message_sprite = Sprite();
+message_sprite.SetZ(20);
+
+fun message_callback(text) {
+    message_image = Image.Text(text, 0.6, 0.66, 0.78, 1, "Sans " + Math.Int(11 * ui));
+    message_sprite.SetImage(message_image);
+    place(message_sprite, message_image, center_x, screen_y + screen_h * 0.92);
+    message_sprite.SetOpacity(0.8);
+}
+
+fun hide_message_callback(text) {
+    message_sprite.SetOpacity(0);
+}
+
+Plymouth.SetMessageFunction(message_callback);
+Plymouth.SetHideMessageFunction(hide_message_callback);

@@ -10,6 +10,7 @@
     ./hardware.nix
     ./monitors.nix
     ./packages.nix
+    ./boot-theme
     ./services.nix
     ./users.nix
     ./virtualisation.nix
