@@ -20,7 +20,6 @@ in
 lib.mkIf osConfig.sys.office.enable {
   home.packages = [
     pkgs.stable.libreoffice
-    pkgs.euro-office-desktopeditors
     pkgs.stable.zoom-us
     mailspring-wrapped
   ];
