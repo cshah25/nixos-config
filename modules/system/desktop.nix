@@ -16,7 +16,6 @@ in
   imports = [
     inputs.mangowm.nixosModules.mango
     inputs.umbriel.nixosModules.default
-    inputs.noctalia-greeter.nixosModules.default
   ];
 
   options.sys.desktop = {
@@ -56,17 +55,14 @@ in
     # Use Noctalia Greeter for standalone compositors (Niri, Mango, Umbriel) when no full DE is active
     services.displayManager.noctalia-greeter = {
       enable = lib.mkDefault (tiling && !cfg.plasma.enable && !cfg.gnome.enable);
-      greeter-args = lib.mkDefault "";
-      passwordless-sync-users = [ username ];
+      passwordlessSyncUsers = [ username ];
       settings = {
-        cursor = {
-          theme = "Bibata-Modern-Ice";
-          size = cfg.cursorSize;
-          path = "${pkgs.bibata-cursors}/share/icons";
-        };
-        keyboard = {
-          layout = "us";
-        };
+        cursor.size = cfg.cursorSize;
+        keyboard.layout = "us";
+      };
+      cursorTheme = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
       };
     };
 

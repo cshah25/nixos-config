@@ -77,6 +77,8 @@
     })
     {
       services.flatpak.enable = true;
+      # Flatpak turns on fonts.fontDir, which rebuilds Xwayland with a font path; keep the cached one
+      programs.xwayland.defaultFontPath = "";
       networking.firewall.enable = true;
     }
   ];

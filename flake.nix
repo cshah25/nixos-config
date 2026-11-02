@@ -21,10 +21,6 @@
     };
     # cachix branch = latest commit with cached binaries; no nixpkgs follows, or the cache would miss
     umbriel.url = "github:noctalia-dev/umbriel/cachix";
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
