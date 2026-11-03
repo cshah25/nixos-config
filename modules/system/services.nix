@@ -14,6 +14,7 @@
     rgb.enable = lib.mkEnableOption "openrgb";
     ollama.enable = lib.mkEnableOption "Ollama LLMs";
     onedrive.enable = lib.mkEnableOption "OneDrive Mount via rclone";
+    nextcloud-mount.enable = lib.mkEnableOption "Nextcloud Mount via rclone";
     printing.enable = lib.mkEnableOption "Printing Services";
   };
 

@@ -51,6 +51,7 @@
       rgb.enable = false;
       ollama.enable = false;
       onedrive.enable = true;
+      nextcloud-mount.enable = false;
       printing.enable = true;
     };
   };
