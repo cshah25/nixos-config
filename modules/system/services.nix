@@ -31,6 +31,7 @@
 
     (lib.mkIf config.sys.services.remote.enable {
       services.openssh.enable = true;
+      services.gvfs.enable = true;
     })
     (lib.mkIf config.sys.services.tailscale.enable {
       services.tailscale.enable = true;
