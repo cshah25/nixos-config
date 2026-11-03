@@ -22,6 +22,7 @@
       brightnessctl
       xwayland-satellite
       wlr-randr
+      davfs2
     ];
   };
 }
