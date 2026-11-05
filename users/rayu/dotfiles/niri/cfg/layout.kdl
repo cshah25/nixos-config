@@ -3,8 +3,11 @@
         center-focused-column "never" // Don’t auto-center focused column
 
 
+        // Matches mango border_px / focus_color / border_color
         focus-ring {
             width 1
+            active-color "#7aa2f7"
+            inactive-color "#1a1b26"
         }
 
         background-color "transparent" // <- needed for noctalia-shell to set wallpaper

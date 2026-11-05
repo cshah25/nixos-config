@@ -8,5 +8,6 @@
     // No sleep
     // spawn-sh-at-startup "swayidle -w timeout 180 'noctalia msg session lock'"
     spawn-at-startup "xwayland-satellite"
-    spawn-sh-at-startup "equibop"
+    spawn-sh-at-startup "sleep 3 && equibop"
+    spawn-sh-at-startup "nextcloud --background"
     spawn-at-startup "wayland-pipewire-idle-inhibit"

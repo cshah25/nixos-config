@@ -13,7 +13,7 @@
     }
 
     window-rule {
-        geometry-corner-radius 5 // Set every window radius to 20
+        geometry-corner-radius 5 // Matches mango border_radius
         clip-to-geometry true
     }
 
