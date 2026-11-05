@@ -1,3 +1,17 @@
+    // Named workspaces always exist and sit above the dynamic ones
+    workspace "chat"
+    workspace "music"
+
+    window-rule {
+        match app-id="(?i)^equibop$"
+        open-on-workspace "chat"
+    }
+
+    window-rule {
+        match app-id="(?i)^spotify$"
+        open-on-workspace "music"
+    }
+
     window-rule {
         geometry-corner-radius 5 // Set every window radius to 20
         clip-to-geometry true
