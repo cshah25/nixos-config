@@ -16,7 +16,7 @@
     desktop = {
       plasma.enable = false;
       gnome.enable = false;
-      niri.enable = false;
+      niri.enable = true;
       mango.enable = true;
       umbriel.enable = false;
     };
