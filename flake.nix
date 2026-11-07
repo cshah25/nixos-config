@@ -56,7 +56,7 @@
       hosts = [
         "NixHome" # Desktop
         "NixThinkpad" # Thinkpad
-        # "NixPrecision" # Laptop; re-add once its hardware-configuration.nix is committed
+        "NixPrecision" # Laptop; re-add once its hardware-configuration.nix is committed
       ];
     in
     {
