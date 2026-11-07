@@ -66,6 +66,8 @@
       services.ollama = {
         enable = true;
         package = pkgs.ollama-rocm;
+        # Free VRAM soon after use; a resident model starves games of VRAM
+        environmentVariables.OLLAMA_KEEP_ALIVE = "1m";
       };
       services.open-webui = {
         enable = true;
