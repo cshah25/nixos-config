@@ -57,7 +57,7 @@
       fwupd.enable = true;
       displaylink.enable = false;
       rgb.enable = false;
-      ollama.enable = false;
+      ollama.enable = true;
       onedrive.enable = true;
       nextcloud-mount.enable = false;
       printing.enable = true;
