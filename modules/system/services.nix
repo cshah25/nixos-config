@@ -67,6 +67,13 @@
         enable = true;
         package = pkgs.ollama-rocm;
       };
+      services.open-webui = {
+        enable = true;
+        port = 8081;
+        environment = {
+          OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
+        };
+      };
     })
     (lib.mkIf config.sys.services.printing.enable {
       services.avahi = {
