@@ -7,7 +7,6 @@
 
 lib.mkIf osConfig.sys.apps.enable {
   home.packages = [
-    pkgs.brave-origin
     #pkgs.spotify
     pkgs.feishin
     pkgs.stable.obsidian
