@@ -79,8 +79,6 @@ binds {
     Mod+Shift+Ctrl+Down                 { move-column-to-monitor-down; }
 
     // ─── Workspaces (1–9) ───
-    // 8 and 9 are the named "chat" / "music" workspaces (see rules.kdl),
-    // matching mango's equibop-on-tag-8 / spotify-on-tag-9 rules
     Mod+1                               { focus-workspace 1; }
     Mod+2                               { focus-workspace 2; }
     Mod+3                               { focus-workspace 3; }

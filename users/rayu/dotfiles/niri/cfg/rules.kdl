@@ -8,7 +8,7 @@
     }
 
     window-rule {
-        match app-id="(?i)^spotify$"
+        match app-id="(?i)^feishin$"
         open-on-workspace "music"
     }
 
