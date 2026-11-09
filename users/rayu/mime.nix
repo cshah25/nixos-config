@@ -23,7 +23,7 @@ let
 
   # Target desktop files
   codeEditor = [ "code.desktop" ];
-  browser = [ "zen-beta.desktop" ];
+  browser = [ "net.waterfox.waterfox" ];
 
   # Helper function to bulk-assign a list of MIME types to a handler
   setMimes =
