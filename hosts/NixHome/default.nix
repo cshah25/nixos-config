@@ -139,6 +139,12 @@
                 type = "process";
                 filter.name = "wineserver";
               }
+              {
+                # Heroic's umu-run launcher (comm is truncated to 15 chars). It runs outside the
+                # container, unlike wineserver, whose start LACT doesn't see.
+                type = "process";
+                filter.name = ".umu-run-wrappe";
+              }
             ];
           };
         };
