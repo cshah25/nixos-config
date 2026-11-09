@@ -5,13 +5,7 @@
   osConfig,
   ...
 }:
-
-# Declarative Zen Browser setup (privacy-first).
-# ⚠ Close Zen before `nixos-rebuild switch` / `home-manager switch`:
-#   spaces and pins are written into zen-sessions.jsonlz4 during activation.
-
 let
-  # Install an add-on from addons.mozilla.org, keyed by its extension ID.
   extension =
     slug: extra:
     {
@@ -31,80 +25,22 @@ in
     inputs.zen-browser.homeModules.beta
   ];
 
-  # PWAsForFirefox CLI/runtime (paired with the native messaging host below)
   home.packages = lib.mkIf osConfig.sys.apps.enable [ pkgs.firefoxpwa ];
 
   programs.zen-browser = lib.mkIf osConfig.sys.apps.enable {
     enable = true;
-    # Default-browser MIME associations are handled in mime.nix
-
     nativeMessagingHosts = [ pkgs.firefoxpwa ];
 
-    # ── Policies (policies.json) ────────────────────────────────────────────
     # Reference: https://mozilla.github.io/policy-templates/
     policies = {
-      DisableAppUpdate = true;
-      DisableTelemetry = true;
-      DisablePocket = true;
-      DisableFirefoxStudies = true;
-      DisableFeedbackCommands = true;
-      DisableSetDesktopBackground = true;
-      DontCheckDefaultBrowser = true;
-      NoDefaultBookmarks = true;
-
-      # Passwords/autofill are handled by Bitwarden
+      DisableAppUpdate = true; # updates come from Nix
+      DontCheckDefaultBrowser = true; # handled in mime.nix
+     
       PasswordManagerEnabled = false;
       OfferToSaveLogins = false;
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
-      DisableFormHistory = true;
 
-      EnableTrackingProtection = {
-        Value = true;
-        Locked = true;
-        Cryptomining = true;
-        Fingerprinting = true;
-        EmailTracking = true;
-      };
-      Cookies = {
-        Behavior = "reject-tracker-and-partition-foreign";
-        BehaviorPrivateBrowsing = "reject-tracker-and-partition-foreign";
-      };
-      HttpsOnlyMode = "enabled";
-      PostQuantumKeyAgreementEnabled = true;
-
-      SearchSuggestEnabled = false;
-      FirefoxSuggest = {
-        WebSuggestions = false;
-        SponsoredSuggestions = false;
-        ImproveSuggest = false;
-        Locked = true;
-      };
-      FirefoxHome = {
-        Search = true;
-        TopSites = false;
-        SponsoredTopSites = false;
-        Highlights = false;
-        Pocket = false;
-        SponsoredPocket = false;
-        Snippets = false;
-        Locked = true;
-      };
-      UserMessaging = {
-        ExtensionRecommendations = false;
-        FeatureRecommendations = false;
-        UrlbarInterventions = false;
-        SkipOnboarding = true;
-        MoreFromMozilla = false;
-        FirefoxLabs = false;
-        Locked = true;
-      };
-      GenerativeAI = {
-        Enabled = false;
-        Locked = true;
-      };
-
-      # ── Extensions ────────────────────────────────────────────────────────
       ExtensionSettings = {
         "uBlock0@raymondhill.net" = extension "ublock-origin" { default_area = "navbar"; };
         "{446900e4-71c2-419f-a6a7-df9c091e268b}" = extension "bitwarden-password-manager" {
@@ -115,7 +51,6 @@ in
         "{88ebde3a-4581-4c6b-8019-2a05a9e3e938}" = extension "hide-youtube-shorts" { };
       };
 
-      # uBlock Origin: default lists + extra privacy lists (re-applied every start)
       "3rdparty".Extensions."uBlock0@raymondhill.net".toOverwrite.filterLists = [
         "user-filters"
         "ublock-filters"
@@ -132,24 +67,13 @@ in
     };
 
     profiles.default = {
-      # Betterfox (BetterZen) privacy/telemetry/performance prefs;
-      # anything in `settings` below overrides it.
+      # Betterfox
       presets.betterfox.enable = true;
 
       settings = {
-        "privacy.globalprivacycontrol.enabled" = true;
-        "privacy.donottrackheader.enabled" = true;
-        "browser.contentblocking.category" = "strict";
-        "network.prefetch-next" = false;
-        "network.dns.disablePrefetch" = true;
-        "network.predictor.enabled" = false;
-        "browser.urlbar.speculativeConnect.enabled" = false;
-        "browser.places.speculativeConnect.enabled" = false;
-        "media.peerconnection.ice.default_address_only" = true; # WebRTC IP leak
-        "geo.enabled" = false;
-        "dom.security.https_only_mode_send_http_background_request" = false;
+        "network.trr.mode" = 5;
+        "doh-rollout.disable-heuristics" = true;
 
-        # Needed for essentials to show up across windows
         "zen.window-sync.enabled" = true;
         "zen.workspaces.continue-where-left-off" = true;
       };
@@ -164,7 +88,6 @@ in
         };
       };
 
-      # ── Essentials (global, shown in every space) ─────────────────────────
       pinsForce = true;
       pins = {
         "WhatsApp" = {
@@ -193,7 +116,6 @@ in
         };
       };
 
-      # ── Spaces ────────────────────────────────────────────────────────────
       spacesForce = true;
       spaces = {
         "Personal" = {
