@@ -118,38 +118,8 @@
         apply_settings_timer = 5;
         gpus.${gpu} = {
           fan_control_enabled = false;
-          performance_level = "low";
+          performance_level = "auto";
         };
-        profiles.gaming = {
-          gpus.${gpu} = {
-            fan_control_enabled = false;
-            performance_level = "auto";
-          };
-          rule = {
-            type = "or";
-            filter = [
-              {
-                type = "process";
-                filter = {
-                  name = "reaper";
-                  args = "SteamLaunch";
-                };
-              }
-              {
-                type = "process";
-                filter.name = "wineserver";
-              }
-              {
-                # Heroic's umu-run launcher (comm is truncated to 15 chars). It runs outside the
-                # container, unlike wineserver, whose start LACT doesn't see.
-                type = "process";
-                filter.name = ".umu-run-wrappe";
-              }
-            ];
-          };
-        };
-        current_profile = null;
-        auto_switch_profiles = true;
       };
   };
 }
