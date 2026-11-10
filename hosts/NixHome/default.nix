@@ -1,5 +1,7 @@
 {
+  config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -118,6 +120,7 @@
         apply_settings_timer = 5;
         gpus.${gpu} = {
           performance_level = "auto";
+          voltage_offset = -50;
           fan_control_enabled = true;
           fan_control_settings = {
             mode = "curve";
@@ -134,4 +137,13 @@
         };
       };
   };
+
+  # The YAML generator quotes the curve's temperature keys ('40'), but LACT only accepts integers
+  environment.etc."lact/config.yaml".source = lib.mkForce (
+    pkgs.runCommand "lact-config.yaml" { } ''
+      sed -E "s/^( +)'([0-9]+)':/\\1\\2:/" ${
+        (pkgs.formats.yaml { }).generate "lact-config.yaml" config.services.lact.settings
+      } > $out
+    ''
+  );
 }
