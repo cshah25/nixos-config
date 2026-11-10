@@ -22,13 +22,13 @@
     };
     monitors = [
       {
-        make = "ASUSTek COMPUTER INC";
-        model = "ASUS VG289";
-        serial = "R9LMTF128641";
-        width = 3840;
-        height = 2160;
+        make = "Dell Inc.";
+        model = "DELL P2722HE";
+        serial = "6G38GP3";
+        width = 1920;
+        height = 1080;
         refresh = 60;
-        scale = 2;
+        scale = 1;
         x = 0;
         y = 0;
       }
@@ -36,11 +36,11 @@
         make = "Microstep";
         model = "MAG 275UD E14";
         serial = "CE8M435A00519";
-        width = 3840;
-        height = 2160;
+        width = 1920;
+        height = 1080;
         refresh = 60;
         gamingRefresh = 144.001007;
-        scale = 2;
+        scale = 1;
         x = 1920;
         y = 0;
       }
