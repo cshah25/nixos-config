@@ -38,14 +38,14 @@
         serial = "CE8M435A00519";
         width = 1920;
         height = 1080;
-        refresh = 60;
-        gamingRefresh = 144.001007;
+        refresh = 288;
+        gamingRefresh = 288;
         scale = 1;
         x = 1920;
         y = 0;
       }
     ];
-    boot.theme.resolution = "3840x2160";
+    boot.theme.resolution = "1920x1080";
     gaming.enable = true;
     virtualisation.enable = true;
     apps.enable = true;
