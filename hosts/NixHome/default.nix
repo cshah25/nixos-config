@@ -101,7 +101,7 @@
 
   # AMD GPU stuff
   hardware.graphics.enable = true;
-
+  hardware.amdgpu.overdrive.enable = true;
   services.lact = {
     enable = true;
     settings =
@@ -117,8 +117,20 @@
         };
         apply_settings_timer = 5;
         gpus.${gpu} = {
-          fan_control_enabled = false;
           performance_level = "auto";
+          fan_control_enabled = true;
+          fan_control_settings = {
+            mode = "curve";
+            temperature_key = "junction";
+            interval_ms = 500;
+            curve = {
+              "40" = 0.25;
+              "60" = 0.35;
+              "75" = 0.5;
+              "85" = 0.7;
+              "95" = 0.9;
+            };
+          };
         };
       };
   };
