@@ -40,7 +40,7 @@
         serial = "CE8M435A00519";
         width = 1920;
         height = 1080;
-        refresh = 288;
+        refresh = 60;
         gamingRefresh = 288;
         scale = 1;
         x = 1920;
