@@ -9,29 +9,22 @@
 
 let
   autostartScript = pkgs.writeShellScript "mango-autostart" ''
-    # ─── Mango WM Autostart Script ───
 
-    # 1. Propagate Wayland and Desktop environment to systemd & dbus
     ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP DISPLAY
     ${pkgs.systemd}/bin/systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP DISPLAY
 
-    # 2. Reset failed user units from prior sessions and start session target
     ${pkgs.systemd}/bin/systemctl --user reset-failed
     ${pkgs.systemd}/bin/systemctl --user start mango-session.target
 
-    # 3. Ensure portal services are restarted with new environment
     ${pkgs.systemd}/bin/systemctl --user restart xdg-desktop-portal-wlr xdg-desktop-portal-gtk xdg-desktop-portal
 
-    # 4. Noctalia desktop shell
     noctalia &
 
-    # 5. Wayland pipewire idle inhibitor
     wayland-pipewire-idle-inhibit &
 
-    # 6. Equibop (Discord Client) after portals are initialized
     (sleep 3 && equibop) &
 
-    (nextcloud --background) &
+    (QT_QPA_PLATFORMTHEME="" nextcloud) &
   '';
 
   # Static config files link straight into the repo, so edits apply without a rebuild
