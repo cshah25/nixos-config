@@ -50,7 +50,7 @@
       displaylink.enable = false;
       rgb.enable = false;
       ollama.enable = false;
-      onedrive.enable = true;
+      onedrive.enable = false;
       nextcloud-mount.enable = false;
       printing.enable = true;
     };
