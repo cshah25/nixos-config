@@ -121,6 +121,7 @@
         gpus.${gpu} = {
           performance_level = "auto";
           voltage_offset = -50;
+          pmfw_options.zero_rpm = false;
           fan_control_enabled = true;
           fan_control_settings = {
             mode = "curve";
