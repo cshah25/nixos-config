@@ -25,6 +25,8 @@ let
     (sleep 3 && equibop) &
 
     (QT_QPA_PLATFORMTHEME="" nextcloud) &
+
+    nextcloud-talk-desktop &
   '';
 
   # Static config files link straight into the repo, so edits apply without a rebuild
