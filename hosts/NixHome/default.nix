@@ -38,11 +38,11 @@
         make = "Microstep";
         model = "MAG 275UD E14";
         serial = "CE8M435A00519";
-        width = 1920;
-        height = 1080;
+        width = 3840;
+        height = 2160;
         refresh = 60;
-        gamingRefresh = 288;
-        scale = 1;
+        gamingRefresh = 144;
+        scale = 2;
         x = 1920;
         y = 0;
       }
