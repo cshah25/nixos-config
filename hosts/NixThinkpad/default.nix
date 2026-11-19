@@ -50,7 +50,7 @@
       displaylink.enable = false;
       rgb.enable = false;
       ollama.enable = false;
-      onedrive.enable = true;
+      onedrive.enable = false;
       nextcloud-mount.enable = false;
       printing.enable = true;
     };
@@ -62,6 +62,11 @@
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-zen4;
 
   systemd.services.NetworkManager-wait-online.enable = false;
+
+  # Install Limine at the UEFI fallback path (EFI/BOOT/BOOTX64.EFI) instead of relying on
+  # a firmware boot entry, so this drive boots when moved between the Dell and the ThinkPad
+  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.limine.efiInstallAsRemovable = true;
 
   # The E14's mic-mute LED stays lit even when the mic is unmuted
   systemd.services.disable-mute = {

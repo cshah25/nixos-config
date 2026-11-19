@@ -29,7 +29,7 @@ in
         enable = true;
         secureBoot.enable = true;
       };
-      boot.loader.efi.canTouchEfiVariables = true;
+      boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
       # Hosts pick a CPU-tuned kernel from pkgs.cachyosKernels.*
       boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 

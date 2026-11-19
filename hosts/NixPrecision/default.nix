@@ -63,6 +63,11 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
+  # Install Limine at the UEFI fallback path (EFI/BOOT/BOOTX64.EFI) instead of relying on
+  # a firmware boot entry, so this drive boots when moved between the Dell and the ThinkPad
+  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.limine.efiInstallAsRemovable = true;
+
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/705be8ac-6fb3-4858-b83d-6a6e92b1c9d2";
     fsType = "ext4";
