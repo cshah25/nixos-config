@@ -29,7 +29,7 @@
         y = 1080;
       }
       {
-        output = "HDMI-A-1";
+        output = "DP-6";
         width = 1920;
         height = 1080;
         refresh = 60;
