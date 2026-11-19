@@ -18,20 +18,10 @@
       fsType = "ext4";
     };
 
-  fileSystems."/mnt/storage" =
-    { device = "/dev/disk/by-uuid/705be8ac-6fb3-4858-b83d-6a6e92b1c9d2";
-      fsType = "ext4";
-    };
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/9985-657F";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
-    };
-
-  fileSystems."/home/rayu/.gvfs" =
-    { device = "gvfsd-fuse";
-      fsType = "fuse.gvfsd-fuse";
     };
 
   swapDevices =
