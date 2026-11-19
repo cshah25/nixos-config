@@ -9,7 +9,7 @@
 let
   mailspring-wrapped = pkgs.symlinkJoin {
     name = "mailspring-wrapped";
-    paths = [ pkgs.stable.mailspring ];
+    paths = [ pkgs.mailspring ];
     buildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/mailspring \

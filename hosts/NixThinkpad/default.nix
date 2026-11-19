@@ -82,6 +82,23 @@
       RemainAfterExit = true;
     };
   };
+  # Turn the keyboard backlight off after 30s without input and restore the previous level on activity.
+  # swayidle honours idle inhibitors, so it stays lit while wayland-pipewire-idle-inhibit holds one (audio playing)
+  systemd.user.services.kbd-backlight-idle =
+    let
+      kbd = "${pkgs.brightnessctl}/bin/brightnessctl --quiet --device=tpacpi::kbd_backlight";
+    in
+    {
+      description = "Dim keyboard backlight when idle";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.swayidle}/bin/swayidle -w timeout 30 '${kbd} --save set 0' resume '${kbd} --restore'";
+        Restart = "on-failure";
+      };
+    };
+
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/705be8ac-6fb3-4858-b83d-6a6e92b1c9d2";
     fsType = "ext4";
